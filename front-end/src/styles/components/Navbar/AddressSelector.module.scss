@@ -1,0 +1,40 @@
+@import "../../variables";
+
+.address_selector{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 170px;
+  height: 45px;
+  border-radius: 100px;
+  transition: background-color 0.1s linear;
+
+  .left{
+
+    .icon{
+      height: 25px;
+      margin-right: 10px;
+    }
+
+  }
+
+  .right{
+
+    p{
+      font-family: $main-font;
+      font-size: 0.8rem;
+    }
+
+    .bottom{
+      font-weight: bold;
+    }
+
+  }
+
+}
+
+.address_selector:hover{
+  background-color: $light-gray;
+  cursor: pointer;
+}

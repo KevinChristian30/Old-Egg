@@ -1,4 +1,4 @@
-import style from "../styles/components/HamburgerMenu.module.scss"
+import style from "../../styles/components/Navbar/HamburgerMenu.module.scss"
 
 const HamburgerMenu = () => {
   return ( 

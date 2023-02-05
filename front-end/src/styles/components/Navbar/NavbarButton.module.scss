@@ -1,0 +1,21 @@
+@import "../../variables";
+
+.navbar_button{
+
+  font-size: 0.75rem;
+  font-weight: bold;
+  width: fit-content;
+  white-space: nowrap;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: $white;
+  background-color: $dark-blue;
+  padding: 5px 15px;
+  border-radius: 34px;
+  transition: 0.1s linear;
+
+}
+
+.navbar_button:hover{
+  transform: scale(1.05, 1.05);
+  cursor: pointer;
+}

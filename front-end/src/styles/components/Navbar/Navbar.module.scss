@@ -1,0 +1,90 @@
+@import "../../variables";
+
+.navbar{
+
+  .top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+    background-color: $white;
+    padding: 0 15px;
+    gap: 5px;
+  }
+  
+  .bottom{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+
+    .left{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      overflow-x: hidden;
+    }
+
+    .left:hover{
+      overflow-x: auto;
+    }
+
+    .left::-webkit-scrollbar {
+      height: 5px;
+      border-radius: 100px;
+    }
+    
+    .left::-webkit-scrollbar-track {
+      background: $light-gray;
+      border-radius: 100px;
+    }
+    
+    .left::-webkit-scrollbar-thumb {
+      background: $dark-blue;
+      border-radius: 100px;
+    }
+
+    .right{
+      display: flex;
+      gap: 15px;
+      
+      .newEgg_business{
+        font-size: 0.75rem;
+        font-weight: bold;
+        width: fit-content;
+        white-space: nowrap;
+        font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 34px;
+        padding: 5px 8px;
+        margin-left: 15px;
+        gap: 3px;
+        
+        .newEgg_left{
+          color: $dark-blue;
+        }
+      
+      }
+  
+      .newEgg_business:hover{
+        background-color: $light-gray;
+        cursor: pointer;
+      }
+  
+    }
+
+    }
+
+
+
+  .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+}

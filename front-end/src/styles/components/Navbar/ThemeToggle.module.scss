@@ -1,0 +1,55 @@
+@import "../../variables";
+
+.theme_toggle{
+
+  position: relative;
+  display: inline-block;
+  min-width: 55px;
+  max-width: 55px;;
+  height: 30px;
+  margin: 0 10px;
+  border: 1.5px solid black;
+  border-radius: 34px;
+
+  .slider{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $light-gray;
+    transition: 0.2s ease-in;
+    border-radius: 34px;
+  }
+
+  input{
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    width: 55px;
+    height: 30px;
+  }
+
+  input:hover{
+    cursor: pointer;
+  }
+
+  .slider::before{
+    position: absolute;
+    content: "";
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    transition: 0.2s ease-in;
+    border-radius: 50px;
+  }
+
+  input:checked + .slider{
+    background-color: $dark-blue;
+  }
+
+  input:checked + .slider::before{
+    transform: translateX(25px);
+  }
+
+}

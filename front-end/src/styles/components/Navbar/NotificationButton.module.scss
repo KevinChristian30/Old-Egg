@@ -1,0 +1,24 @@
+@import "../../variables";
+
+.notification_button{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  border: 1.5px solid black;
+  transition: background-color 0.1s linear;
+  min-width: 35px;
+  height: 35px;
+
+
+  .icon{
+    height: 20px;
+  }
+
+}
+
+.notification_button:hover{
+  background-color: $light-gray;
+  cursor: pointer;
+}

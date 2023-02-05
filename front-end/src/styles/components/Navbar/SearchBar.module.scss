@@ -1,0 +1,52 @@
+@import "../../variables";
+
+.search_bar{
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 30%;
+  min-width: 100px;
+  height: 45px;
+
+  .text_field{
+    height: 20px;
+    width: 100%;
+    border-radius: 100px;
+    padding: 10px 15px;
+    border: none;
+    background-color: $light-purplish-blue;
+  }
+  
+  .text_field:focus{
+    outline: 2px solid $dark-blue;
+  }
+
+  .search_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $dark-blue;
+    height: 40px;
+    width: 60px;
+    border: none;
+    border-radius: 100px;
+    position: absolute;
+    right: 0;
+    transition: all 0.1s linear;
+
+    .icon{
+      color: $white;
+      height: 17px;
+      width: auto;
+    }
+
+  }
+
+  .search_button:hover{
+    transform: scale(1.05, 1.05);
+    cursor: pointer;
+  }
+
+}
+

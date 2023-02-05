@@ -1,0 +1,41 @@
+@import "../../variables";
+
+.login_and_register_button{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 100px;
+  transition: background-color 0.1s linear;
+  min-width: 130px;
+  height: 45px;
+
+  .left{
+
+    .icon{
+      height: 25px;
+      margin-right: 10px;
+    }
+
+  }
+
+  .right{
+
+    p{
+      font-family: $main-font;
+      font-size: 0.8rem;
+    }
+
+    .bottom{
+      font-weight: bold;
+    }
+
+  }
+
+}
+
+.login_and_register_button:hover{
+  background-color: $light-gray;
+  cursor: pointer;
+}

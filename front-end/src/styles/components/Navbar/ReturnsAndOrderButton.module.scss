@@ -1,0 +1,29 @@
+@import "../../variables";
+
+.returns_and_orders_button{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 20px;
+  border-radius: 100px;
+  transition: background-color 0.1s linear;
+  font-family: $main-font;
+  font-size: 0.9rem;
+  min-width: 45px;
+  height: 45px;
+
+  .bottom{
+
+    font-weight: bold;
+    font-size: 0.8rem;
+
+  }
+
+}
+
+.returns_and_orders_button:hover{
+  background-color: $light-gray;
+  cursor: pointer;
+}

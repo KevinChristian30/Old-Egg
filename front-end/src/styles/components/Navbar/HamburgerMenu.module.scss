@@ -1,6 +1,4 @@
-$light-gray: #ebebeb;
-$dark-gray: #707270;
-$white: white;
+@import "../../variables";
 
 .hamburger_menu{
 
@@ -13,6 +11,7 @@ $white: white;
   border-radius: 100px;
   padding: 10px;
   background-color: $white;
+  transition: background-color 0.1s linear;
 
   .line{
     background-color: $dark-gray;
@@ -26,4 +25,5 @@ $white: white;
 
 .hamburger_menu:hover{
   background-color: $light-gray;
+  cursor: pointer;
 }

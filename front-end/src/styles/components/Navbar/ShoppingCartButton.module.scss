@@ -1,0 +1,17 @@
+@import "../../variables";
+
+.shopping_cart_button{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  height: 40px;
+  border-radius: 34px;
+
+} 
+
+.shopping_cart_button:hover{
+  background-color: $light-gray;
+  cursor: pointer;
+}
