@@ -14,6 +14,8 @@ import ShoppingCartButton from './ShoppingCartButton';
 import ThemeToggle from './ThemeToggle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion, faComment } from '@fortawesome/free-solid-svg-icons';
+import NewEggBusiness from './NewEggBusinessButton';
+import SafeNumber from '@/types/SafeNumber';
 
 const Navbar = () => {
 
@@ -40,13 +42,13 @@ const Navbar = () => {
 
       <div className={style.top}>
         <HamburgerMenu />
-        <Logo />
+        <Logo height={50 as SafeNumber}/>
         <AddressSelector />
         <SearchBar />
         <NotificationButton />
         <ChangeCountryButton />
         <ThemeToggle />
-        <LoginAndRegisterButton />
+        <a href="/login-or-register"><LoginAndRegisterButton /></a>
         <ReturnsAndOrdersButton />
         <ShoppingCartButton />
       </div>
@@ -65,10 +67,7 @@ const Navbar = () => {
           <SingleTextLink text={"Gaming PC Finder"}/>
         </div>
         <div className={style.right}>
-          <div className={style.newEgg_business}>
-            <div className={style.newEgg_left}>NEWEGG</div>
-            <div className={style.right}>BUSINESS</div>
-          </div>
+          <NewEggBusiness />
           <NavbarButton child={ getFeedbackButton() } />
           <NavbarButton child={ getHelpCenterButton() } />
         </div>

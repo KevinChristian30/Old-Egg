@@ -1,0 +1,14 @@
+@import "../variables";
+
+.square_input_field{
+
+  input{
+    padding: 0 15px;
+    border: 1px solid $light-gray;
+  }
+
+  input:focus{
+    outline: 1px solid $dark-blue;
+  }
+
+}
