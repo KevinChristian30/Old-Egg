@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion, faComment } from '@fortawesome/free-solid-svg-icons';
 import NewEggBusiness from './NewEggBusinessButton';
 import SafeNumber from '@/types/SafeNumber';
+import Link from 'next/link';
 
 const Navbar = () => {
 
@@ -42,13 +43,13 @@ const Navbar = () => {
 
       <div className={style.top}>
         <HamburgerMenu />
-        <Logo height={50 as SafeNumber}/>
+        <Link href='/'><Logo height={50 as SafeNumber}/></Link>
         <AddressSelector />
         <SearchBar />
         <NotificationButton />
         <ChangeCountryButton />
         <ThemeToggle />
-        <a href="/login-or-register"><LoginAndRegisterButton /></a>
+        <Link href="/login-or-register"><LoginAndRegisterButton /></Link>
         <ReturnsAndOrdersButton />
         <ShoppingCartButton />
       </div>

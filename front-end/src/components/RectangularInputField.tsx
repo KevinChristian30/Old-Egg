@@ -1,13 +1,13 @@
-import style from "../styles/components/SquareInputField.module.scss";
+import style from "../styles/components/RectangularInputField.module.scss"
 
-interface SquareInputFieldProps{
+interface RectangularInputFieldProps{
   placeholder?: string
   width?: number
   height?: number
   email?: boolean
 }
 
-const SquareInputField = (props: SquareInputFieldProps) => {
+const RectangularInputField = (props: RectangularInputFieldProps) => {
 
   const placeholder = props.placeholder;
   const width = props.width;
@@ -34,4 +34,4 @@ const SquareInputField = (props: SquareInputFieldProps) => {
    );
 }
  
-export default SquareInputField;
+export default RectangularInputField;

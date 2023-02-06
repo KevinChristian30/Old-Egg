@@ -11,7 +11,118 @@
 
   p{
     font-family: $main-font;
+  }
+
+  .sign_in_title{
+    font-weight: bolder;
+  }
+
+  .sign_in_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 330px;
+    height: 44px;
+    font-family: $main-font;
     font-weight: bold;
+    background-color: $light-orange;
+    border: 1px solid $brownish-orange;
+    font-size: 15px;
+  }
+
+  .sign_in_button:hover{
+    background-color: #f29831;
+    cursor: pointer;
+  }
+
+  .one_time_sign_in_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 330px;
+    height: 44px;
+    font-family: $main-font;
+    font-weight: bold;
+    font-size: 15px;
+    border: 1px solid $light-gray;
+  }
+
+  .one_time_sign_in_button:hover{
+    cursor: pointer;
+    border: 1px solid $dark-blue;
+    color: $dark-blue;
+  }
+
+  .whats_the_one_time_code{
+    text-decoration: underline;
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 0.8rem;
+  }
+
+  .whats_the_one_time_code:hover{
+    cursor: pointer;
+    color: $dark-blue;
+    text-decoration-color: $dark-blue;
+  }
+
+  .new_to_newEgg{
+    display: flex;
+    gap: 5px;
+    font-weight: 100;
+
+    b:hover{
+      cursor: pointer;
+      color: $dark-blue;
+      text-decoration-color: $dark-blue;
+    }
+
+  }
+
+  .or{
+    color: $dark-gray;
+    font-size: 12px;
+  }
+
+  .sign_in_with_google_and_apple_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 330px;
+    height: 44px;
+    font-family: $main-font;
+    font-weight: bold;
+    font-size: 15px;
+    border: 1px solid $light-gray;
+  }
+
+  .sign_in_with_google_and_apple_button:hover{
+    cursor: pointer;
+    border: 1px solid $dark-blue;
+    color: $dark-blue;
+  }
+
+  .terms_and_conditions_and_privacy_policy{
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    font-family: $main-font;
+    text-decoration: underline;
+
+    .link{
+      color: $dark-gray;
+    }
+
+    .link:hover{
+      color: $dark-blue;
+    }
+
+  }
+
+  .credits{
+    font-size: 12px;
+    color: $dark-gray;
   }
 
 }
