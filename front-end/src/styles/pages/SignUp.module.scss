@@ -1,0 +1,38 @@
+@import "../variables";
+
+.index{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+  gap: 15px;
+
+  p{
+    font-family: $main-font;
+  }
+
+  .sign_up_title{
+    font-weight: bolder;
+    margin-top: 15px;
+  }
+
+  .shopping_for_business{
+    font-size: 0.8rem;
+    color: $dark-gray;
+    display: flex;
+    gap: 3px;
+
+    .link{
+      color: $brownish-orange;
+      text-decoration: underline;
+    }
+  }
+
+  .constraint_hints_container{
+    display: flex;
+    gap: 25px;
+  }
+
+}

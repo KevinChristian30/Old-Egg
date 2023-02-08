@@ -1,12 +1,12 @@
-import style from "../../styles/pages/LoginAndRegister.module.scss";
+import style from "../../styles/pages/SignIn.module.scss";
 import Logo from "../../components/Navbar/Logo";
 import SafeNumber from "@/types/SafeNumber";
-import RectangularInputField from "@/components/RectangularInputField";
+import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
 import RectangularButton from "@/components/RectangularButton";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faAppleAlt, faAppleWhole } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Index = () => {
 
@@ -59,12 +59,12 @@ const Index = () => {
         width={304}
         height={44}
         email={true}/>
-      <RectangularButton content={ getSignInButtonContent() } />
+      <RectangularButton content={ getSignInButtonContent() } orange/>
       <RectangularButton content={ getOneTimeSignInButtonContent() } />
       <p className={style.whats_the_one_time_code}>What's the One-Time Code?</p>
       <div className={style.new_to_newEgg}>
         <p>New to Newegg?</p>
-        <b><u><p>Sign Up</p></u></b>
+        <Link href='/sign-up'><b><u><p>Sign Up</p></u></b></Link>
       </div>
       <br />
       <p className={style.or}>OR</p>

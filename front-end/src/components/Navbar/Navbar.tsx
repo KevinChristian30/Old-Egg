@@ -49,7 +49,7 @@ const Navbar = () => {
         <NotificationButton />
         <ChangeCountryButton />
         <ThemeToggle />
-        <Link href="/login-or-register"><LoginAndRegisterButton /></Link>
+        <Link href="/sign-in"><LoginAndRegisterButton /></Link>
         <ReturnsAndOrdersButton />
         <ShoppingCartButton />
       </div>

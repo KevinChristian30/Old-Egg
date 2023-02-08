@@ -17,42 +17,6 @@
     font-weight: bolder;
   }
 
-  .sign_in_button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 330px;
-    height: 44px;
-    font-family: $main-font;
-    font-weight: bold;
-    background-color: $light-orange;
-    border: 1px solid $brownish-orange;
-    font-size: 15px;
-  }
-
-  .sign_in_button:hover{
-    background-color: #f29831;
-    cursor: pointer;
-  }
-
-  .one_time_sign_in_button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 330px;
-    height: 44px;
-    font-family: $main-font;
-    font-weight: bold;
-    font-size: 15px;
-    border: 1px solid $light-gray;
-  }
-
-  .one_time_sign_in_button:hover{
-    cursor: pointer;
-    border: 1px solid $dark-blue;
-    color: $dark-blue;
-  }
-
   .whats_the_one_time_code{
     text-decoration: underline;
     font-family: sans-serif;
@@ -79,28 +43,16 @@
 
   }
 
+  .sign_in_with_google_and_apple_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
   .or{
     color: $dark-gray;
     font-size: 12px;
-  }
-
-  .sign_in_with_google_and_apple_button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 330px;
-    height: 44px;
-    font-family: $main-font;
-    font-weight: bold;
-    font-size: 15px;
-    border: 1px solid $light-gray;
-  }
-
-  .sign_in_with_google_and_apple_button:hover{
-    cursor: pointer;
-    border: 1px solid $dark-blue;
-    color: $dark-blue;
   }
 
   .terms_and_conditions_and_privacy_policy{

@@ -11,4 +11,9 @@
     outline: 1px solid $dark-blue;
   }
 
+  .number::-webkit-inner-spin-button,
+  .number::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
 }
