@@ -1,0 +1,32 @@
+@import "../../../variables";
+
+.footer_component{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: $main-font;
+
+  .title{
+    font-weight: bolder;
+    font-size: 15px;
+    color: white;
+  }
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+
+    .link{
+      color: white;
+
+      &:hover{
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+    }
+  }
+
+}

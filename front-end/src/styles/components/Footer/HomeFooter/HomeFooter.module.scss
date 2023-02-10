@@ -1,0 +1,60 @@
+@import "../../../variables";
+
+.home_footer{
+
+  .top{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: $darker-blue;
+    padding: 40px 40px;
+  }
+
+  .bottom{
+
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 40px 60px 40px;
+
+    .left{
+
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-family: $main-font;
+      color: $dark-gray;
+      font-size: 12px;
+      
+      .link_container{
+
+        display: flex;
+        gap: 15px;
+
+        .link{
+          color: $dark-gray;
+          &:hover{
+            text-decoration: underline;
+          }
+
+        }
+
+      }
+
+    }
+
+    .right{
+
+      display: flex;
+      justify-content: space-around;
+      width: 30%;
+
+      .link{
+        height: 25px;
+        color: $dark-blue;
+      }
+
+    }
+
+  }
+
+}

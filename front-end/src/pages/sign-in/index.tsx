@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
+import SignInFooter from "@/components/Footer/SignInFooter";
 
 const Index = () => {
 
@@ -70,13 +71,10 @@ const Index = () => {
       <p className={style.or}>OR</p>
       <RectangularButton content={ getSignInWithGoogleButton() }/>
       <RectangularButton content={ getSignInWithAppleButton() }/>
-      <br /><br /><br />
-      <div className={style.terms_and_conditions_and_privacy_policy}>
-        <Link className={style.link} href=''>Terms & Conditions</Link> 
-          | 
-        <Link className={style.link}href=''>Privacy Policy</Link>
-      </div>
-      <p className={style.credits}>© 2000-2023 Newegg Inc. All rights reserved.</p>
+      <br />
+
+      <SignInFooter />
+
     </form>
   );
 

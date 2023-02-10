@@ -35,6 +35,10 @@
     gap: 5px;
     font-weight: 100;
 
+    b{
+      color: black;
+    }
+
     b:hover{
       cursor: pointer;
       color: $dark-blue;
@@ -53,23 +57,6 @@
   .or{
     color: $dark-gray;
     font-size: 12px;
-  }
-
-  .terms_and_conditions_and_privacy_policy{
-    display: flex;
-    gap: 10px;
-    font-size: 12px;
-    font-family: $main-font;
-    text-decoration: underline;
-
-    .link{
-      color: $dark-gray;
-    }
-
-    .link:hover{
-      color: $dark-blue;
-    }
-
   }
 
   .credits{

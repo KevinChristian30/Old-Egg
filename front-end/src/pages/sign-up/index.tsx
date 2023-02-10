@@ -3,6 +3,20 @@ import style from '../../styles/pages/SignUp.module.scss'
 import Logo from '@/components/Navbar/Logo';
 import SafeNumber from '@/types/SafeNumber';
 import RectangularInputField from '@/components/RectangularInputField/RectangularInputField';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import RectangularButton from '@/components/RectangularButton';
+import SignInFooter from '@/components/Footer/SignInFooter';
+
+const getSignupButtonContent = () => {
+  
+  return (
+    <div className="">
+      SIGN UP
+    </div>
+  );
+
+}
 
 const SignUp = () => {
 
@@ -18,6 +32,7 @@ const SignUp = () => {
           Create a free business account.
         </Link>
       </p>
+
       <RectangularInputField placeholder={"First Name"} width={width} height={height}/>
       <RectangularInputField placeholder={"Last Name"} width={width} height={height}/>
       <RectangularInputField email placeholder={"Email Address"} width={width} height={height}/>
@@ -30,7 +45,10 @@ const SignUp = () => {
             Including 3 of the following:
           </div>
           <div className={style.bottom}>
-
+            <div><FontAwesomeIcon className={style.icon} icon={faCircleCheck} /> ABC</div>
+            <div><FontAwesomeIcon className={style.icon} icon={faCircleCheck} /> abc</div>
+            <div><FontAwesomeIcon className={style.icon} icon={faCircleCheck} /> 123</div>
+            <div><FontAwesomeIcon className={style.icon} icon={faCircleCheck} /> @#$</div>
           </div>
         </div>
         <div className={style.right}>
@@ -38,10 +56,33 @@ const SignUp = () => {
             Must contain:
           </div>
           <div className={style.bottom}>
-            
+            <div><FontAwesomeIcon className={style.icon} icon={faCircleCheck} /> 8-30 Chars</div>
           </div>
         </div>
       </div>
+      <br />
+
+      <div className={style.subscription}>
+        <input type="checkbox" />
+        <p>Subscribe for exclusive e-mail offers and discounts</p>
+      </div>
+
+      <div className={style.terms_of_service}>
+        By creating an account, you agree to Newegg’s 
+        <Link href={''} className={style.link}>Privacy Notice</Link> 
+        and 
+        <Link href={''} className={style.link}>Terms of Use</Link>
+        .
+      </div>
+
+      <RectangularButton orange content={ getSignupButtonContent() } />
+      <div className={style.sign_in}>
+        Have an account? <Link className={style.link} href={'/sign-in'}>Sign In</Link>
+      </div>
+
+      <br />
+      <SignInFooter />
+      <br />
 
     </form>
    );

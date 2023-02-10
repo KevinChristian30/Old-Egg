@@ -8,6 +8,7 @@
   align-items: center;
   padding-top: 25px;
   gap: 15px;
+  background-color: $white;
 
   p{
     font-family: $main-font;
@@ -30,9 +31,98 @@
     }
   }
 
-  .constraint_hints_container{
+  .password_constraint_hints_container{
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 25px;
+    font-family: $main-font;
+    font-size: 15px;
+    color: $dark-gray;
+
+    .left{
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .bottom{
+        margin-top: 5px;
+        display: flex;
+        gap: 10px;
+      }
+
+    }
+
+    .right{
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .bottom{
+        margin-top: 5px;
+      }
+
+    }
+
+  }
+
+  .subscription{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+    input{
+      border: 3px solid black;
+      width: 20px;
+      height: 20px;
+    }
+
+    input:checked{
+      background-color: $white;
+    }
+
+    &:hover{
+      color: $dark-blue;
+      cursor: pointer;
+    }
+
+  }
+
+  .terms_of_service{
+    font-family: $main-font;
+    font-size: 0.9rem;
+    
+    .link{
+      text-decoration: underline;
+      color: black;
+      margin: 0 5px;
+
+      &:hover{
+        color: $dark-blue;
+      }
+
+    }
+
+  }
+
+  .sign_in{
+    font-family: $main-font;
+
+    .link{
+      color: black;
+      font-weight: bold;
+      text-decoration: underline;
+
+      &:hover{
+        color: $dark-blue;
+      }
+    }
+
   }
 
 }
