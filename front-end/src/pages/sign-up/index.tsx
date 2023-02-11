@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import RectangularButton from '@/components/RectangularButton';
 import SignInFooter from '@/components/Footer/SignInFooter';
+import { use, useState } from 'react';
 
 const getSignupButtonContent = () => {
   
@@ -22,6 +23,14 @@ const SignUp = () => {
 
   const width: number = 304;
   const height: number = 44;
+
+  const [firstNameError, setFirstNameError] = useState(false);
+
+  const onSignUpClicked = () => {
+
+    
+  
+  }
 
   return ( 
     <form className={style.index}>
@@ -75,7 +84,7 @@ const SignUp = () => {
         .
       </div>
 
-      <RectangularButton orange content={ getSignupButtonContent() } />
+      <RectangularButton orange content={ getSignupButtonContent() } onClick={ onSignUpClicked } />
       <div className={style.sign_in}>
         Have an account? <Link className={style.link} href={'/sign-in'}>Sign In</Link>
       </div>

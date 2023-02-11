@@ -1,9 +1,10 @@
-import { ReactElement } from "react";
+import { MouseEventHandler, ReactElement } from "react";
 import style from "../styles/components/RectangularButton.module.scss";
 
 interface RectangularButtonProps{
   content: ReactElement
   orange?: boolean
+  onClick?: MouseEventHandler
 }
 
 const RectangularButton = (props: RectangularButtonProps) => {
@@ -12,7 +13,7 @@ const RectangularButton = (props: RectangularButtonProps) => {
   const orange = props.orange;
 
   if (orange) return (
-    <div className={`${style["rectangular_button"]} ${style["orange_button"]}`}>
+    <div className={`${style["rectangular_button"]} ${style["orange_button"]}`} onClick={props.onClick}>
       { content }
     </div>
   );
