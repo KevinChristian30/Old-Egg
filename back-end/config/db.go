@@ -8,6 +8,13 @@ import (
 
 var DB *gorm.DB
 
+func migrate() {
+
+	DB.AutoMigrate(&model.Role{})
+	DB.AutoMigrate(&model.User{})
+
+}
+
 func Connect() {
 
 	dsn := "host=localhost user=postgres password=postgres dbname=newEgg port=5432 TimeZone=Asia/Shanghai"
@@ -17,8 +24,8 @@ func Connect() {
 		panic(err)
 	}
 
-	db.AutoMigrate(&model.User{})
-
 	DB = db
+
+	migrate()
 
 }
