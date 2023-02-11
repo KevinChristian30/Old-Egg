@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import RectangularButton from '@/components/RectangularButton';
 import SignInFooter from '@/components/Footer/SignInFooter';
-import { use, useState } from 'react';
+import { useState } from 'react';
+import User from "../../types/User";
+import signUp from '../api-calls/sign-up';
 
 const getSignupButtonContent = () => {
   
@@ -24,16 +26,33 @@ const SignUp = () => {
   const width: number = 304;
   const height: number = 44;
 
-  const [firstNameError, setFirstNameError] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(true);
 
-  const onSignUpClicked = () => {
+  const onFormSubmitted = (e:any) => {
 
-    
-  
+    e.preventDefault();
+    const user: User = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      mobile_phone_number: phoneNumber,
+      password: password,
+      role_id: 1,
+      subscribed_to_email_offers_and_discounts: isSubscribing
+    };
+
+    const response = signUp(user);
+    console.log(response);
+
   }
 
   return ( 
-    <form className={style.index}>
+    <form className={style.index} onSubmit={ onFormSubmitted }>
       <Link href="/"><Logo height={60 as SafeNumber}/></Link>
       <p className={style.sign_up_title}>Create Account</p>
       <p className={style.shopping_for_business}>Shopping for your business? 
@@ -42,11 +61,20 @@ const SignUp = () => {
         </Link>
       </p>
 
-      <RectangularInputField placeholder={"First Name"} width={width} height={height}/>
-      <RectangularInputField placeholder={"Last Name"} width={width} height={height}/>
-      <RectangularInputField email placeholder={"Email Address"} width={width} height={height}/>
-      <RectangularInputField number placeholder={"Mobile Phone Number (optional)"} width={width} height={height}/>
-      <RectangularInputField password placeholder={"Password"} width={width} height={height}/>
+      <RectangularInputField value={firstName} onChange={setFirstName} 
+      required placeholder={"First Name"} width={width} height={height}/>
+
+      <RectangularInputField value={lastName} onChange={setLastName} 
+      required placeholder={"Last Name"} width={width} height={height}/>
+      
+      <RectangularInputField value={email} onChange={setEmail} 
+      required email placeholder={"Email Address"} width={width} height={height}/>
+
+      <RectangularInputField value={phoneNumber} onChange={setPhoneNumber} 
+      number placeholder={"Mobile Phone Number (optional)"} width={width} height={height}/>
+
+      <RectangularInputField value={password} onChange={setPassword} 
+      required password placeholder={"Password"} width={width} height={height}/>
 
       <div className={style.password_constraint_hints_container}>
         <div className={style.left}>
@@ -72,7 +100,7 @@ const SignUp = () => {
       <br />
 
       <div className={style.subscription}>
-        <input type="checkbox" />
+        <input type="checkbox" checked={isSubscribing} onChange={() => setIsSubscribing(!isSubscribing)}/>
         <p>Subscribe for exclusive e-mail offers and discounts</p>
       </div>
 
@@ -84,7 +112,7 @@ const SignUp = () => {
         .
       </div>
 
-      <RectangularButton orange content={ getSignupButtonContent() } onClick={ onSignUpClicked } />
+      <button><RectangularButton orange content={ getSignupButtonContent() } /></button>
       <div className={style.sign_in}>
         Have an account? <Link className={style.link} href={'/sign-in'}>Sign In</Link>
       </div>

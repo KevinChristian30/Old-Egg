@@ -1,17 +1,27 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/KevinChristian30/OldEgg/config"
 	"github.com/KevinChristian30/OldEgg/route"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/cors"
 )
 
 func main() {
 
 	router := gin.New()
-	config.Connect()
 
+	opts := cors.Options{
+		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+	}
+
+	handler := cors.New(opts).Handler(router)
+
+	config.Connect()
 	route.UserRoute(router)
-	router.Run(":8080")
+	http.ListenAndServe(":8080", handler)
 
 }
