@@ -10,6 +10,7 @@ import SignInFooter from '@/components/Footer/SignInFooter';
 import { useState } from 'react';
 import User from "../../types/User";
 import signUp from '../api-calls/sign-up';
+import { useRouter } from 'next/router';
 
 const getSignupButtonContent = () => {
   
@@ -33,9 +34,12 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(true);
 
-  const onFormSubmitted = (e:any) => {
+  const router = useRouter();
+
+  const onFormSubmitted = async (e:any) => {
 
     e.preventDefault();
+
     const user: User = {
       first_name: firstName,
       last_name: lastName,
@@ -46,9 +50,15 @@ const SignUp = () => {
       subscribed_to_email_offers_and_discounts: isSubscribing
     };
 
-    const response = signUp(user);
-    console.log(response);
-
+    const response:any = await signUp(user);
+    if (response === -1) alert('Sign Up Failed, Due to Server Error');
+    else if (response === -2) alert('Email Must be Unique');
+    else if (response === -3) alert('Phone Number Must be Unique');
+    else {
+      alert('Account Created');
+      router.push('/');
+    }
+    
   }
 
   return ( 
