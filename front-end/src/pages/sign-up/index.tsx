@@ -9,7 +9,7 @@ import RectangularButton from '@/components/RectangularButton';
 import SignInFooter from '@/components/Footer/SignInFooter';
 import { useState } from 'react';
 import User from "../../types/User";
-import signUp from '../api-calls/sign-up';
+import signUp from '../api-calls/auth/sign-up';
 import { useRouter } from 'next/router';
 
 const getSignupButtonContent = () => {
@@ -52,11 +52,11 @@ const SignUp = () => {
 
     const response:any = await signUp(user);
     if (response === -1) alert('Sign Up Failed, Due to Server Error');
-    else if (response === -2) alert('Email Must be Unique');
-    else if (response === -3) alert('Phone Number Must be Unique');
+    else if (response === -2) alert('Email Already Used');
+    else if (response === -3) alert('Phone Number Already Used');
     else {
       alert('Account Created');
-      router.push('/');
+      router.push('/sign-in');
     }
     
   }
