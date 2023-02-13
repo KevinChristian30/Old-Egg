@@ -53,6 +53,13 @@ const getSignInWithAppleButton = () => {
   );
 }
 
+function setCookie(cName: string, cValue: string, expDays: any) {
+  let date = new Date();
+  date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+}
+
 const Index = () => {
 
   const [email, setEmail] = useState('')
@@ -73,7 +80,11 @@ const Index = () => {
     if (response === -1) alert("Server Error, Couldn't Sign You In Right Now");
     if (response === -2) alert('Email Not Found');
     if (response === -3) alert('Incorrect Password');
-    else router.push('/');
+    if (response === -4) alert('Token Generation Failed');
+    else {
+      setCookie("Auth", response, 1);
+      router.push("/");
+    }
   
   }
 

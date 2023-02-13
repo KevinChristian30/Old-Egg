@@ -9,8 +9,9 @@ const signIn = async (user: User) => {
     const response = await axios.post(ENV.API + 'sign-in', user);
     const result = response.data;
 
-    if (result === 'Email Not Found') return -2;
-    if (result === 'Incorrect Password') return -3;
+    if (result === 'Invalid Email Address') return -2;
+    if (result === 'Invalid Password') return -3;
+    if (result === 'Failed to Create Token') return -4;
     return result;
 
   } catch(error){

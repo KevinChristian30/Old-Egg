@@ -1,8 +1,7 @@
 package controller
 
 import (
-	"fmt"
-	"strconv"
+	"os"
 	"time"
 
 	"github.com/KevinChristian30/OldEgg/config"
@@ -11,8 +10,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
-
-const SECRETKEY = "secret"
 
 func GetUsers(c *gin.Context) {
 
@@ -45,7 +42,7 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), 14)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
 
 	if err != nil {
 		panic(err)
@@ -60,41 +57,40 @@ func CreateUser(c *gin.Context) {
 
 func SignIn(c *gin.Context) {
 
-	var attempt model.User
+	var attempt, user model.User
 	c.ShouldBindJSON(&attempt)
 
-	var user model.User
-	config.DB.Model(model.User{}).Where("email = ?", attempt.Email).First(&user)
+	config.DB.First(&user, "email = ?", attempt.Email)
 
 	if user.ID == 0 {
-		c.String(200, "Email Not Found")
+		c.String(200, "Invalid Email Address")
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(attempt.Password)); err != nil {
-		c.String(200, "Incorrect Password")
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(attempt.Password))
+	if err != nil {
+		c.String(200, "Invalid Password")
 		return
 	}
 
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer:    strconv.Itoa(int(user.ID)),
-		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"subject": user.ID,
+		"expire":  time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
-	token, err := claims.SignedString([]byte(SECRETKEY))
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRETKEY")))
 	if err != nil {
-		c.String(500, "Internal Server Error, Could Not Sign You In")
+		c.String(200, "Failed to Create Token")
 		return
 	}
 
-	cookie, err := c.Cookie("jwt_token")
-	if err != nil {
-		cookie = "NotSet"
-		c.SetCookie("jwt_token", token, 3600*24, "/", "localhost", false, false)
-	}
+	c.String(200, tokenString)
 
-	fmt.Print(cookie)
+}
 
-	c.JSON(200, "Sign In Successfull")
+func Authenticate(c *gin.Context) {
+
+	// user, _ := c.Get("user")
+	// c.JSON(200, user)
 
 }
