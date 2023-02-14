@@ -5,11 +5,29 @@ import getCookie from "@/utility/getCookie";
 
 const ThemeToggle = () => {
 
-  // const theme = getCookie("theme")
+  const [checked, setChecked] = useState(true);
+
+  useEffect(() => {
+
+    let theme = getCookie("theme")
+    if (theme === "light"){
+      setChecked(false)
+    } else {
+      setChecked(true)
+    }
+
+  }, [])
+
+  const change = () => {
+  
+    useTheme()
+    setChecked(!checked)
+  
+  }
 
   return ( 
     <div className={style.theme_toggle}>
-      <input type="checkbox" onChange={ useTheme }/>
+      <input type="checkbox" onChange={ change } checked={checked}/>
       <span className={style.slider}></span>
     </div>
    );

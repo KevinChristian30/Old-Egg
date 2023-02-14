@@ -1,9 +1,8 @@
-import Navbar from '@/components/Navbar/Navbar'
 import styles from '../styles/pages/Home.module.scss'
-import HomeFooter from '@/components/Footer/HomeFooter/HomeFooter'
 import useAuth from '@/hooks/useAuth';
 import CustomerHome from '@/components/Home/CustomerHome';
 import AdminHome from '@/components/Home/AdminHome';
+import HomeLayout from '@/layouts/HomeLayout';
 
 export default function Home() {
 
@@ -18,11 +17,7 @@ export default function Home() {
 
   return(
     <div className={styles.home}>
-      <Navbar user={user} />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      { getHome() }
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <HomeFooter />
+      <HomeLayout user={user} content={getHome()} />
     </div>
   );
 

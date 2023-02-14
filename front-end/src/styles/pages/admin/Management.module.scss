@@ -1,0 +1,12 @@
+.management{
+ 
+  display: flex;
+  justify-content: center;
+
+  .container{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 30px;
+  }
+
+}
