@@ -78,9 +78,9 @@ const Index = () => {
     const response = await signIn(user)
 
     if (response === -1) alert("Server Error, Couldn't Sign You In Right Now");
-    if (response === -2) alert('Email Not Found');
-    if (response === -3) alert('Incorrect Password');
-    if (response === -4) alert('Token Generation Failed');
+    else if (response === -2) alert('Email Not Found');
+    else if (response === -3) alert('Incorrect Password');
+    else if (response === -4) alert('Token Generation Failed');
     else {
       setCookie("Auth", response, 1);
       router.push("/");
