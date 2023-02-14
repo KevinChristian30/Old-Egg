@@ -15,12 +15,12 @@
   gap: 3px;
   
   .newEgg_left{
-    color: $dark-blue;
+    color: var(--navbar-button-color);
   }
 
 }
 
 .newEgg_business:hover{
-  background-color: $light-gray;
+  background-color: var(--hover-color);
   cursor: pointer;
 }

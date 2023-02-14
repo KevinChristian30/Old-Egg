@@ -24,6 +24,6 @@
 }
 
 .returns_and_orders_button:hover{
-  background-color: $light-gray;
+  background-color: var(--hover-color);
   cursor: pointer;
 }

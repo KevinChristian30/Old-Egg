@@ -10,7 +10,7 @@
   .title{
     font-weight: bolder;
     font-size: 15px;
-    color: white;
+    color: var(--text-color);
   }
 
   .container{
@@ -20,7 +20,7 @@
     font-size: 13px;
 
     .link{
-      color: white;
+      color: var(--text-color);
 
       &:hover{
         text-decoration: underline;

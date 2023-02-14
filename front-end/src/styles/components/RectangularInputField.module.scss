@@ -4,20 +4,18 @@
 
   input{
     padding: 0 15px;
-    border: 1px solid $light-gray;
+    color: var(--text-color);
+    background-color: var(--primary-color-light);
+    border: 1px solid $light-orange;
   }
 
   input:focus{
-    outline: 1px solid $dark-blue;
+    outline: 1px solid var(--secondary-color-light);
   }
 
   input::-webkit-inner-spin-button,
   input::-webkit-outer-spin-button {
     -webkit-appearance: none;
-  }
-
-  .errorMessage{
-
   }
 
 }

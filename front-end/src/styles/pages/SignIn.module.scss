@@ -8,6 +8,8 @@
   align-items: center;
   padding: 25px;
   gap: 15px;
+  background-color: var(--background-color);
+  color: var(--text-color);
 
   p{
     font-family: $main-font;
@@ -26,8 +28,8 @@
 
   .whats_the_one_time_code:hover{
     cursor: pointer;
-    color: $dark-blue;
-    text-decoration-color: $dark-blue;
+    color: var(--secondary-color-dark);
+    text-decoration-color: var(--secondary-color-dark);
   }
 
   .new_to_newEgg{
@@ -37,12 +39,13 @@
 
     b{
       color: black;
+      color: var(--text-color);
     }
 
     b:hover{
       cursor: pointer;
-      color: $dark-blue;
-      text-decoration-color: $dark-blue;
+      color: var(--secondary-color-dark);
+      text-decoration-color: var(--secondary-color-dark);
     }
 
   }
@@ -55,13 +58,13 @@
   }
 
   .or{
-    color: $dark-gray;
+    color: var(--text-color);
     font-size: 12px;
   }
 
   .credits{
     font-size: 12px;
-    color: $dark-gray;
+    color: var(--text-color);
   }
 
 }

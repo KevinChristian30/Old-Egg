@@ -19,14 +19,14 @@
   }
   
   .text_field:focus{
-    outline: 2px solid $dark-blue;
+    outline: 2px solid var(--secondary-color-light);
   }
 
   .search_button{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $dark-blue;
+    background-color: var(--navbar-button-color);
     height: 40px;
     width: 60px;
     border: none;
@@ -36,7 +36,7 @@
     transition: all 0.1s linear;
 
     .icon{
-      color: $white;
+      color: var(--navbar-background-color);
       height: 17px;
       width: auto;
     }

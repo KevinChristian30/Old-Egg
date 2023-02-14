@@ -16,16 +16,15 @@
     gap: 10px;
     font-family: $main-font;
     text-decoration: underline;
-    font-family: $main-font;
     justify-content: center;
     align-items: center;
   
     .link{
-      color: $dark-gray;
+      color: var(--text-font);
     }
   
     .link:hover{
-      color: $dark-blue;
+      color: var(--secondary-color-light)
     }
 
     .credits{

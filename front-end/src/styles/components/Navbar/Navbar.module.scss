@@ -6,14 +6,15 @@
   position: fixed;
   top: 0;
   z-index: 100;
-  background-color: var(--white);
+  background-color: var(--navbar-background-color);
+  color: var(--text-color);
 
   .top{
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 75px;
-    background-color: white;
+    background-color: var(--navbar-background-color);
     padding: 0 15px;
     gap: 5px;
   }
@@ -37,17 +38,17 @@
     }
 
     .left::-webkit-scrollbar {
-      height: 5px;
+      height: 3px;
       border-radius: 100px;
     }
-
+    
     .left::-webkit-scrollbar-track {
-      background: $light-gray;
+      background: orangered;
       border-radius: 100px;
     }
     
     .left::-webkit-scrollbar-thumb {
-      background: $dark-blue;
+      background: var(--text-color);
       border-radius: 100px;
     }
 

@@ -12,6 +12,6 @@
 } 
 
 .shopping_cart_button:hover{
-  background-color: $light-gray;
+  background-color: var(--hover-color);
   cursor: pointer;
 }

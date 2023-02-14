@@ -35,6 +35,6 @@
 }
 
 .address_selector:hover{
-  background-color: $light-gray;
+  background-color: var(--hover-color);
   cursor: pointer;
 }
