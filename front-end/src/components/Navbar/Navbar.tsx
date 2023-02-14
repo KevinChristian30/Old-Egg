@@ -17,9 +17,15 @@ import { faCircleQuestion, faComment } from '@fortawesome/free-solid-svg-icons';
 import NewEggBusiness from './NewEggBusinessButton';
 import SafeNumber from '@/types/SafeNumber';
 import Link from 'next/link';
+import User from '@/types/User';
 
-const Navbar = () => {
+interface NavBarProps{
+  user?:User
+}
 
+const Navbar = (props:NavBarProps) => {
+
+  const { user } = props;
 
   const getFeedbackButton = () => {
     return (
@@ -50,7 +56,7 @@ const Navbar = () => {
         <NotificationButton />
         <ChangeCountryButton />
         <ThemeToggle />
-        <Link href="/sign-in"><LoginAndRegisterButton /></Link>
+        <Link href="/sign-in"><LoginAndRegisterButton firstName={user?.first_name} /></Link>
         <ReturnsAndOrdersButton />
         <ShoppingCartButton />
       </div>

@@ -1,5 +1,4 @@
 import { ENV } from "@/ENV";
-import User from "@/types/User";
 import axios from "axios";
 
 const authenticate = async (token: object) => {

@@ -1,8 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "../../styles/components/Navbar/LoginAndRegisterButton.module.scss";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "@/hooks/useAuth";
 
-const LoginAndRegisterButton = () => {
+interface LoginAndRegsterButonProps{
+  firstName?: string
+}
+
+const LoginAndRegisterButton = (props: LoginAndRegsterButonProps) => {
+
+  const firstName = props.firstName;
+
+  const getText = () => {
+
+    if (firstName) return <p>{firstName}</p>
+    else return <p>Sign In / Register</p>
+
+  }
+
   return (
     <div className={style.login_and_register_button}>
       <div className={style.left}>
@@ -13,7 +28,7 @@ const LoginAndRegisterButton = () => {
           <p>Welcome</p>
         </div>
         <div className={style.bottom}>
-          <p>Sign In / Register</p>
+          { getText() }
         </div>      
       </div>
     </div>
