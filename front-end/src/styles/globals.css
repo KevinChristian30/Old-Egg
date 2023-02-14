@@ -6,3 +6,31 @@
 a{
   text-decoration: none;
 }
+
+:root[data-theme="light"] {
+  --background-color: #ebebeb;
+
+  --secondary-color-light: #1e44b6;
+  --secondary-color-dark: #0a185c;
+
+  --tertiary-color-light: #fba33c;
+  --tertiary-color-dark: #c8611c;
+
+  --white: #f4f5f7;
+  --dark-gray: #707270;
+  --light-purplish-blue: #e8e6fb;
+}
+
+:root[data-theme="dark"] {
+  --background-color: #0a185c;
+
+  --secondary-color-light: #ebebeb;
+  --secondary-color-dark: #ebebeb;
+
+  --tertiary-color-light: #fba33c;
+  --tertiary-color-dark: #c8611c;
+
+  --white: #f4f5f7;
+  --dark-gray: #707270;
+  --light-purplish-blue: #e8e6fb;
+}

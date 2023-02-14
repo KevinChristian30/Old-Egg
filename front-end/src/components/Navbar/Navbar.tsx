@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useContext } from 'react';
 import style from '../../styles/components/Navbar/Navbar.module.scss';
 import SingleTextLink from '../SingleTextLink';
 import AddressSelector from './AddressSelector';
@@ -19,6 +19,7 @@ import SafeNumber from '@/types/SafeNumber';
 import Link from 'next/link';
 
 const Navbar = () => {
+
 
   const getFeedbackButton = () => {
     return (
