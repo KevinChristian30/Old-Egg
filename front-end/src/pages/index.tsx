@@ -25,12 +25,17 @@ export default function Home() {
     }
 
     const getUser = async () => {
-      
+
+      const cookie = getCookie("Auth")
+
       const result = await authenticate({
-        token: getCookie("Auth")
+        "token_string": cookie
       });
 
-      console.log(result)
+      if (result == -2) alert("You Are Not Signed In")
+      else if (result == -3) alert("Your Cookie Expired, Please Log In Again")
+      else if (result == -4 || result == -5 || result == -6) alert("Server Error")
+      else console.log(result)
 
     }
 

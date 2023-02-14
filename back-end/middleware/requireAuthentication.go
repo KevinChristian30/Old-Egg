@@ -1,57 +1,71 @@
 package middleware
 
 import (
+	"fmt"
+	"os"
+	"time"
+
+	"github.com/KevinChristian30/OldEgg/config"
+	"github.com/KevinChristian30/OldEgg/model"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 	"gorm.io/gorm"
 )
 
 func RequireAuthentication(c *gin.Context) {
 
-	// tokenString, err := c.Cookie("Auth")
-	// if err != nil {
-	// 	c.String(200, "Couldn't Get Cookie")
-	// 	return
-	// }
-
-	// fmt.Printf(tokenString)
-	// return
-
-	type Token struct {
+	type JWTToken struct {
 		gorm.Model
-		token string `json: "token"`
+		TokenString string `json:"token_string"`
 	}
 
-	var t Token
-	c.ShouldBindJSON(&t)
+	var token JWTToken
+	c.BindJSON(&token)
 
-	c.JSON(200, t)
+	if token.TokenString == "" {
+		c.String(200, "Couldn't Get Cookie")
+		return
+	}
 
-	// token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	tokenString := token.TokenString
+	result, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 
-	// 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-	// 		return nil, fmt.Errorf("Unexpected Signing Method: %v", token.Header)
-	// 	}
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
 
-	// 	return os.Getenv("SECRETKEY"), nil
+		return []byte(os.Getenv("SECRET")), nil
 
-	// })
+	})
 
-	// if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+	if err != nil {
+		c.String(200, "Token Parsing Failed")
+		return
+	}
 
-	// 	// if float64(time.Now().Unix()) > claims["expires"].(float64) {
-	// 	// 	c.String(200, "Cookie Expired")
-	// 	// }
+	if claims, ok := result.Claims.(jwt.MapClaims); ok && result.Valid {
 
-	// 	var user model.User
-	// 	config.DB.First(&user, claims["Auth"])
+		if float64(time.Now().Unix()) > claims["expire"].(float64) {
 
-	// 	if user.ID == 0 {
-	// 		c.String(200, "User Not Found")
-	// 	}
+			c.String(200, "Cookie Expired")
+			return
 
-	// 	c.Set("user", user)
-	// 	c.Next()
+		}
 
-	// }
+		var user model.User
+		config.DB.First(&user, "ID = ?", claims["subject"])
+
+		if user.ID == 0 {
+			c.String(200, "Email Not Found")
+			return
+		}
+
+		c.Set("user", user)
+
+		c.Next()
+
+	} else {
+		c.String(200, "Server Error")
+	}
 
 }

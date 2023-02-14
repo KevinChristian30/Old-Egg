@@ -90,7 +90,7 @@ func SignIn(c *gin.Context) {
 
 func Authenticate(c *gin.Context) {
 
-	// user, _ := c.Get("user")
-	// c.JSON(200, user)
+	user, _ := c.Get("user")
+	c.JSON(200, user)
 
 }
