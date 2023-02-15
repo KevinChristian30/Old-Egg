@@ -1,16 +1,25 @@
 @import "../variables.module.scss";
 
 .square_input_field{
-
-  input{
+  
+  input,
+  textarea{
     padding: 0 15px;
     color: var(--text-color);
     background-color: var(--primary-color-light);
     border: 1px solid $light-orange;
+    font-size: 15px;
+    font-family: $main-font;
+    resize: none;
   }
 
-  input:focus{
-    outline: 1px solid var(--secondary-color-light);
+  textarea{
+    padding: 10px;
+  }
+
+  input:focus,
+  textarea:focus{
+    border: 1px solid var(--secondary-color-light);
   }
 
   input::-webkit-inner-spin-button,

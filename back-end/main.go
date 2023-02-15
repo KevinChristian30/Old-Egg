@@ -22,7 +22,10 @@ func main() {
 	handler := cors.New(opts).Handler(router)
 
 	config.Connect()
+
 	route.UserRoute(router)
+	route.VoucherRoute(router)
+
 	http.ListenAndServe(":8080", handler)
 
 }

@@ -5,7 +5,8 @@ type User = {
   mobile_phone_number?: string,
   password?: string,
   role_id?: number,
-  subscribed_to_email_offers_and_discounts?: boolean
+  subscribed_to_email_offers_and_discounts?: boolean,
+  status?: string
 }
 
 export default User;

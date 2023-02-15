@@ -1,17 +1,17 @@
-import { ChangeEventHandler, useState } from "react"
 import style from "../../styles/components/RectangularInputField.module.scss"
 
 interface RectangularInputFieldProps{
   placeholder?: string
   width?: number
   height?: number
-  value?: string
+  value?: any
   required?: boolean
   onChange: any 
   
   email?: boolean
   password?: boolean
   number?: boolean
+  area?: boolean
 }
 
 const RectangularInputField = (props: RectangularInputFieldProps) => {
@@ -29,7 +29,7 @@ const RectangularInputField = (props: RectangularInputFieldProps) => {
       email: "email",
       password: "password",
       number: "number",
-      text: "text"
+      text: "text",
     }
 
     let inputType = ''
@@ -38,7 +38,11 @@ const RectangularInputField = (props: RectangularInputFieldProps) => {
     else if (props.number) inputType = inputTypes.number
     else inputType = inputTypes.text
 
-    return <input type={inputType} placeholder={placeholder} style={styling} value={value} required={required} onChange={(e) => onChange(e.target.value)}/>
+    if (props.area){
+      return <textarea placeholder={placeholder} style={styling} value={value} required={required} onChange={(e) => onChange(e.target.value)} />
+    }
+
+    return <input type={inputType} placeholder={placeholder} style={styling} value={value} required={required} onChange={(e) => onChange(e.target.value)} />
   
   }
 

@@ -20,7 +20,7 @@ const AdminHome = () => {
   }
 
   return ( 
-    <HomeLayout user={user} content={getContent()} />
+    getContent()
    );
 }
  

@@ -2,15 +2,17 @@ import Link from "next/link";
 import style from "../../../styles/pages/admin/Management.module.scss"
 import SquareCard from "@/components/SquareCard";
 import { faBagShopping, faComments, faNewspaper, faRectangleAd, faTags, faUser } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "@/components/Navbar/Navbar";
-import HomeFooter from "@/components/Footer/HomeFooter/HomeFooter";
 import HomeLayout from "@/layouts/HomeLayout";
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import useMiddleware from "@/hooks/useMiddleware";
 
 const Management = () => {
 
-  const user = useAuth();
-
+  const user:any = useAuth();
+  const router = useRouter();
+  if (useMiddleware(user, router, "Admin")) return;
+  
   const getContent = () => {
 
     return (
@@ -30,10 +32,10 @@ const Management = () => {
 
   return ( 
     <>
-      <br /><br /><br /><br /><br />
       <HomeLayout user={user} content={getContent()}/>
     </>
    );
+   
 }
  
 export default Management;

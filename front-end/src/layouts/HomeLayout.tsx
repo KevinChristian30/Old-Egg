@@ -15,8 +15,8 @@ const HomeLayout = (props: HomeLayoutProps) => {
   return ( 
     <div className={style.home_layout}>
       <Navbar user={ user } />
-      <br /><br /><br /><br /><br />
-      { content }
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div className={style.content_container}>{ content }</div> 
       <br /><br /><br /><br /><br />
       <HomeFooter />
     </div>

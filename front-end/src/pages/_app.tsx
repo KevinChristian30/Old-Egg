@@ -7,7 +7,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
 
-    let theme = getCookie("theme")
+    let theme = getCookie("theme");
+
     if (theme === "light"){
       document.documentElement.setAttribute('data-theme', "light");
     } else {

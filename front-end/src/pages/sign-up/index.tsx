@@ -47,7 +47,8 @@ const SignUp = () => {
       mobile_phone_number: phoneNumber,
       password: password,
       role_id: 1,
-      subscribed_to_email_offers_and_discounts: isSubscribing
+      subscribed_to_email_offers_and_discounts: isSubscribing,
+      status: 'Active'
     };
 
     const response:any = await signUp(user);

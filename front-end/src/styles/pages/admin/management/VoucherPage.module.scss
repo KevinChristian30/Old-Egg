@@ -1,0 +1,18 @@
+@import "../../../variables.module.scss";
+
+.index{
+
+  .container{
+
+    color: var(--text-color);
+    font-family: $main-font;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  
+  }
+
+}
+

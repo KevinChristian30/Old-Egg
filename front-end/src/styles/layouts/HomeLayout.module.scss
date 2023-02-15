@@ -1,3 +1,10 @@
 .home_layout{
   background-color: var(--background-color);
+
+  .content_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 }

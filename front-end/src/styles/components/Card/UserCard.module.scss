@@ -1,0 +1,20 @@
+@import "../../variables.module.scss";
+
+.user_card{
+
+  color: var(--text-color);
+  font-family: $main-font;
+  padding: 20px;
+  border: 3px solid var(--secondary-color-light);
+  border-radius: 8px;
+  background-color: var(--primary-color-light);
+  width: 200px;
+
+  &:hover{
+
+    background-color: var(--hover-color);
+    cursor: pointer;
+
+  }
+
+}
