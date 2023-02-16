@@ -1,5 +1,5 @@
-import { FontawesomeObject, IconProp } from "@fortawesome/fontawesome-svg-core";
-import style from "../styles/components/SquareCard.module.scss";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import style from "../../styles/components/SquareCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface SquareCardProps{

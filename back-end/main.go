@@ -25,6 +25,7 @@ func main() {
 
 	route.UserRoute(router)
 	route.VoucherRoute(router)
+	route.ShopRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

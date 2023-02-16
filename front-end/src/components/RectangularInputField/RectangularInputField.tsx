@@ -3,7 +3,7 @@ import style from "../../styles/components/RectangularInputField.module.scss"
 interface RectangularInputFieldProps{
   placeholder?: string
   width?: number
-  height?: number
+  height?: number | 44
   value?: any
   required?: boolean
   onChange: any 

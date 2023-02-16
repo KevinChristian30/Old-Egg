@@ -1,6 +1,6 @@
 import Link from "next/link";
 import style from "../../../styles/pages/admin/Management.module.scss"
-import SquareCard from "@/components/SquareCard";
+import SquareCard from "@/components/Card/SquareCard";
 import { faBagShopping, faComments, faNewspaper, faRectangleAd, faTags, faUser } from "@fortawesome/free-solid-svg-icons";
 import HomeLayout from "@/layouts/HomeLayout";
 import useAuth from "@/hooks/useAuth";
@@ -21,7 +21,7 @@ const Management = () => {
           <Link href="/admin/management/voucher"><SquareCard text={"Voucher"} icon={faTags} /></Link>
           <Link href="/admin/management/users"><SquareCard text={"Users"} icon={faUser} /></Link>
           <Link href="/admin/management/newsletter"><SquareCard text={"Newsletter"} icon={faNewspaper} /></Link>
-          <Link href="/admin/management/shop"><SquareCard text={"Shop"} icon={faBagShopping} /></Link>
+          <Link href="/admin/management/shops"><SquareCard text={"Shop"} icon={faBagShopping} /></Link>
           <Link href="/admin/management/review"><SquareCard text={"Review"} icon={faComments} /></Link>
           <Link href="/admin/management/promotions"><SquareCard text={"Promotion"} icon={faRectangleAd} /></Link>
         </div>

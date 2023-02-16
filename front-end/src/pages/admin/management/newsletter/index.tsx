@@ -25,7 +25,11 @@ const NewsletterPage = (props:any) => {
     e.preventDefault();
     
     var emails = ""
-    users.map((user:any) => emails += user.email + ';');
+    users.map((user:any) => {
+      
+      if (user.subscribed_to_email_offers_and_discounts) emails += user.email + ';'
+    
+    });
 
     sendEmail(emails, subject, newsletter);
 
@@ -39,9 +43,9 @@ const NewsletterPage = (props:any) => {
         <form onSubmit={ onFormSubmitted }>
           <h1>Newsletter</h1>
           <br />
-          <RectangularInputField value={subject} onChange={setSubject} placeholder="Subject" width={790} height={44} />
+          <RectangularInputField required value={subject} onChange={setSubject} placeholder="Subject" width={790} height={44} />
           <br />
-          <RectangularInputField area value={newsletter} onChange={setNewsletter} placeholder="Body" width={800} height={300} />
+          <RectangularInputField required area value={newsletter} onChange={setNewsletter} placeholder="Body" width={800} height={300} />
           <br />
           <button>
             <RectangularButton orange width={200} content={<div>Blast!</div>} />

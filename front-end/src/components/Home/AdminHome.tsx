@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "../../styles/components/Home/AdminHome.module.scss";
 import { faListCheck, faScroll } from "@fortawesome/free-solid-svg-icons";
-import SquareCard from "../SquareCard";
+import SquareCard from "../Card/SquareCard";
 import Link from "next/link";
 import HomeLayout from "@/layouts/HomeLayout";
 import useAuth from "@/hooks/useAuth";

@@ -13,6 +13,7 @@ func migrate() {
 	DB.AutoMigrate(&model.Role{})
 	DB.AutoMigrate(&model.User{})
 	DB.AutoMigrate(&model.Voucher{})
+	DB.AutoMigrate(&model.Shop{})
 
 }
 
