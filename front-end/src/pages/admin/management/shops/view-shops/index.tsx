@@ -25,16 +25,18 @@ const ViewShopPage = (props:any) => {
       <div className={style.index}>
         <h1>View Shops</h1>
         <br />
-        <div className={style.line}>
-          <p>Active</p>
-          <input type="checkbox" className={style.checkbox} 
-          checked={isActiveFilter} onChange={() => setIsActiveFilter(!isActiveFilter)} />
-        </div>
-        <div className={style.line}>
-          <p>Banned</p>
-          <input type="checkbox" className={style.checkbox} 
-          checked={isBannedFilter} onChange={() => setIsBannedFilter(!isBannedFilter)} />
-        </div>
+        <div className={style.checkbox_container}>
+          <div className={style.line}>
+            <p>Active</p>
+            <input type="checkbox" className={style.checkbox} 
+            checked={isActiveFilter} onChange={() => setIsActiveFilter(!isActiveFilter)} />
+          </div>
+          <div className={style.line}>
+            <p>Banned</p>
+            <input type="checkbox" className={style.checkbox} 
+            checked={isBannedFilter} onChange={() => setIsBannedFilter(!isBannedFilter)} />
+          </div>
+        </div>  
         <br />
         <div className={style.container}>
           {

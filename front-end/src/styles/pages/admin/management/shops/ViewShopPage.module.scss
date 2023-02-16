@@ -1,17 +1,21 @@
 .index{
 
-  .line{
-    
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    width: 200px;
-    margin: 5px 0;
+  .checkbox_container{
 
-    .checkbox{
-
-      width: 100px;
-
+    .line{
+      
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      width: 200px;
+      margin: 5px 0;
+  
+      .checkbox{
+  
+        width: 100px;
+  
+      }
+  
     }
 
   }
