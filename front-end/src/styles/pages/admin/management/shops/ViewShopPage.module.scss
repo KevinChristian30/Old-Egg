@@ -1,0 +1,27 @@
+.index{
+
+  .line{
+    
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    width: 200px;
+    margin: 5px 0;
+
+    .checkbox{
+
+      width: 100px;
+
+    }
+
+  }
+
+  .container{
+
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 30px;
+
+  }
+
+}

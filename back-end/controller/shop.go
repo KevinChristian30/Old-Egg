@@ -24,3 +24,14 @@ func GetShops(c *gin.Context) {
 	c.JSON(200, &shops)
 
 }
+
+func UpdateShop(c *gin.Context) {
+
+	var shop model.Shop
+	c.ShouldBindJSON(&shop)
+
+	config.DB.Model(&model.Shop{}).Where("shop_email = ?", shop.ShopEmail).Updates(map[string]interface{}{"status": shop.Status})
+
+	c.JSON(200, &shop)
+
+}

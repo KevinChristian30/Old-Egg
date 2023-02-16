@@ -16,18 +16,8 @@ const UserCard = (props: UserCardProps) => {
 
   const getButtonContent = () => {
 
-    if (isActive)
-    return (
-      <div className="">
-        Ban
-      </div>
-    );
-
-    else return (
-      <div className="">
-        Unban
-      </div>
-    );
+    if (isActive) return <div className="">Ban</div>
+    return <div className="">Unban</div>
     
   }
 
