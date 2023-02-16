@@ -20,7 +20,7 @@ const ManageShopsPage = () => {
         <Link href='/admin/management/shops/add-shop'>
           <SquareCard text="Add Shop" icon={faPlus} />
         </Link>
-        <Link href='/admin/management/shops/view'>
+        <Link href='/admin/management/shops/view-shops'>
           <SquareCard text="View Shops" icon={faListOl} />
         </Link>
       </div>

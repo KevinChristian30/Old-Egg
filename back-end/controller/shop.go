@@ -16,3 +16,11 @@ func CreateShop(c *gin.Context) {
 	c.JSON(200, shop)
 
 }
+
+func GetShops(c *gin.Context) {
+
+	shops := []model.Shop{}
+	config.DB.Find(&shops)
+	c.JSON(200, &shops)
+
+}
