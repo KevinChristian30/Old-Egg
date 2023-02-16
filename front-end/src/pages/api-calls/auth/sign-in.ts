@@ -12,6 +12,7 @@ const signIn = async (user: User) => {
     if (result === 'Invalid Email Address') return -2;
     if (result === 'Invalid Password') return -3;
     if (result === 'Failed to Create Token') return -4;
+    if (result === 'You Are Banned') return -5;
     return result;
 
   } catch(error){

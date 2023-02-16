@@ -73,6 +73,11 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
+	if user.Status != "Active" {
+		c.String(200, "You Are Banned")
+		return
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"subject": user.ID,
 		"expire":  time.Now().Add(time.Hour * 24 * 30).Unix(),
@@ -92,5 +97,16 @@ func Authenticate(c *gin.Context) {
 
 	user, _ := c.Get("user")
 	c.JSON(200, user)
+
+}
+
+func UpdateUser(c *gin.Context) {
+
+	var user model.User
+	c.ShouldBindJSON(&user)
+
+	config.DB.Model(&model.User{}).Where("email = ?", user.Email).Updates(map[string]interface{}{"status": user.Status})
+
+	c.JSON(200, &user)
 
 }

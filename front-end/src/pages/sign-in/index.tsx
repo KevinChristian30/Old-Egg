@@ -81,6 +81,7 @@ const Index = () => {
     else if (response === -2) alert('Email Not Found');
     else if (response === -3) alert('Incorrect Password');
     else if (response === -4) alert('Token Generation Failed');
+    else if (response === -5) alert('You Are Banned');
     else {
       setCookie("Auth", response, 1);
       router.push("/");
