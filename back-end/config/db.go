@@ -14,6 +14,7 @@ func migrate() {
 	DB.AutoMigrate(&model.User{})
 	DB.AutoMigrate(&model.Voucher{})
 	DB.AutoMigrate(&model.Shop{})
+	DB.AutoMigrate(&model.PromotionPicture{})
 
 }
 

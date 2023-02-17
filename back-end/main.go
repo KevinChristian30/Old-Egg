@@ -26,6 +26,7 @@ func main() {
 	route.UserRoute(router)
 	route.VoucherRoute(router)
 	route.ShopRoute(router)
+	route.PromotionPictureRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

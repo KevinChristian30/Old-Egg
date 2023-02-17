@@ -1,4 +1,5 @@
 import { ENV } from "@/ENV";
+import getCookie from "@/utility/getCookie";
 import axios from "axios";
 
 const getAllUsers = async () => {

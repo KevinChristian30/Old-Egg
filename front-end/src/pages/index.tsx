@@ -1,6 +1,6 @@
 import styles from '../styles/pages/Home.module.scss'
 import useAuth from '@/hooks/useAuth';
-import CustomerHome from '@/components/Home/CustomerHome';
+import CustomerHome from '@/components/Home/CustomerHome/CustomerHome';
 import AdminHome from '@/components/Home/AdminHome';
 import HomeLayout from '@/layouts/HomeLayout';
 
@@ -17,7 +17,7 @@ export default function Home() {
 
   return(
     <div className={styles.home}>
-      <HomeLayout user={user} content={getHome()} />
+      <HomeLayout noGap user={user} content={getHome()} />
     </div>
   );
 

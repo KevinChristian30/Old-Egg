@@ -1,0 +1,48 @@
+.index{
+
+  width: 78%;
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  .view_pictures{
+
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    row-gap: 40px;
+    justify-content: space-between;
+    
+    .promotion_image_container{
+
+      .promotion_image{
+
+        width: 500px;
+        border: 2px solid var(--secondary-color-light);
+        
+      }
+
+    }
+
+  }
+
+  .add_picture{
+
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    gap: 10px;
+
+    .button{
+      width: 200px;
+    }
+
+    .input_image{
+
+      width: 100%;
+      height: auto;
+      border: 5px solid var(--secondary-color-light);
+
+    }
+
+  }
+
+}

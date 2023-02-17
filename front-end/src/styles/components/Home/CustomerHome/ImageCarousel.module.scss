@@ -1,0 +1,41 @@
+.image_carousel{
+
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  position: relative;
+
+  .next, .prev{
+    position: absolute;
+    font-size: 30px;
+  }
+
+  .icon{
+    color: var(--text-color);
+    height: 50px;
+    transition: all 0.1s linear;
+    padding: 15px 20px;
+    border-radius: 100px;
+    background-color: var(--primary-color-light);
+    opacity: 75%;
+
+    &:hover{
+      transform: scale(1.1, 1.1);
+      cursor: pointer;
+    }
+
+  }
+
+  .prev{
+    left:400px;
+  }
+
+  .next{
+    right: 50px;
+  }
+
+  .image{
+    width: 100%;
+  }
+
+}
