@@ -19,11 +19,19 @@ DOCUMENTATION
 
 const useMiddleware = (user:any, router:NextRouter, role:string) => {
 
-  console.log(user)
-  if (!user) return true;
+  if (!user || !user.role_id) return true;
+
   if (role === 'Admin'){
 
     if (user.role_id !== 2) {
+      router.back();
+      return true;
+    }
+
+  }
+  if (role === 'Shop'){
+
+    if (user.role_id !== 3){
       router.back();
       return true;
     }

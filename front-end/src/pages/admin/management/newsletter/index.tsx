@@ -14,8 +14,9 @@ const NewsletterPage = (props:any) => {
   const [subject, setSubject] = useState('');
   const [newsletter, setNewsletter] = useState('');
 
-  const user = useAuth()
-  const router = useRouter()
+  const user:any = useAuth();
+  const router = useRouter();
+  if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
 
   const { users } = props; 

@@ -16,8 +16,9 @@ const PromotionsPage = (props: any) => {
 
   const [file, setFile] = useState(null);
 
-  const user = useAuth();
+  const user:any = useAuth();
   const router = useRouter();
+  if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
 
   const handleFileUpload = async (e:any) => {
@@ -52,8 +53,6 @@ const PromotionsPage = (props: any) => {
     if (result === -1) alert('Remove Failed, due to Server Error');
     else {
 
-      console.log(result);
-      console.log(image);
       alert('Picture Removed');
       window.location.reload();
 

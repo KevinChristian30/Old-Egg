@@ -89,8 +89,10 @@ const Index = () => {
       if (response === -1) alert("Server Error, Couldn't Sign You In Right Now");
       else if (response === -3) alert('Incorrect Password');
       else if (response === -4) alert('Token Generation Failed');
-      else if (response === -5) alert('You Are Banned');
-      else {
+      else if (response === -5) {
+        setCookie("Auth", "", 1);
+        alert('You Are Banned');
+      }else {
         setCookie("Auth", response, 1);
         router.push("/");
       } 
@@ -100,7 +102,10 @@ const Index = () => {
       if (shopSignInResponse === -1) alert("Server Error, Couldn't Sign You In Right Now");
       else if (shopSignInResponse === -3) alert('Incorrect Password');
       else if (shopSignInResponse === -4) alert('Token Generation Failed');
-      else if (shopSignInResponse === -5) alert('You Are Banned');
+      else if (shopSignInResponse === -5){
+        setCookie("Auth", "", 1);
+        alert('You Are Banned');
+      } 
       else {
         setCookie("Auth", shopSignInResponse, 1);
         router.push("/");

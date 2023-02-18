@@ -26,8 +26,9 @@ const VoucherPage = () => {
   const [voucherDiscount, setVoucherDiscount] = useState('');
   const [voucherDescription, setVoucherDescription] = useState('');
 
-  const user = useAuth();
+  const user:any = useAuth();
   const router = useRouter();
+  if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
 
   const onFormSubmitted = async (e:any) => {

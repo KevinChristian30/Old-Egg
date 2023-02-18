@@ -8,9 +8,10 @@ import { faListOl, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const ManageShopsPage = () => {
-  
-  const user = useAuth();
+
+  const user:any = useAuth();
   const router = useRouter();
+  if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
 
   const getContent = () => {
