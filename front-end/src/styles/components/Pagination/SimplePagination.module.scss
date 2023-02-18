@@ -1,10 +1,13 @@
 .simple_pagination{
 
+  width: 90vw;
+
   .container{
 
     display: grid;
     gap: 30px;
     grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
 
   }
 

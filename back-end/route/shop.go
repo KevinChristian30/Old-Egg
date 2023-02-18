@@ -10,5 +10,6 @@ func ShopRoute(router *gin.Engine) {
 	router.POST("/create-shop", controller.CreateShop)
 	router.GET("/get-shops", controller.GetShops)
 	router.POST("/update-shop", controller.UpdateShop)
+	router.POST("/shop-sign-in", controller.ShopSignIn)
 
 }

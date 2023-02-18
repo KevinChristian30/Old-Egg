@@ -53,16 +53,29 @@ func RequireAuthentication(c *gin.Context) {
 		}
 
 		var user model.User
-		config.DB.First(&user, "ID = ?", claims["subject"])
+		config.DB.First(&user, "email = ?", claims["subject"])
 
 		if user.ID == 0 {
-			c.String(200, "Email Not Found")
-			return
+
+			var shop model.Shop
+			config.DB.First(&shop, "shop_email = ?", claims["subject"])
+
+			if shop.ID == 0 {
+				c.String(200, "Email Not Found")
+				return
+			} else {
+
+				c.Set("user", shop)
+				c.Next()
+
+			}
+
+		} else {
+
+			c.Set("user", user)
+			c.Next()
+
 		}
-
-		c.Set("user", user)
-
-		c.Next()
 
 	} else {
 		c.String(200, "Server Error")

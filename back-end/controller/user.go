@@ -48,7 +48,7 @@ func CreateUser(c *gin.Context) {
 		panic(err)
 	}
 
-	newUser.Password = hashedPassword
+	newUser.Password = string(hashedPassword)
 
 	config.DB.Create(&newUser)
 	c.JSON(200, &newUser)
@@ -79,7 +79,7 @@ func SignIn(c *gin.Context) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"subject": user.ID,
+		"subject": user.Email,
 		"expire":  time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 

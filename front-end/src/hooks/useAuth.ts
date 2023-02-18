@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const useAuth = () => {
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
 
   useEffect(() => {
 
@@ -15,8 +15,19 @@ const useAuth = () => {
       const result = await authenticate({
         "token_string": cookie
       });
-  
-      setUser(result);
+
+      if (result.role_id) setUser(result);
+      else if (result.shop_name)
+        setUser({
+          first_name: result.shop_name,
+          email: result.shop_email,
+          password: result.shop_password,
+          role_id: 3,
+          status: result.status
+        })
+      else{
+          setUser({})
+        }
   
     }
   

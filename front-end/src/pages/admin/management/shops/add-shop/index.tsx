@@ -32,13 +32,15 @@ const AddShopPage = () => {
 
     const result:any = addShop(shop);
     if (result === -1) alert('Shop Creation Failed, Server Error');
+    else if (result === -2) alert('Email is Not Unique');
+    else if (result === -3) alert('Password Hashing Failed');
     else {
       
       sendEmail(shopEmail, "NewEgg Shop Account Creation",
         "Dear client, here are your NewEgg Account Credentials\nShop Name: " + shopName + "\nEmail: " + shopEmail + "\nShop Password: " + shopPassword
       );
       alert('Shop Added Successfully');
-      router.back();
+      window.location.reload();
 
     }
 

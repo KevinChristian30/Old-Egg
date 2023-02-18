@@ -12,6 +12,7 @@ import { useState } from "react";
 import signIn from "../api-calls/auth/sign-in";
 import User from "@/types/User";
 import { useRouter } from "next/router";
+import shopSignIn from "../api-calls/auth/shop-sign-in";
 
 const getSignInButtonContent = () => {
 
@@ -75,18 +76,38 @@ const Index = () => {
       email: email,
       password: password
     }
-    const response = await signIn(user)
 
-    if (response === -1) alert("Server Error, Couldn't Sign You In Right Now");
-    else if (response === -2) alert('Email Not Found');
-    else if (response === -3) alert('Incorrect Password');
-    else if (response === -4) alert('Token Generation Failed');
-    else if (response === -5) alert('You Are Banned');
-    else {
-      setCookie("Auth", response, 1);
-      router.push("/");
+    const response:any = await signIn(user)
+    const shopSignInResponse:any = await shopSignIn(user);
+
+    if (response === -2 && shopSignInResponse === -2){
+
+      alert('Email Not Found');
+
+    }else if (response != -2){ // Found in User
+
+      if (response === -1) alert("Server Error, Couldn't Sign You In Right Now");
+      else if (response === -3) alert('Incorrect Password');
+      else if (response === -4) alert('Token Generation Failed');
+      else if (response === -5) alert('You Are Banned');
+      else {
+        setCookie("Auth", response, 1);
+        router.push("/");
+      } 
+      
+    } else { // Found in Shop
+      
+      if (shopSignInResponse === -1) alert("Server Error, Couldn't Sign You In Right Now");
+      else if (shopSignInResponse === -3) alert('Incorrect Password');
+      else if (shopSignInResponse === -4) alert('Token Generation Failed');
+      else if (shopSignInResponse === -5) alert('You Are Banned');
+      else {
+        setCookie("Auth", shopSignInResponse, 1);
+        router.push("/");
+      }
+
     }
-  
+
   }
 
   return (
@@ -99,14 +120,16 @@ const Index = () => {
         placeholder={"Email Address"}
         width={304}
         height={44}
-        email/>
+        email
+        required/>
       <RectangularInputField
         value={password}
         onChange={setPassword}
         placeholder={"Password"}
         width={304}
         height={44}
-        password/>
+        password
+        required/>
       <button>
         <RectangularButton content={ getSignInButtonContent() } orange/>
       </button>

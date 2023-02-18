@@ -11,6 +11,7 @@ const Management = () => {
 
   const user:any = useAuth();
   const router = useRouter();
+  if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
   
   const getContent = () => {

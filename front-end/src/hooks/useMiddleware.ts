@@ -19,6 +19,7 @@ DOCUMENTATION
 
 const useMiddleware = (user:any, router:NextRouter, role:string) => {
 
+  console.log(user)
   if (!user) return true;
   if (role === 'Admin'){
 

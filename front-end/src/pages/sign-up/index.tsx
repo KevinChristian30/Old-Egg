@@ -50,16 +50,47 @@ const SignUp = () => {
       subscribed_to_email_offers_and_discounts: isSubscribing,
       status: 'Active'
     };
-
-    const response:any = await signUp(user);
-    if (response === -1) alert('Sign Up Failed, Due to Server Error');
-    else if (response === -2) alert('Email Already Used');
-    else if (response === -3) alert('Phone Number Already Used');
-    else {
-      alert('Account Created');
-      router.push('/sign-in');
-    }
     
+    const isValidPassword = () => {
+
+      let countNumber = 0, countUppercaseLetter = 0, countLowercaseLetter = 0, countSymbol = 0;
+      
+      if (password.length < 8 || password.length > 30) {
+        alert('Password Length Must be between 8 - 30');
+        return false;
+      }
+      
+      for (let i = 0; i < password.length; i++){
+
+        if (password[i] >= '0' && password[i] <= '9') countNumber++;
+        else if (password[i] >= 'A' && password[i] <= 'Z') countUppercaseLetter++;
+        else if (password[i] >= 'a' && password[i] <= 'z') countLowercaseLetter++;
+        else countSymbol++;
+
+      }
+
+      if (countNumber <= 0) alert('Password Must Contain Number');
+      else if (countUppercaseLetter <= 0) alert('Password Must Contain Uppercase Letter');
+      else if (countLowercaseLetter <= 0) alert('Password Must Contain Lowercase Letter');
+      else if (countSymbol <= 0) alert('Password Must Contain Symbol');
+
+      return countNumber > 0 && countUppercaseLetter > 0 && countLowercaseLetter > 0 && countSymbol > 0;
+
+    }
+
+    if (isValidPassword()){
+
+      const response:any = await signUp(user);
+      if (response === -1) alert('Sign Up Failed, Due to Server Error');
+      else if (response === -2) alert('Email Already Used');
+      else if (response === -3) alert('Phone Number Already Used');
+      else {
+        alert('Account Created');
+        router.push('/sign-in');
+      }
+      
+    }
+
   }
 
   return ( 

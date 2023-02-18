@@ -9,6 +9,9 @@ const addShop = async (shop: Shop) => {
     const response = await axios.post(ENV.API + 'create-shop', shop);
     const result = response.data;
 
+    if (result === 'Email is Not Unique') return -2;
+    if (result === 'Password Hashing Failed') return -3;
+
     return result;
 
   } catch(error){

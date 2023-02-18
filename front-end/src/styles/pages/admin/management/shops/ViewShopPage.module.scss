@@ -1,5 +1,10 @@
 .index{
 
+  color: var(--text-color);
+  width: 90%;
+  align-self: center;
+  justify-self: center;
+
   .checkbox_container{
 
     .line{
@@ -25,6 +30,7 @@
     display: grid;
     grid-template-columns: repeat(4, auto);
     gap: 30px;
+    justify-content: space-between;
 
   }
 
