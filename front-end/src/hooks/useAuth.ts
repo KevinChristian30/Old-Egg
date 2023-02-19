@@ -19,6 +19,7 @@ const useAuth = () => {
       if (result.role_id) setUser(result);
       else if (result.shop_name)
         setUser({
+          id: result.ID,
           first_name: result.shop_name,
           email: result.shop_email,
           password: result.shop_password,
@@ -27,7 +28,7 @@ const useAuth = () => {
         })
       else{
           setUser({})
-        }
+      }
   
     }
   
