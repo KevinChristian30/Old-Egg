@@ -11,8 +11,6 @@ const ShopHome = (props: any) => {
   
   const products = useProducts();
 
-  console.log(products);
-
   return ( 
     <div className={style.index}>
       <br /><br /><br /><br /><br /><br />

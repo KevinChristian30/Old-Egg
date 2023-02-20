@@ -30,10 +30,7 @@ func GetAllProducts(c *gin.Context) {
 	}
 
 	products := []model.Product{}
-	config.DB.Find(&products)
-
-	c.JSON(200, products)
-	return
+	config.DB.Order("product_id asc").Find(&products)
 
 	length := len(products)
 	parsedProducts := []Product{}

@@ -7,8 +7,9 @@ import ProductCard from "../Card/ProductCard";
 
 interface SimplePaginationProps {
   data: any,
+  type: string,
   itemsPerPage: number,
-  type: string
+  itemsPerRow?: number
 }
 
 const SimplePagination = (props:SimplePaginationProps) => {
@@ -16,7 +17,7 @@ const SimplePagination = (props:SimplePaginationProps) => {
   const [pageNumber, setPageNumber] = useState(0);
   let displayedContent:any[] = [];
 
-  const { data, itemsPerPage, type } = props;
+  const { data, itemsPerPage, type, itemsPerRow } = props;
   const maxPage = Math.ceil(data.length / itemsPerPage)
 
   displayedContent = [];
@@ -50,7 +51,12 @@ const SimplePagination = (props:SimplePaginationProps) => {
         <RectangularButton onClick={ incrementPage } orange content={ <div>Next</div> } width={100} />
       </div>
       <br />
-      <div className={style.container}>
+      <div className={style.container} style={
+          {
+            display: "grid",
+            gridTemplateColumns: `repeat(${itemsPerRow}, auto)`,
+          }
+        } >
         {
           displayedContent.map((content) => {
             if (type === 'user') return <UserCard key={content.email} user={content} />
