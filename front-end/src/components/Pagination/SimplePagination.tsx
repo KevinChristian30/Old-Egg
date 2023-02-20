@@ -3,9 +3,10 @@ import User from "@/types/User";
 import { useState } from "react";
 import UserCard from "../Card/UserCard";
 import RectangularButton from "../RectangularButton";
+import ProductCard from "../Card/ProductCard";
 
 interface SimplePaginationProps {
-  data: [],
+  data: any,
   itemsPerPage: number,
   type: string
 }
@@ -13,16 +14,16 @@ interface SimplePaginationProps {
 const SimplePagination = (props:SimplePaginationProps) => {
 
   const [pageNumber, setPageNumber] = useState(0);
-  let displayedUsers:User[] = [];
+  let displayedContent:any[] = [];
 
   const { data, itemsPerPage, type } = props;
   const maxPage = Math.ceil(data.length / itemsPerPage)
 
-  displayedUsers = [];
+  displayedContent = [];
   for (let i = pageNumber * itemsPerPage; i < pageNumber * itemsPerPage + itemsPerPage; i++){
 
     if (data[i]){
-      displayedUsers.push(data[i]);
+      displayedContent.push(data[i]);
     } else break;
 
   }
@@ -51,8 +52,9 @@ const SimplePagination = (props:SimplePaginationProps) => {
       <br />
       <div className={style.container}>
         {
-          displayedUsers.map((user) => {
-            if (type === 'user') return <UserCard key={user.email} user={user} />
+          displayedContent.map((content) => {
+            if (type === 'user') return <UserCard key={content.email} user={content} />
+            else return <ProductCard key={content.product_id} product={content} />
           })
         }
       </div>

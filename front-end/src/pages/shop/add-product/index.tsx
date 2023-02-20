@@ -28,9 +28,8 @@ const AddProductPage = () => {
   const [productDetails, setProductDetails] = useState(''); 
 
   const [files, setFiles] = useState<any>([]);
-
   const [error, setError] = useState(false);
-  
+
   const user:any = useAuth();
   const router = useRouter();
   if (!user) return <div className="">Loading...</div>
@@ -53,7 +52,7 @@ const AddProductPage = () => {
     }
 
     const id = v4();
-      
+    
     await files.map(async (file:any) => {
 
       const link = await uploadFile(file, '/products');
@@ -69,16 +68,17 @@ const AddProductPage = () => {
         product_stock: Number(productStock),
         product_details: productDetails
       }
-      
+  
       const result = await CreateProduct(product);
       if (result === -1){
         alert('Product Creation Failed');
         setError(true);
-        return
-      }
+        return;
+      }  
 
     })
 
+    
     if (!error) {
       alert('Product Created Successfully');
       setProductName('')

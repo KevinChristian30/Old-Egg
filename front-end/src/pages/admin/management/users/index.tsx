@@ -5,6 +5,7 @@ import getAllUsers from "@/pages/api-calls/user/getAllUsers";
 import style from "../../../../styles/pages/admin/management/UsersPage.module.scss";
 import { useRouter } from "next/router";
 import SimplePagination from "@/components/Pagination/SimplePagination";
+import { useEffect, useState } from "react";
 
 const ManageUsers = (props:any) => {
   

@@ -7,14 +7,14 @@ const useProductCategories = () => {
 
   useEffect(() => {
 
-    const getUser = async () => {
+    const getProductCategories = async () => {
 
       const result = await getAllProductCategories();
       setProductCategories(result);
   
     }
   
-    getUser();
+    getProductCategories();
 
   }, [])
 
