@@ -1,4 +1,3 @@
-import { ReactElement, useContext } from 'react';
 import style from '../../styles/components/Navbar/Navbar.module.scss';
 import SingleTextLink from '../SingleTextLink';
 import AddressSelector from './AddressSelector';
