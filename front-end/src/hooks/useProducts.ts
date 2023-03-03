@@ -1,7 +1,7 @@
 import getAllProducts from "@/pages/api-calls/products/getAllProducts";
 import { useEffect, useState } from "react";
 
-const useProducts = () => {
+const useProducts = (shopID: Number, pageNumber: Number) => {
 
   const [products, setProducts] = useState({});
 
@@ -9,7 +9,7 @@ const useProducts = () => {
 
     const getProducts = async () => {
 
-      const result = await getAllProducts();
+      const result = await getAllProducts(shopID, pageNumber);
       setProducts(result);
   
     }

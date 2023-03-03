@@ -7,12 +7,12 @@ import ShopHome from '../components/Home/ShopHome';
 
 export default function Home() {
 
-  const user:any = useAuth()
+  const user:any = useAuth();
 
   const getHome = () => {
 
     if (user.role_id === 2) return <AdminHome />
-    else if (user.role_id === 3) return <ShopHome /> 
+    else if (user.role_id === 3) return <ShopHome shopID={user.id} /> 
     else return <CustomerHome />
 
   }

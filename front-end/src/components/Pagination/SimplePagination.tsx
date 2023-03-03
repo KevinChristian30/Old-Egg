@@ -1,5 +1,4 @@
 import style from "../../styles/components/Pagination/SimplePagination.module.scss";
-import User from "@/types/User";
 import { useState } from "react";
 import UserCard from "../Card/UserCard";
 import RectangularButton from "../RectangularButton";
@@ -10,6 +9,7 @@ interface SimplePaginationProps {
   type: string,
   itemsPerPage: number,
   itemsPerRow?: number
+  appendData?: any
 }
 
 const SimplePagination = (props:SimplePaginationProps) => {
@@ -17,7 +17,7 @@ const SimplePagination = (props:SimplePaginationProps) => {
   const [pageNumber, setPageNumber] = useState(0);
   let displayedContent:any[] = [];
 
-  const { data, itemsPerPage, type, itemsPerRow } = props;
+  const { data, itemsPerPage, type, itemsPerRow, appendData } = props;
   const maxPage = Math.ceil(data.length / itemsPerPage)
 
   displayedContent = [];

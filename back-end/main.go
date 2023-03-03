@@ -29,6 +29,7 @@ func main() {
 	route.PromotionPictureRoute(router)
 	route.ProductCategoryRoute(router)
 	route.ProductRoute(router)
+	route.ProductImageLinkRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

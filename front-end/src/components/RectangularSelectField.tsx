@@ -15,7 +15,8 @@ const RectangularSelectField = (props: RectangularInputFieldProps) => {
 
   const { data, width, height, value, onChange, idAttributeName, optionAttributeName } = props;
 
-  if (!data) return <div className="">Loading...</div>
+  if (Object.keys(data).length == 0) return <div className="">Loading</div>
+  
   return ( 
     <div className={style.rectangular_select_field}>
       <select value={value} onChange={(e:any) => onChange(e.target.value)} style={{width: `${width}px`, height: `${height}px`}}>

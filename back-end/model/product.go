@@ -8,7 +8,6 @@ type Product struct {
 	ShopID             int     `json:"shop_id" gorm:"References:users(ID)"`
 	ProductCategoryID  int     `json:"product_category_id" gorm:"References:product_categories(ProductCategoryID)"`
 	ProductName        string  `json:"product_name"`
-	ProductImageURL    string  `json:"product_image_url"`
 	ProductDescription string  `json:"product_description"`
 	ProductPrice       float64 `json:"product_price"`
 	ProductStock       int     `json:"product_stock"`

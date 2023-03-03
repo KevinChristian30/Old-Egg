@@ -15,6 +15,8 @@ import { v4 } from "uuid";
 import uploadFile from "@/utility/uploadFile";
 import CreateProduct from "@/pages/api-calls/shops/product/CreateProduct";
 import Product from "@/types/Product";
+import CreateProductImageLink from "@/pages/api-calls/products/productImageLink/createProductImageLink";
+import ProductImageLink from "@/types/ProductImageLink";
 
 const AddProductPage = () => {
   
@@ -52,34 +54,40 @@ const AddProductPage = () => {
     }
 
     const id = v4();
+    const product: Product = {
+      product_id: id,
+      shop_id: Number(user.id),
+      product_name: productName,
+      product_category_id: Number(productCategoryID),
+      product_description: productDescription,
+      product_price: Number(productPrice),
+      product_stock: Number(productStock),
+      product_details: productDetails
+    };
+
+    const result = await CreateProduct(product);
+    if (result === -1){
+      alert('Product Creation Failed');
+      setError(true);
+      return;
+    }  
     
     await files.map(async (file:any) => {
 
       const link = await uploadFile(file, '/products');
 
-      const product: Product = {
-        product_id: id,
-        shop_id: user.id,
-        product_category_id: Number(productCategoryID),
-        product_name: productName,
-        product_image_url: link,
-        product_description: productDescription,
-        product_price: Number(productPrice),
-        product_stock: Number(productStock),
-        product_details: productDetails
-      }
-  
-      const result = await CreateProduct(product);
-      if (result === -1){
-        alert('Product Creation Failed');
-        setError(true);
-        return;
-      }  
+      const productImageLink: ProductImageLink = {
+        product_id: product.product_id,
+        link: link
+      };
+
+      await CreateProductImageLink(productImageLink);
 
     })
-
+    
     
     if (!error) {
+
       alert('Product Created Successfully');
       setProductName('')
       setProductCategoryID(1)
@@ -88,6 +96,7 @@ const AddProductPage = () => {
       setProductStock(0)
       setProductDetails('')
       setFiles([])
+    
     }
 
   }
