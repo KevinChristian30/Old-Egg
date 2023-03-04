@@ -1,0 +1,17 @@
+.index{
+  position: relative;
+
+  .categories_container{
+
+    position: absolute;
+    top: 13px;
+    left: 15px;
+    width: 250px;
+    height: 97%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow-y: auto;
+
+  }
+
+}

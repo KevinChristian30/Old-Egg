@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const useProductCategories = () => {
 
-  const [productCategories, setProductCategories] = useState({});
+  const [productCategories, setProductCategories] = useState([]);
 
   useEffect(() => {
 

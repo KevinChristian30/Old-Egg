@@ -40,8 +40,6 @@ const ImageCarousel = () => {
   if (!promotionPictures) return <div>Loading ...</div>;
   if (!promotionPictures[currentImageIndex]) return <div>Loading ...</div>;
 
-  // setInterval(handleNextClicked, 10000);
-
   return (
     <div className={style.image_carousel}>
       <div className={style.prev} onClick={handlePrevClicked}>
