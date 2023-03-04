@@ -1,0 +1,23 @@
+.notification_card{
+
+  .header{
+
+    color: var(--secondary-color-light);
+    font-weight: bold;
+    font-size: 15px;
+
+  }
+
+  .details{
+
+    font-size: 12px;
+
+  }
+
+  .line{
+    background-color: var(--tertiary-color-light);
+    height: 1px;
+    margin: 10px 0;
+  }
+
+}

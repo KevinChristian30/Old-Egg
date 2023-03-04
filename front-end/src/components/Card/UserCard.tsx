@@ -27,6 +27,7 @@ const UserCard = (props: UserCardProps) => {
     setStatus(status === "Active" ? "Banned" : "Active");
 
     const toUpdate:User = {
+      id: user.id,
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,

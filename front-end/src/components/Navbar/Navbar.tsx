@@ -53,7 +53,7 @@ const Navbar = (props:NavBarProps) => {
         <Link href='/'><Logo height={50 as SafeNumber}/></Link>
         <AddressSelector />
         <SearchBar />
-        <NotificationButton />
+        <NotificationButton user_id={user ? user.ID : -1} />
         <ChangeCountryButton />
         <ThemeToggle />
         <Link href="/sign-in"><LoginAndRegisterButton firstName={user?.first_name} /></Link>

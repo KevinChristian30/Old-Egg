@@ -13,7 +13,7 @@ import (
 )
 
 func GetUsers(c *gin.Context) {
-
+ 
 	type RequestBody struct {
 		PageNumber int `json:"page_number"`
 	}

@@ -31,6 +31,7 @@ func main() {
 	route.ProductRoute(router)
 	route.ProductImageLinkRoute(router)
 	route.EmailRoute(router)
+	route.NotificationRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 
