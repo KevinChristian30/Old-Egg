@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"net/mail"
 	"os"
 	"time"
 
@@ -13,8 +14,17 @@ import (
 
 func GetUsers(c *gin.Context) {
 
+	type RequestBody struct {
+		PageNumber int `json:"page_number"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	pageSize := 8
+
 	users := []model.User{}
-	config.DB.Find(&users)
+	config.DB.Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&users)
 	c.JSON(200, &users)
 
 }
@@ -24,9 +34,51 @@ func CreateUser(c *gin.Context) {
 	var newUser model.User
 	c.ShouldBindJSON(&newUser)
 
+	if newUser.FirstName == "" {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
+	if newUser.LastName == "" {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
+	if newUser.Email == "" {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
+	if newUser.MobilePhoneNumber == "" {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
+	if newUser.Password == "" {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
+	if newUser.RoleID == 0 {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
+	if newUser.Status == "" {
+		c.String(200, "Field Cannot be Null")
+		return
+	}
+
 	// Unique Email Validation
 	var countEmail int64 = 0
 	config.DB.Model(model.User{}).Where("email = ?", newUser.Email).Count(&countEmail)
+
+	// Valid Email Validation
+	_, err := mail.ParseAddress(newUser.Email)
+	if err != nil {
+		c.String(200, "Invalid Email Format")
+		return
+	}
 
 	if countEmail != 0 {
 		c.String(200, "Email is Not Unique")

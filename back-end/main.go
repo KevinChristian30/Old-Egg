@@ -30,6 +30,7 @@ func main() {
 	route.ProductCategoryRoute(router)
 	route.ProductRoute(router)
 	route.ProductImageLinkRoute(router)
+	route.EmailRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

@@ -17,7 +17,7 @@ const FooterComponent = (props: FooterComponentProps) => {
       <div className={style.container}>
         {
           links.map(link => {
-            return <Link key={link.title} href={link.url} className={style.link}>{link.title}</Link>
+            return <Link target="_blank" key={link.title} href={link.url} className={style.link}>{link.title}</Link>
           })
         }
       </div>

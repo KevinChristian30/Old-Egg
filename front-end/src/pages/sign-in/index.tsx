@@ -13,6 +13,7 @@ import signIn from "../api-calls/auth/sign-in";
 import User from "@/types/User";
 import { useRouter } from "next/router";
 import shopSignIn from "../api-calls/auth/shop-sign-in";
+import setCookie from "@/utility/setCookie";
 
 const getSignInButtonContent = () => {
 
@@ -52,13 +53,6 @@ const getSignInWithAppleButton = () => {
       SIGN IN WITH APPLE
     </div>
   );
-}
-
-function setCookie(cName: string, cValue: string, expDays: any) {
-  let date = new Date();
-  date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
-  const expires = "expires=" + date.toUTCString();
-  document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
 }
 
 const Index = () => {

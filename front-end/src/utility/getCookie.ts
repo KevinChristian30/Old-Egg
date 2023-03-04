@@ -1,4 +1,5 @@
 export default function getCookie(cname: string) {
+
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -11,5 +12,6 @@ export default function getCookie(cname: string) {
       return c.substring(name.length, c.length);
     }
   }
+  
   return "";
 }

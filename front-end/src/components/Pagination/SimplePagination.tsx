@@ -8,8 +8,8 @@ interface SimplePaginationProps {
   data: any,
   type: string,
   itemsPerPage: number,
-  itemsPerRow?: number
-  appendData?: any
+  itemsPerRow?: number,
+  onNextClicked?: any
 }
 
 const SimplePagination = (props:SimplePaginationProps) => {
@@ -17,8 +17,8 @@ const SimplePagination = (props:SimplePaginationProps) => {
   const [pageNumber, setPageNumber] = useState(0);
   let displayedContent:any[] = [];
 
-  const { data, itemsPerPage, type, itemsPerRow, appendData } = props;
-  const maxPage = Math.ceil(data.length / itemsPerPage)
+  const { data, itemsPerPage, type, itemsPerRow, onNextClicked } = props;
+  const maxPage = Math.ceil(data.length / itemsPerPage);
 
   displayedContent = [];
   for (let i = pageNumber * itemsPerPage; i < pageNumber * itemsPerPage + itemsPerPage; i++){
@@ -29,10 +29,12 @@ const SimplePagination = (props:SimplePaginationProps) => {
 
   }
 
-  const incrementPage = () => {
+  const incrementPage = async () => {
 
-    if (pageNumber + 1 > maxPage) setPageNumber(0)
-    setPageNumber((pageNumber + 1) % maxPage);
+    if (onNextClicked) await onNextClicked();
+
+    if (pageNumber + 1 > maxPage) setPageNumber(0);
+    else setPageNumber((pageNumber + 1) % maxPage);
     
   }
   

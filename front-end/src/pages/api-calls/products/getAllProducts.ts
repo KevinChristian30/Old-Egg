@@ -10,9 +10,7 @@ const getAllProducts = async (shopID: Number, pageNumber: Number) => {
       "page_number": pageNumber
     }
 
-    console.log(getAllProductsBody)
-
-    const response = await axios.post(ENV.API + 'get-all-products' , getAllProductsBody);
+    const response = await axios.post(ENV.API + 'get-products' , getAllProductsBody);
     const result =  response.data;
     return result;
 

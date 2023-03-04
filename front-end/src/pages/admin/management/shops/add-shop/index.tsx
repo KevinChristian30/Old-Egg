@@ -16,12 +16,14 @@ const AddShopPage = () => {
   const [shopEmail, setShopEmail] = useState('');
   const [shopPassword, setShopPassword] = useState('');
 
+  const [sending, setSending] = useState(false);
+
   const user:any = useAuth();
   const router = useRouter();
   if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
 
-  const onFormSubmitted = (e:any) => {
+  const onFormSubmitted = async (e:any) => {
 
     e.preventDefault();
     const shop:Shop = {
@@ -37,11 +39,19 @@ const AddShopPage = () => {
     else if (result === -3) alert('Password Hashing Failed');
     else {
       
-      sendEmail(shopEmail, "NewEgg Shop Account Creation",
+      setSending(true);
+      
+      const response = await sendEmail(shopEmail, "NewEgg Shop Account Creation",
         "Dear client, here are your NewEgg Account Credentials\nShop Name: " + shopName + "\nEmail: " + shopEmail + "\nShop Password: " + shopPassword
       );
-      alert('Shop Added Successfully');
-      window.location.reload();
+
+      if (response === "Send Error") alert("Email Send Error");
+      else alert('Shop Added Successfully');
+
+      setSending(false);
+      setShopName("");
+      setShopEmail("");
+      setShopPassword("");
 
     }
 
@@ -49,7 +59,8 @@ const AddShopPage = () => {
 
   const getContent = () => {
 
-    return (
+    if (sending) return <h1>Sending Email...</h1>
+    else return (
       <form className={style.index} onSubmit={ onFormSubmitted }>
         <h1>Add Shop</h1>
         <br /><br />

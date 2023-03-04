@@ -17,6 +17,7 @@ import NewEggBusiness from './NewEggBusinessButton';
 import SafeNumber from '@/types/SafeNumber';
 import Link from 'next/link';
 import User from '@/types/User';
+import WORDS from './Words';
 
 interface NavBarProps{
   user?:User
@@ -30,7 +31,7 @@ const Navbar = (props:NavBarProps) => {
     return (
       <div className={style.button}>
         <FontAwesomeIcon icon={faComment} className={style.icon} />
-        FEEDBACK
+        {WORDS.feedback}
       </div>
     );
   }
@@ -39,7 +40,7 @@ const Navbar = (props:NavBarProps) => {
     return (
       <div className={style.button}>
         <FontAwesomeIcon icon={faCircleQuestion} className={style.icon} />
-        HELP CENTER
+        {WORDS.helpCenter}
       </div>
     );
   }

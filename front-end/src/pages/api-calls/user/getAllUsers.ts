@@ -1,11 +1,15 @@
 import { ENV } from "@/ENV";
 import axios from "axios";
 
-const getAllUsers = async (leftIndex?:number, rightIndex?:number, count?:number) => {
+const getAllUsers = async (pageNumber: Number) => {
 
   try{
 
-    const response = await axios.get(ENV.API + 'get-users');
+    const requestBody = {
+      "page_number" : pageNumber
+    }
+
+    const response = await axios.post(ENV.API + 'get-users', requestBody);
     const result = response.data;
 
     return result;

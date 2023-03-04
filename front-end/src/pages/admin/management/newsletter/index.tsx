@@ -6,39 +6,51 @@ import useMiddleware from "@/hooks/useMiddleware";
 import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
 import RectangularButton from "@/components/RectangularButton";
 import { useState } from "react";
-import getAllUsers from "@/pages/api-calls/user/getAllUsers";
-import sendEmail from "@/utility/sendEmail";
+import axios from "axios";
+import { ENV } from "@/ENV";
 
-const NewsletterPage = (props:any) => {
+const NewsletterPage = () => {
 
   const [subject, setSubject] = useState('');
   const [newsletter, setNewsletter] = useState('');
+  const [sending, setSending] = useState(false);
 
   const user:any = useAuth();
   const router = useRouter();
   if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
 
-  const { users } = props; 
-
-  const onFormSubmitted = (e:any) => {
+  const onFormSubmitted = async (e:any) => {
 
     e.preventDefault();
     
-    var emails = ""
-    users.map((user:any) => {
-      
-      if (user.subscribed_to_email_offers_and_discounts) emails += user.email + ';'
-    
-    });
+    const requestBody = {
+      "mail_subject": subject,
+      "mail_body": newsletter
+    };
 
-    sendEmail(emails, subject, newsletter);
+    setSending(true);
+    const response = await axios.post(ENV.API + "blast-newsletter", requestBody);
+    if (response.data === 'Email Blast Error'){
+
+      alert("Error While Sending Email");
+      
+    } else {
+      
+      alert("Newsletter Sent Successfully");
+
+    }
+
+    setSubject("")
+    setNewsletter("")
+    setSending(false);
 
   }
 
   const getContent = () => {
 
-    return (
+    if (sending) return <h1>Blasting Email ...</h1>
+    else return (
       <div className={style.index}>
         <script src="https://smtpjs.com/v3/smtp.js" defer></script>
         <form onSubmit={ onFormSubmitted }>
@@ -64,15 +76,3 @@ const NewsletterPage = (props:any) => {
 }
  
 export default NewsletterPage;
-
-export async function getStaticProps(){
-
-  const users = await getAllUsers();
-
-  return {
-    props: {
-      users: users
-    }
-  }
-
-}

@@ -8,6 +8,6 @@ import (
 func ProductRoute(router *gin.Engine) {
 
 	router.POST("/create-product", controller.CreateProduct)
-	router.POST("/get-all-products", controller.GetAllProducts)
+	router.POST("/get-products", controller.GetProducts)
 
 }
