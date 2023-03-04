@@ -6,7 +6,8 @@ let WORDS = {
   returns: "Returns",
   orders: "Orders",
   feedback: "FEEDBACK",
-  helpCenter: "HELP CENTER"
+  helpCenter: "HELP CENTER",
+  welcome: "Welcome"
 }
 
 export default WORDS

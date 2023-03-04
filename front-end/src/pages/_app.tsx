@@ -29,6 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
       WORDS.orders = "Pesanan";
       WORDS.feedback = "Umpan Balik";
       WORDS.helpCenter = "Bantuan";
+      WORDS.welcome = "Selamat Datang";
     
     } else {
 
@@ -39,6 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
       WORDS.orders = "Orders";
       WORDS.feedback = "FEEDBACK";
       WORDS.helpCenter = "HELP CENTER";
+      WORDS.welcome = "Welcome";
 
     }
 

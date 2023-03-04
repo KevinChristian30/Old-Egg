@@ -26,7 +26,7 @@ const LoginAndRegisterButton = (props: LoginAndRegsterButonProps) => {
       </div>
       <div className={style.right}>
         <div className={style.top}>
-          <p>Welcome</p>
+          <p>{WORDS.welcome}</p>
         </div>
         <div className={style.bottom}>
           { getText() }
