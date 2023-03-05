@@ -12,20 +12,35 @@ const ManageUsers = () => {
   const [users, setUsers] = useState<any>([]);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const incrementPage = async () => {
+  const getData = async () => {
 
-    const toAppend = await getAllUsers(pageNumber);
-    setUsers([...users, ...toAppend]);
-
-    setPageNumber(pageNumber + 1);
+    setUsers([])
+    const data = await getAllUsers(pageNumber);
+    if (data.length == 0) setPageNumber(pageNumber - 1);
+    setUsers(data);
 
   }
 
   useEffect(()=> {
     
-    incrementPage();
+    getData();
 
-  }, [])
+  }, [pageNumber])
+
+
+  const incrementPage = async () => {
+
+    setPageNumber(pageNumber + 1);
+  
+  }
+
+  const decrementPage = async () => {
+
+    if (pageNumber - 1 === 0) setPageNumber(1);
+    else setPageNumber(pageNumber - 1);
+
+  }
+
 
   const user:any = useAuth();
   const router = useRouter();
@@ -37,7 +52,12 @@ const ManageUsers = () => {
     return (
       <div className={style.index}>
         <h1>View Users</h1>
-        <SimplePagination onNextClicked={ incrementPage } data={users} itemsPerPage={8} type='user'/>
+        <SimplePagination
+        pageNumber={ pageNumber }
+        onNextButtonClicked={ incrementPage }
+        onPreviousButtonClicked={ decrementPage } 
+        data={users} 
+        type='user'/>
       </div>
     );
 

@@ -1,11 +1,17 @@
 import { ENV } from "@/ENV";
 import axios from "axios";
 
-const getAllShops = async () => {
+const getAllShops = async (pageNumber: Number, isActive: boolean, isBanned: boolean) => {
 
   try{
 
-    const response = await axios.get(ENV.API + 'get-shops');
+    const body = {
+      "page_number": pageNumber,
+      "is_active": isActive,
+      "is_banned": isBanned
+    }
+
+    const response = await axios.post(ENV.API + 'get-shops', body);
     const result = response.data;
 
     return result;

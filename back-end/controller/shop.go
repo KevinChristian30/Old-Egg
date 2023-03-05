@@ -41,8 +41,48 @@ func CreateShop(c *gin.Context) {
 
 func GetShops(c *gin.Context) {
 
+	type RequestBody struct {
+		PageNumber int  `json:"page_number"`
+		IsActive   bool `json:"is_active"`
+		IsBanned   bool `json:"is_banned"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	pageSize := 4
+
+	if requestBody.IsActive && requestBody.IsBanned {
+
+		shops := []model.Shop{}
+		config.DB.Model(model.Shop{}).Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&shops)
+
+		c.JSON(200, shops)
+		return
+
+	}
+
+	if requestBody.IsActive {
+
+		shops := []model.Shop{}
+		config.DB.Model(model.Shop{}).Where("status = ?", "Active").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&shops)
+
+		c.JSON(200, shops)
+		return
+
+	}
+
+	if requestBody.IsBanned {
+
+		shops := []model.Shop{}
+		config.DB.Model(model.Shop{}).Where("status = ?", "Banned").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&shops)
+
+		c.JSON(200, shops)
+		return
+
+	}
+
 	shops := []model.Shop{}
-	config.DB.Find(&shops)
 	c.JSON(200, &shops)
 
 }

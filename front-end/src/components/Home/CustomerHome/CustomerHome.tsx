@@ -13,7 +13,7 @@ const CustomerHome = () => {
       <div className={style.categories_container}>
         {
           categories.map((category: any) => {
-            return <CategoryCard category={category} /> 
+            return <CategoryCard key={category.ID} category={category} /> 
           })
         }
       </div>

@@ -3,54 +3,29 @@ import { useState } from "react";
 import UserCard from "../Card/UserCard";
 import RectangularButton from "../RectangularButton";
 import ProductCard from "../Card/ProductCard";
+import ShopCard from "../Card/ShopCard";
 
 interface SimplePaginationProps {
   data: any,
   type: string,
-  itemsPerPage: number,
   itemsPerRow?: number,
-  onNextClicked?: any
+  
+  pageNumber: any,
+  onNextButtonClicked: any
+  onPreviousButtonClicked: any
 }
 
 const SimplePagination = (props:SimplePaginationProps) => {
 
-  const [pageNumber, setPageNumber] = useState(0);
-  let displayedContent:any[] = [];
-
-  const { data, itemsPerPage, type, itemsPerRow, onNextClicked } = props;
-  const maxPage = Math.ceil(data.length / itemsPerPage);
-
-  displayedContent = [];
-  for (let i = pageNumber * itemsPerPage; i < pageNumber * itemsPerPage + itemsPerPage; i++){
-
-    if (data[i]){
-      displayedContent.push(data[i]);
-    } else break;
-
-  }
-
-  const incrementPage = async () => {
-
-    if (onNextClicked) await onNextClicked();
-
-    if (pageNumber + 1 > maxPage) setPageNumber(0);
-    else setPageNumber((pageNumber + 1) % maxPage);
-    
-  }
-  
-  const decrementPage = () => {
-    
-    if (pageNumber - 1 < 0) setPageNumber(maxPage - 1);
-    else setPageNumber((pageNumber - 1) % maxPage);
-
-  }
+  const { data, type, itemsPerRow, pageNumber } = props;
+  const { onNextButtonClicked, onPreviousButtonClicked } = props;
 
   return ( 
     <div className={style.simple_pagination}>
       <div className={style.button_container}>
-        <h3>Page: {pageNumber + 1}</h3>
-        <RectangularButton onClick={ decrementPage } orange content={ <div>Prev</div> } width={100} />
-        <RectangularButton onClick={ incrementPage } orange content={ <div>Next</div> } width={100} />
+        <h3>Page: {pageNumber}</h3>
+        <RectangularButton onClick={ onPreviousButtonClicked } orange content={ <div>Prev</div> } width={100} />
+        <RectangularButton onClick={ onNextButtonClicked } orange content={ <div>Next</div> } width={100} />
       </div>
       <br />
       <div className={style.container} style={
@@ -60,8 +35,9 @@ const SimplePagination = (props:SimplePaginationProps) => {
           }
         } >
         {
-          displayedContent.map((content) => {
+          data.map((content: any) => {
             if (type === 'user') return <UserCard key={content.email} user={content} />
+            else if (type === 'shop') return <ShopCard shop={content} />
             else return <ProductCard key={content.product_id} product={content} />
           })
         }

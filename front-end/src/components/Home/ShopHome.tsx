@@ -16,16 +16,29 @@ const ShopHome = (props: ShopHomeProps) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [products, setProducts] = useState<any>([]);
 
+  const [isAvailableOnly, setIsAvailableOnly] = useState(false);
+
+  const getProducts = async () => {
+
+    setProducts([]);
+    const data = await getAllProducts(shopID, pageNumber, !isAvailableOnly);
+    if (!data) setPageNumber(pageNumber - 1);
+    else setProducts(data);
+
+  }
+
   useEffect(() => {
 
-    const getMoreProducts = async () => {
+    const initialFetch = async () => {
 
-      const toAppend:any = await getAllProducts(shopID, pageNumber);
-      if (toAppend) setProducts([...products, ...toAppend]);
+      setProducts([]);
+      const data = await getAllProducts(shopID, pageNumber, isAvailableOnly);
+      if (!data) setPageNumber(pageNumber - 1);
+      else setProducts(data);
 
     }
     
-    getMoreProducts();
+    initialFetch();
 
   }, [pageNumber]);
 
@@ -35,17 +48,42 @@ const ShopHome = (props: ShopHomeProps) => {
 
   }
 
-  if (products.length <= 0) return <div>No Products</div>
+  const decrementPageNumber = () => {
+
+    if (pageNumber - 1 === 0) setPageNumber(1);
+    else setPageNumber(pageNumber - 1);
+
+  }
+
+  const onIsAvailableOnlyChange = async () => {
+
+    setIsAvailableOnly(!isAvailableOnly);
+    if (pageNumber == 1) getProducts();
+    else setPageNumber(1);
+
+  }
+
+  if (!products || products.length <= 0) return <h1>No Products</h1>
 
   return ( 
     <div className={style.index}>
       <br /><br /><br /><br /><br /><br />
       <h1>Your Products</h1>
       <h3>Product Count: {products.length}</h3>
-      <br /><br />
+      <br /><br /><br />
+      <div className={style.is_available_only_container}>
+        <h4>Show Available Products Only</h4>
+        <input type="checkbox" checked={isAvailableOnly} onChange={ onIsAvailableOnlyChange } />
+      </div>
       <br />
       <div className={style.products_container}>
-        <SimplePagination onNextClicked={ incrementPageNumber } data={ products } itemsPerPage={50} type="product" />
+        <SimplePagination 
+          pageNumber={pageNumber} 
+          onPreviousButtonClicked={ decrementPageNumber }
+          onNextButtonClicked={ incrementPageNumber } 
+          data={ products } 
+          type="product" 
+        />
       </div>
       <br /><br /><br /><br />
       <h1>Manage Your Shop</h1>

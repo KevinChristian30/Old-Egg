@@ -18,8 +18,9 @@ func CreateProduct(c *gin.Context) {
 func GetProducts(c *gin.Context) {
 
 	type RequestBody struct {
-		ShopID     int `json:"shop_id"`
-		PageNumber int `json:"page_number"`
+		ShopID          int  `json:"shop_id"`
+		PageNumber      int  `json:"page_number"`
+		IsAvailableOnly bool `json:"is_available_only"`
 	}
 
 	var requestBody RequestBody
@@ -28,7 +29,15 @@ func GetProducts(c *gin.Context) {
 	pageSize := 50
 
 	rawProducts := []model.Product{}
-	config.DB.Model(model.Product{}).Where("shop_id = ?", requestBody.ShopID).Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+	if requestBody.IsAvailableOnly {
+
+		config.DB.Model(model.Product{}).Where("shop_id = ?", requestBody.ShopID).Where("product_stock > 0").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+
+	} else {
+
+		config.DB.Model(model.Product{}).Where("shop_id = ?", requestBody.ShopID).Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+
+	}
 
 	type Product struct {
 		ProductID          string   `json:"product_id"`

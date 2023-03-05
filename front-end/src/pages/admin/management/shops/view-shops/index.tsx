@@ -6,19 +6,50 @@ import { useRouter } from "next/router";
 import getAllShops from "@/pages/api-calls/shops/GetAllShops";
 import Shop from "@/types/Shop";
 import ShopCard from "@/components/Card/ShopCard";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
+import SimplePagination from "@/components/Pagination/SimplePagination";
 
 const ViewShopPage = (props:any) => {
 
+  const [shops, setShops] = useState([]);
+
+  const [pageNumber, setPageNumber] = useState(1);
+
   const [isActiveFilter, setIsActiveFilter] = useState(true);
   const [isBannedFilter, setIsBannedFilter] = useState(true);
+
+  const getData = async () => {
+
+    setShops([]);
+    const data = await getAllShops(pageNumber, isActiveFilter, isBannedFilter);
+    if (data.length == 0) setPageNumber(pageNumber - 1);
+    setShops(data);
+
+  }
+
+  useEffect(() => {
+
+    getData();
+
+  }, [pageNumber, isActiveFilter, isBannedFilter]);
+
+  const incrementPage = async () => {
+
+    setPageNumber(pageNumber + 1);
+
+  }
+
+  const decrementPage = async () => {
+    
+    if (pageNumber - 1 === 0) setPageNumber(1);
+    else setPageNumber(pageNumber - 1);
+
+  }
 
   const user:any = useAuth();
   const router = useRouter();
   if (!user.role_id) return <div className="">Loading</div>
   if (useMiddleware(user, router, "Admin")) return;
-
-  const { shops } = props;
 
   const getContent = () => {
 
@@ -40,12 +71,14 @@ const ViewShopPage = (props:any) => {
         </div>  
         <br />
         <div className={style.container}>
-          {
-            shops.map((shop:Shop) => {
-              if (isBannedFilter && shop.status === 'Banned') return <ShopCard shop={shop} />
-              if (isActiveFilter && shop.status === 'Active') return <ShopCard shop={shop} />
-            })
-          }
+          <SimplePagination
+            data={shops}
+            onNextButtonClicked={ incrementPage }
+            onPreviousButtonClicked={ decrementPage }
+            pageNumber={ pageNumber }
+            itemsPerRow={ 4 }
+            type="shop"
+          />
         </div>
       </div>
     );
@@ -59,15 +92,3 @@ const ViewShopPage = (props:any) => {
 }
  
 export default ViewShopPage;
-
-export async function getStaticProps(){
-
-  const shops = await getAllShops();
-
-  return {
-    props: {
-      shops: shops
-    }
-  }
-
-}

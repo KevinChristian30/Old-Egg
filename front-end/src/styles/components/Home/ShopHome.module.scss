@@ -18,4 +18,18 @@
 
   }
 
+  .is_available_only_container{
+
+    display: flex;
+    gap: 15px;
+
+    input[type=checkbox]{
+
+      width: 17px;
+      height: 17px;
+
+    }
+
+  }
+
 }
