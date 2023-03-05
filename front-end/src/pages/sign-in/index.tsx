@@ -6,7 +6,7 @@ import RectangularButton from "@/components/RectangularButton";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faHands } from "@fortawesome/free-solid-svg-icons";
 import SignInFooter from "@/components/Footer/SignInFooter";
 import { useState } from "react";
 import signIn from "../api-calls/auth/sign-in";
@@ -20,16 +20,6 @@ const getSignInButtonContent = () => {
   return (
     <div className={style.sign_in_button}>
       SIGN IN
-    </div>
-  );
-
-}
-
-const getOneTimeSignInButtonContent = () => {
-
-  return (
-    <div className={style.one_time_sign_in_button}>
-        GET ONE-TIME SIGN IN CODE
     </div>
   );
 
@@ -55,6 +45,27 @@ const getSignInWithAppleButton = () => {
   );
 }
 
+const getOneTimeSignInButtonContent = () => {
+  
+  return (
+    <div className={style.one_time_sign_in_button}>
+      ONE-TIME SIGN IN
+    </div>
+  );
+
+}
+
+const getSignInAssistanceButton = () => {
+
+  return (
+    <div className={style.sign_in_with_google_and_apple_button}>
+      <FontAwesomeIcon icon={faHands} className={style.icon} />
+      SIGN IN ASSISTANCE
+    </div>
+  );
+
+}
+
 const Index = () => {
 
   const [email, setEmail] = useState('')
@@ -67,6 +78,7 @@ const Index = () => {
     e.preventDefault();
 
     const user: User = {
+      ID: -1, // Might be Dangerous
       email: email,
       password: password
     }
@@ -78,7 +90,7 @@ const Index = () => {
 
       alert('Email Not Found');
 
-    }else if (response != -2){ // Found in User
+    } else if (response != -2){ // Found in User
 
       if (response === -1) alert("Server Error, Couldn't Sign You In Right Now");
       else if (response === -3) alert('Incorrect Password');
@@ -132,7 +144,7 @@ const Index = () => {
       <button>
         <RectangularButton content={ getSignInButtonContent() } orange/>
       </button>
-      <RectangularButton content={ getOneTimeSignInButtonContent() } />
+      <RectangularButton onClick={ () => router.push('/sign-in/one-time') } content={ getOneTimeSignInButtonContent() } />
       <p className={style.whats_the_one_time_code}>What's the One-Time Code?</p>
       <div className={style.new_to_newEgg}>
         <p>New to Newegg?</p>
@@ -140,6 +152,7 @@ const Index = () => {
       </div>
       <br />
       <p className={style.or}>OR</p>
+      <RectangularButton onClick={ () => router.push('/sign-in/assistance') } content={ getSignInAssistanceButton() }/>
       <RectangularButton content={ getSignInWithGoogleButton() }/>
       <RectangularButton content={ getSignInWithAppleButton() }/>
       <br />

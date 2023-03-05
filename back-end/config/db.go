@@ -19,6 +19,7 @@ func migrate() {
 	DB.AutoMigrate(&model.Product{})
 	DB.AutoMigrate(&model.ProductImageLink{})
 	DB.AutoMigrate(&model.Notification{})
+	DB.AutoMigrate(&model.OneTimeCode{})
 
 }
 

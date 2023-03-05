@@ -1,8 +1,11 @@
 package controller
 
 import (
+	"math/rand"
 	"net/mail"
+	"net/smtp"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/KevinChristian30/OldEgg/config"
@@ -13,7 +16,7 @@ import (
 )
 
 func GetUsers(c *gin.Context) {
- 
+
 	type RequestBody struct {
 		PageNumber int `json:"page_number"`
 	}
@@ -112,6 +115,11 @@ func SignIn(c *gin.Context) {
 	var attempt, user model.User
 	c.ShouldBindJSON(&attempt)
 
+	if attempt.Email == "" || attempt.Password == "" {
+		c.String(200, "Fields Cannot be Empty")
+		return
+	}
+
 	config.DB.First(&user, "email = ?", attempt.Email)
 
 	if user.ID == 0 {
@@ -160,5 +168,269 @@ func UpdateUser(c *gin.Context) {
 	config.DB.Model(&model.User{}).Where("email = ?", user.Email).Updates(map[string]interface{}{"status": user.Status})
 
 	c.JSON(200, &user)
+
+}
+
+func GetOneTimeSignInCode(c *gin.Context) {
+
+	type RequestBody struct {
+		Email string `json:"email"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	var code model.OneTimeCode
+	code.Email = requestBody.Email
+
+	code.Code = strconv.Itoa(100000 + rand.Intn(999999-100000))
+
+	// Only Create if Doesn't Exist
+	var countEmail int64
+	config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).Count(&countEmail)
+
+	if countEmail == 0 {
+
+		config.DB.Create(&code)
+
+	} else {
+
+		var user model.OneTimeCode
+		config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).First(&user)
+		user.Code = code.Code
+		config.DB.Save(&user)
+
+	}
+
+	c.JSON(200, code)
+
+}
+
+func diff(a, b time.Time) (year, month, day, hour, min, sec int) {
+
+	if a.Location() != b.Location() {
+		b = b.In(a.Location())
+	}
+	if a.After(b) {
+		a, b = b, a
+	}
+	y1, M1, d1 := a.Date()
+	y2, M2, d2 := b.Date()
+
+	h1, m1, s1 := a.Clock()
+	h2, m2, s2 := b.Clock()
+
+	year = int(y2 - y1)
+	month = int(M2 - M1)
+	day = int(d2 - d1)
+	hour = int(h2 - h1)
+	min = int(m2 - m1)
+	sec = int(s2 - s1)
+
+	if sec < 0 {
+		sec += 60
+		min--
+	}
+
+	if min < 0 {
+		min += 60
+		hour--
+	}
+
+	if hour < 0 {
+		hour += 24
+		day--
+	}
+
+	if day < 0 {
+		t := time.Date(y1, M1, 32, 0, 0, 0, 0, time.UTC)
+		day += 32 - t.Day()
+		month--
+	}
+
+	if month < 0 {
+		month += 12
+		year--
+	}
+
+	return
+
+}
+
+func SignInWithOneTimeCode(c *gin.Context) {
+
+	type RequestBody struct {
+		Email string `json:"email"`
+		Code  string `json:"code"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	var code model.OneTimeCode
+	config.DB.Model(model.OneTimeCode{}).Where("email = ?", requestBody.Email).Where("code = ?", requestBody.Code).First(&code)
+
+	if code.ID == 0 {
+		c.String(200, "Invalid Code")
+		return
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"subject": code.Email,
+		"expire":  time.Now().Add(time.Hour * 24 * 30).Unix(),
+	})
+
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRETKEY")))
+	if err != nil {
+		c.String(200, "Failed to Create Token")
+		return
+	}
+
+	// Check if Code is Still Valid
+	_, _, _, _, min, _ := diff(code.UpdatedAt, time.Now())
+	if min >= 15 {
+		c.String(200, "Code is Not Longer Valid")
+		return
+	}
+
+	c.String(200, tokenString)
+
+}
+
+func RequestForgotPasswordCode(c *gin.Context) {
+
+	type RequestBody struct {
+		Email string `json:"email"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	// Validate Email Must Not be Empty
+	if requestBody.Email == "" {
+		c.String(200, "Field Can't be Empty")
+		return
+	}
+
+	// Validate User Must Exist
+	var user model.User
+	config.DB.Model(model.User{}).Where("email = ?", requestBody.Email).First(&user)
+	if user.ID == 0 {
+		c.String(200, "Email isn't Registered")
+		return
+	}
+
+	// Generate Code
+	var code model.OneTimeCode
+	code.Email = user.Email
+	code.Code = strconv.Itoa(100000 + rand.Intn(999999-100000))
+
+	// Save Code to Database
+	// Only Create if Doesn't Exist
+	var countEmail int64
+	config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).Count(&countEmail)
+
+	if countEmail == 0 {
+
+		config.DB.Create(&code)
+
+	} else {
+
+		var user model.OneTimeCode
+		config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).First(&user)
+
+		// 2 Minute Code Request Validation
+		_, _, _, _, min, _ := diff(code.UpdatedAt, time.Now())
+		if min < 2 {
+			c.String(200, "You Can Only Request Code Every 2 Minutes")
+			return
+		}
+
+		user.Code = code.Code
+		config.DB.Save(&user)
+
+	}
+
+	// Send Code to Email
+	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "bkvbmvffymlxabmx", "smtp.gmail.com")
+
+	msg := "Subject: " + "Forgot Password Code" + "\n" + "\nHere is your Code: " + code.Code
+	var to []string
+	to = append(to, code.Email)
+
+	err := smtp.SendMail(
+		"smtp.gmail.com:587",
+		auth,
+		"oldeggKC222@gmail.com",
+		to,
+		[]byte(msg),
+	)
+
+	if err != nil {
+		c.String(200, "Send Error")
+		return
+	}
+
+	c.String(200, "Email Sent Successfully")
+
+}
+
+func ValidateForgotPasswordCode(c *gin.Context) {
+
+	type RequestBody struct {
+		Email string `json:"email"`
+		Code  string `json:"code"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	var code model.OneTimeCode
+	config.DB.Model(model.OneTimeCode{}).Where("email = ?", requestBody.Email).Where("code = ?", requestBody.Code).First(&code)
+
+	if code.ID == 0 {
+		c.String(200, "Invalid Code")
+		return
+	}
+
+	// Check if Code is Still Valid
+	_, _, _, _, min, _ := diff(code.UpdatedAt, time.Now())
+	if min >= 5 {
+		c.String(200, "Code is Not Longer Valid")
+		return
+	}
+
+	c.String(200, "Valid Code")
+
+}
+
+func ResetPassword(c *gin.Context) {
+
+	type RequestBody struct {
+		Email       string `json:"email"`
+		NewPassword string `json:"new_password"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	// Update the Password
+	// Find
+	var user model.User
+	config.DB.Model(model.User{}).Where("email = ?", requestBody.Email).First(&user)
+
+	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(requestBody.NewPassword), 10)
+
+	if err != nil {
+		panic(err)
+	}
+
+	// Set the new Password
+	user.Password = string(newHashedPassword)
+
+	// Save the user
+	config.DB.Save(&user)
+
+	c.String(200, "Password Saved!")
 
 }

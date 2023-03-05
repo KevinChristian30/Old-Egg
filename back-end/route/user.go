@@ -13,5 +13,10 @@ func UserRoute(router *gin.Engine) {
 	router.POST("/update-user", controller.UpdateUser)
 	router.POST("/authenticate", middleware.RequireAuthentication, controller.Authenticate)
 	router.POST("/get-users", controller.GetUsers)
+	router.POST("/get-one-time-sign-in-code", controller.GetOneTimeSignInCode)
+	router.POST("/sign-in-with-one-time-code", controller.SignInWithOneTimeCode)
+	router.POST("/request-forgot-password-code", controller.RequestForgotPasswordCode)
+	router.POST("/validate-forgot-password-code", controller.ValidateForgotPasswordCode)
+	router.POST("/reset-password", controller.ResetPassword)
 
 }

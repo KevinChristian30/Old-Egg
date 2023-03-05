@@ -18,13 +18,17 @@ const RectangularButton = (props: RectangularButtonProps) => {
   const height = props.height
 
   if (orange) return (
-    <div className={`${style["rectangular_button"]} ${style["orange_button"]}`} onClick={props.onClick} style={{width: width, height: height}}>
+    <div className={`${style["rectangular_button"]} ${style["orange_button"]}`} 
+    onClick={props.onClick} 
+    style={{width: width, height: height}}>
       { content }
     </div>
   );
 
   return ( 
-    <div className={style.rectangular_button} style={{width: width, height: height}}>
+    <div className={style.rectangular_button} 
+    style={{width: width, height: height}}
+    onClick={props.onClick} >
       { content }
     </div>
    );
