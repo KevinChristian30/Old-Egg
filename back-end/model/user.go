@@ -12,4 +12,5 @@ type User struct {
 	RoleID                              int    `json:"role_id" gorm:"foreign_key:RoleID"`
 	SubscribedToEmailOffersAndDiscounts bool   `json:"subscribed_to_email_offers_and_discounts"`
 	Status                              string `json:"status"`
+	TwoFactorAuthentication             bool   `json:"two_factor_authentication"`
 }

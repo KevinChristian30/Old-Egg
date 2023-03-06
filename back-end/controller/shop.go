@@ -244,3 +244,44 @@ func GetShopInformation(c *gin.Context) {
 	c.JSON(200, responseBody)
 
 }
+
+func ResetShopPassword(c *gin.Context) {
+
+	type RequestBody struct {
+		Email             string `json:"email"`
+		NewPassword       string `json:"new_password"`
+		RepeatNewPassword string `json:"repeat_new_password"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	// Validate Password Must be Equal
+	if requestBody.NewPassword != requestBody.RepeatNewPassword {
+		c.String(200, "Password Doesn't Match")
+		return
+	}
+
+	var shop model.Shop
+	config.DB.Model(model.Shop{}).Where("shop_email = ?", requestBody.Email).First(&shop)
+
+	if shop.ID == 0 {
+		c.String(200, "Email Not Found")
+		return
+	}
+
+	// Hash Password
+	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(requestBody.NewPassword), 10)
+
+	if err != nil {
+		panic(err)
+	}
+
+	// Set the new Password
+	shop.ShopPassword = string(newHashedPassword)
+
+	// Save Password
+	config.DB.Save(&shop)
+	c.String(200, "Password Saved!")
+
+}

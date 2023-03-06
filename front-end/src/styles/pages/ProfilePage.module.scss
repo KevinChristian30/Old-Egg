@@ -1,0 +1,30 @@
+.index{
+  
+  width: 80%;
+
+  .phone_number_container,
+  .two_factor_authentication_container{
+    
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+
+  }
+
+  .update_password_container{
+
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: flex-start;
+
+    .container{
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+    }
+
+  }
+
+}

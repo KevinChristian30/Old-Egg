@@ -56,7 +56,9 @@ const Navbar = (props:NavBarProps) => {
         <NotificationButton user_id={user ? user.ID : -1} />
         <ChangeCountryButton />
         <ThemeToggle />
-        <Link href="/sign-in"><LoginAndRegisterButton firstName={user?.first_name} /></Link>
+        <Link href={ user?.first_name ? "/profile" : "/sign-in" }>
+          <LoginAndRegisterButton firstName={user?.first_name} />
+        </Link>
         <ReturnsAndOrdersButton />
         <ShoppingCartButton />
       </div>

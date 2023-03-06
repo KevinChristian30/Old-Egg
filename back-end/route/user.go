@@ -18,5 +18,7 @@ func UserRoute(router *gin.Engine) {
 	router.POST("/request-forgot-password-code", controller.RequestForgotPasswordCode)
 	router.POST("/validate-forgot-password-code", controller.ValidateForgotPasswordCode)
 	router.POST("/reset-password", controller.ResetPassword)
+	router.POST("/request-two-factor-authentication-code", controller.RequestTFACode)
+	router.POST("/change-password", controller.ChangePassword)
 
 }

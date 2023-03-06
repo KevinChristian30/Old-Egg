@@ -165,7 +165,11 @@ func UpdateUser(c *gin.Context) {
 	var user model.User
 	c.ShouldBindJSON(&user)
 
-	config.DB.Model(&model.User{}).Where("email = ?", user.Email).Updates(map[string]interface{}{"status": user.Status})
+	config.DB.Model(&model.User{}).Where("email = ?", user.Email).Updates(map[string]interface{}{
+		"status":                    user.Status,
+		"mobile_phone_number":       user.MobilePhoneNumber,
+		"two_factor_authentication": user.TwoFactorAuthentication,
+	})
 
 	c.JSON(200, &user)
 
@@ -429,6 +433,113 @@ func ResetPassword(c *gin.Context) {
 	user.Password = string(newHashedPassword)
 
 	// Save the user
+	config.DB.Save(&user)
+
+	c.String(200, "Password Saved!")
+
+}
+
+func RequestTFACode(c *gin.Context) {
+
+	type RequestBody struct {
+		Email string `json:"email"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	// Validate Email Must Not be Empty
+	if requestBody.Email == "" {
+		c.String(200, "Field Can't be Empty")
+		return
+	}
+
+	// Validate User Must Exist
+	var user model.User
+	config.DB.Model(model.User{}).Where("email = ?", requestBody.Email).First(&user)
+	if user.ID == 0 {
+		c.String(200, "Email isn't Registered")
+		return
+	}
+
+	// Generate Code
+	var code model.OneTimeCode
+	code.Email = user.Email
+	code.Code = strconv.Itoa(100000 + rand.Intn(999999-100000))
+
+	// Save Code to Database
+	// Only Create if Doesn't Exist
+	var countEmail int64
+	config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).Count(&countEmail)
+
+	if countEmail == 0 {
+
+		config.DB.Create(&code)
+
+	} else {
+
+		var user model.OneTimeCode
+		config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).First(&user)
+		user.Code = code.Code
+		config.DB.Save(&user)
+
+	}
+
+	// Send Code to Email
+	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "bkvbmvffymlxabmx", "smtp.gmail.com")
+
+	msg := "Subject: " + "Two Factor Authentication Code" + "\n" + "\nHere is your Code: " + code.Code
+	var to []string
+	to = append(to, code.Email)
+
+	err := smtp.SendMail(
+		"smtp.gmail.com:587",
+		auth,
+		"oldeggKC222@gmail.com",
+		to,
+		[]byte(msg),
+	)
+
+	if err != nil {
+		c.String(200, "Send Error")
+		return
+	}
+
+	c.String(200, "Email Sent Successfully")
+
+}
+
+func ChangePassword(c *gin.Context) {
+
+	type RequestBody struct {
+		Email       string `json:"email"`
+		OldPassword string `json:"old_password"`
+		NewPassword string `json:"new_password"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	// Get User with Email
+	var user model.User
+	config.DB.Model(model.User{}).Where("email = ?", requestBody.Email).First(&user)
+
+	// Validate Old Password Must be Correct
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(requestBody.OldPassword))
+
+	if err != nil {
+		c.String(200, "Old Password is Wrong")
+		return
+	}
+
+	// If Correct, Save new Password
+	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(requestBody.NewPassword), 10)
+
+	if err != nil {
+		panic(err)
+	}
+
+	user.Password = string(newHashedPassword)
 	config.DB.Save(&user)
 
 	c.String(200, "Password Saved!")

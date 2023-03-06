@@ -35,7 +35,8 @@ const UserCard = (props: UserCardProps) => {
       password: user.password,
       role_id: user.role_id,
       subscribed_to_email_offers_and_discounts: user.subscribed_to_email_offers_and_discounts,
-      status: status === "Active" ? "Banned" : "Active"
+      status: status === "Active" ? "Banned" : "Active",
+      two_factor_authentication: user.two_factor_authentication
     }
 
     const result = updateUser(toUpdate);

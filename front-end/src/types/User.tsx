@@ -7,7 +7,8 @@ type User = {
   password?: string,
   role_id?: number,
   subscribed_to_email_offers_and_discounts?: boolean,
-  status?: string
+  status?: string,
+  two_factor_authentication?: boolean
 }
 
 export default User;

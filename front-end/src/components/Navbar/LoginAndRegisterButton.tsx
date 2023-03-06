@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "../../styles/components/Navbar/LoginAndRegisterButton.module.scss";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import useAuth from "@/hooks/useAuth";
 import WORDS from "./Words";
 
 interface LoginAndRegsterButonProps{
