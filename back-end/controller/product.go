@@ -1,9 +1,14 @@
 package controller
 
 import (
+	"fmt"
+	"os"
+	"time"
+
 	"github.com/KevinChristian30/OldEgg/config"
 	"github.com/KevinChristian30/OldEgg/model"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt"
 )
 
 func CreateProduct(c *gin.Context) {
@@ -84,5 +89,89 @@ func GetProducts(c *gin.Context) {
 	}
 
 	c.JSON(200, &parsedProducts)
+
+}
+
+func GetProductByID(c *gin.Context) {
+
+	type RequestBody struct {
+		ProductID string `json:"product_id"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	var product model.Product
+	config.DB.First(&product, "product_id = ?", requestBody.ProductID)
+
+	if product.ID == 0 {
+		c.String(200, "Product Not Found")
+		return
+	}
+
+	c.JSON(200, product)
+
+}
+
+func UpdateProduct(c *gin.Context) {
+
+	type RequestBody struct {
+		Token   string        `json:"token"`
+		Product model.Product `json:"product"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	tokenString := requestBody.Token
+	result, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+
+		return []byte(os.Getenv("SECRET")), nil
+
+	})
+
+	if err != nil {
+		c.String(200, "Token Parsing Failed")
+		return
+	}
+
+	if claims, ok := result.Claims.(jwt.MapClaims); ok && result.Valid {
+
+		if float64(time.Now().Unix()) > claims["expire"].(float64) {
+
+			c.String(200, "Cookie Expired")
+			return
+
+		}
+
+		var shop model.Shop
+		config.DB.First(&shop, "shop_email = ?", claims["subject"])
+
+		var product model.Product
+		config.DB.Model(&model.Product{}).Where("product_id = ?", requestBody.Product.ProductID).First(&product)
+
+		if shop.ID == uint(product.ShopID) {
+
+			config.DB.Model(&model.Product{}).Where("product_id = ?", requestBody.Product.ProductID).Updates(map[string]interface{}{
+				"product_name":        requestBody.Product.ProductName,
+				"product_description": requestBody.Product.ProductDescription,
+				"product_price":       requestBody.Product.ProductPrice,
+				"product_stock":       requestBody.Product.ProductStock,
+				"product_details":     requestBody.Product.ProductDetails,
+			})
+
+			c.JSON(200, &requestBody)
+
+		} else {
+
+			c.String(200, "You Are Not Authorized to Update This Product")
+
+		}
+
+	}
 
 }

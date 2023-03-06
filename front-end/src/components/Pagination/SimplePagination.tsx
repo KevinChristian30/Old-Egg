@@ -4,6 +4,7 @@ import UserCard from "../Card/UserCard";
 import RectangularButton from "../RectangularButton";
 import ProductCard from "../Card/ProductCard";
 import ShopCard from "../Card/ShopCard";
+import Link from "next/link";
 
 interface SimplePaginationProps {
   data: any,
@@ -38,7 +39,7 @@ const SimplePagination = (props:SimplePaginationProps) => {
           data.map((content: any) => {
             if (type === 'user') return <UserCard key={content.email} user={content} />
             else if (type === 'shop') return <ShopCard shop={content} />
-            else return <ProductCard key={content.product_id} product={content} />
+            else return <Link key={content.product_id} href={"/shop/update-product/" + content.product_id}><ProductCard product={content} /></Link>
           })
         }
       </div>

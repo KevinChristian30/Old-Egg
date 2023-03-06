@@ -32,7 +32,7 @@ const useMiddleware = (user:any, router:NextRouter, role:string) => {
   
   if (role === 'Shop'){
 
-    if (user.role_id !== 3){
+    if (user.role_id !== 3) {
       router.back();
       return true;
     }
