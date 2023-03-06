@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/KevinChristian30/OldEgg/config"
@@ -98,6 +100,67 @@ func UpdateShop(c *gin.Context) {
 
 }
 
+func UpdateShopProfile(c *gin.Context) {
+
+	type RequestBody struct {
+		Token              string `json:"token"`
+		ShopEmail          string `json:"shop_email"`
+		ShopName           string `json:"shop_name"`
+		AboutUs            string `json:"about_us"`
+		DisplayPictureLink string `json:"display_picture_link"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	tokenString := requestBody.Token
+	result, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+
+		return []byte(os.Getenv("SECRET")), nil
+
+	})
+
+	if err != nil {
+		c.String(200, "Token Parsing Failed")
+		return
+	}
+
+	if claims, ok := result.Claims.(jwt.MapClaims); ok && result.Valid {
+
+		if float64(time.Now().Unix()) > claims["expire"].(float64) {
+
+			c.String(200, "Cookie Expired")
+			return
+
+		}
+
+		var shop model.Shop
+		config.DB.First(&shop, "shop_email = ?", claims["subject"])
+
+		if shop.ShopEmail == requestBody.ShopEmail {
+
+			config.DB.Model(&model.Shop{}).Where("shop_email = ?", requestBody.ShopEmail).Updates(map[string]interface{}{
+				"shop_name":            requestBody.ShopName,
+				"about_us":             requestBody.AboutUs,
+				"display_picture_link": requestBody.DisplayPictureLink,
+			})
+
+			c.JSON(200, &requestBody)
+
+		} else {
+
+			c.String(200, "You Are Not Authorized to Update This Profile")
+
+		}
+
+	}
+
+}
+
 func ShopSignIn(c *gin.Context) {
 
 	var attempt model.User
@@ -134,5 +197,50 @@ func ShopSignIn(c *gin.Context) {
 	}
 
 	c.String(200, tokenString)
+
+}
+
+func GetShopInformation(c *gin.Context) {
+
+	type RequestBody struct {
+		Email string `json:"email"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	type ResponseBody struct {
+		Shop          model.Shop `json:"shop"`
+		AverageRating float64    `json:"average_rating"`
+		NumberOfSales int64      `json:"number_of_sales"`
+	}
+
+	var responseBody ResponseBody
+	config.DB.Model(model.Shop{}).Where("shop_email = ?", requestBody.Email).First(&responseBody.Shop)
+
+	if responseBody.Shop.ID == 0 {
+		c.String(200, "Email Not Found")
+		return
+	}
+
+	// Get Average Rating
+	var ratings []model.ShopRating
+	config.DB.Model(model.ShopRating{}).Where("shop_id = ?", responseBody.Shop.ID).Find(&ratings)
+
+	length := len(ratings)
+	for i := 0; i < length; i++ {
+		responseBody.AverageRating += ratings[i].Rating
+	}
+
+	if length > 0 {
+		responseBody.AverageRating /= float64(length)
+	}
+
+	responseBody.AverageRating, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", responseBody.AverageRating), 32)
+
+	// Get Number of Sales
+	config.DB.Model(model.SalesHeader{}).Where("shop_id = ?", responseBody.Shop.ID).Count(&responseBody.NumberOfSales)
+
+	c.JSON(200, responseBody)
 
 }

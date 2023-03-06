@@ -29,6 +29,7 @@ const useMiddleware = (user:any, router:NextRouter, role:string) => {
     }
 
   }
+  
   if (role === 'Shop'){
 
     if (user.role_id !== 3){

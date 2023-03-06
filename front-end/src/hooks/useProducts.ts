@@ -9,7 +9,7 @@ const useProducts = (shopID: Number, pageNumber: Number) => {
 
     const getProducts = async () => {
 
-      const result = await getAllProducts(shopID, pageNumber);
+      const result = await getAllProducts(shopID, pageNumber, false);
       setProducts(result);
   
     }

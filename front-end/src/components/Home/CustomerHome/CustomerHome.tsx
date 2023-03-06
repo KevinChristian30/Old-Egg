@@ -7,6 +7,8 @@ const CustomerHome = () => {
 
   const categories = useProductCategories();
 
+  if (!categories || categories.length == 0) return <div className="">Loading...</div>
+
   return (
     <div className={style.index}>
       <ImageCarousel />

@@ -32,4 +32,14 @@
 
   }
 
+  .container{
+
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+    width: 60%;
+
+
+  }
+
 }

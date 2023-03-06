@@ -1,7 +1,7 @@
 import Link from "next/link";
 import style from "../../styles/components/Home/ShopHome.module.scss";
 import SquareCard from "../Card/SquareCard";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faComments, faKey, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 import SimplePagination from "../Pagination/SimplePagination";
 import { useEffect, useState } from "react";
 import getAllProducts from "@/pages/api-calls/products/getAllProducts";
@@ -91,6 +91,15 @@ const ShopHome = (props: ShopHomeProps) => {
       <div className={style.container}>
         <Link href="/shop/add-product">
           <SquareCard text="Add Product" icon={faPlus} />
+        </Link>
+        <Link href="/shop/edit-shop-info">
+          <SquareCard text="Edit Shop Info" icon={faPenToSquare} />
+        </Link>
+        <Link href="/shop/reviews">
+          <SquareCard text="Reviews" icon={faComments} />
+        </Link>
+        <Link href="/shop/change-password">
+          <SquareCard text="Password" icon={faKey} />
         </Link>
       </div>
       <br /><br /><br /><br /><br /><br />
