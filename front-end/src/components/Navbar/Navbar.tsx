@@ -18,6 +18,7 @@ import SafeNumber from '@/types/SafeNumber';
 import Link from 'next/link';
 import User from '@/types/User';
 import WORDS from './Words';
+import { useState } from 'react';
 
 interface NavBarProps{
   user?:User
@@ -45,7 +46,7 @@ const Navbar = (props:NavBarProps) => {
     );
   }
 
-  return ( 
+  return (
     <div className={style.navbar}>
 
       <div className={style.top}>

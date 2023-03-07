@@ -24,7 +24,6 @@ const ProfilePage = () => {
   const [newPassword, setNewPassword] = useState("");
 
   const [isTokenSent, setIsTokenSent] = useState(false); 
-
   
   useEffect(() => {
 
@@ -143,10 +142,11 @@ const ProfilePage = () => {
 
     return (
       <div className={style.index}>
-        <h1>Hi, {user.first_name + ' ' + user.last_name}</h1>
+        <h1>Hi, {user.first_name + ' '}</h1>
         <br /><br /><br />
         <h3>Your Email: {user.email}</h3>
-        <br />
+        <h3>Your Currency: {user.currency}</h3>
+        <br /><br /><br />
         <div className={style.phone_number_container}>
           <h3>Your Phone Number </h3>
           <RectangularInputField 

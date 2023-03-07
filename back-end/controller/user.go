@@ -169,6 +169,7 @@ func UpdateUser(c *gin.Context) {
 		"status":                    user.Status,
 		"mobile_phone_number":       user.MobilePhoneNumber,
 		"two_factor_authentication": user.TwoFactorAuthentication,
+		"currency":                  user.Currency,
 	})
 
 	c.JSON(200, &user)

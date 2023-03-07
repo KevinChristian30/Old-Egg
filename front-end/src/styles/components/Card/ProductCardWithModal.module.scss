@@ -1,0 +1,38 @@
+@import "../../variables.module.scss";
+
+.product_card_with_modal{
+
+  color: var(--text-color);
+  background-color: var(--primary-color-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  border: 3px solid var(--secondary-color-light);
+  width: 200px;
+  height: 300px;
+
+  .text_container{
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .product_name{
+      color: $light-orange;
+    }
+
+  }
+  
+  &:hover{
+    background-color: var(--background-color);
+    cursor: pointer;
+  }
+  
+  .image{
+    height: 70%;
+    width: 100%;
+    border-radius: 7px 7px 0 0;
+  }
+
+}

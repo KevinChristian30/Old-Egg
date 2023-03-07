@@ -22,6 +22,7 @@ func migrate() {
 	DB.AutoMigrate(&model.OneTimeCode{})
 	DB.AutoMigrate(&model.ShopRating{})
 	DB.AutoMigrate(&model.SalesHeader{})
+	DB.AutoMigrate(&model.SearchQuery{})
 
 }
 

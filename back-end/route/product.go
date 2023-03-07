@@ -11,5 +11,6 @@ func ProductRoute(router *gin.Engine) {
 	router.POST("/get-products", controller.GetProducts)
 	router.POST("/get-product-by-id", controller.GetProductByID)
 	router.POST("/update-product", controller.UpdateProduct)
+	router.POST("/search-product", controller.SearchProduct)
 
 }

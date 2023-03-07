@@ -1,0 +1,19 @@
+.index{
+
+  width: 90%;
+
+  .is_available_only_container{
+  
+    display: flex;
+    gap: 30px;
+
+    input[type=checkbox]{
+
+      width: 15px;
+      height: 15px;
+
+    }
+  
+  }
+
+}

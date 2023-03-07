@@ -63,7 +63,7 @@ const ShopHome = (props: ShopHomeProps) => {
 
   }
 
-  if (!products || products.length <= 0) return <h1>No Products</h1>
+  // if (!products || products.length <= 0) return <h1>No Products</h1>
 
   return ( 
     <div className={style.index}>
@@ -77,13 +77,16 @@ const ShopHome = (props: ShopHomeProps) => {
       </div>
       <br />
       <div className={style.products_container}>
-        <SimplePagination 
-          pageNumber={pageNumber} 
-          onPreviousButtonClicked={ decrementPageNumber }
-          onNextButtonClicked={ incrementPageNumber } 
-          data={ products } 
-          type="product" 
-        />
+        {
+          products.length > 0 && 
+          <SimplePagination 
+            pageNumber={pageNumber} 
+            onPreviousButtonClicked={ decrementPageNumber }
+            onNextButtonClicked={ incrementPageNumber } 
+            data={ products } 
+            type="shop-product" 
+          />
+        }
       </div>
       <br /><br /><br /><br />
       <h1>Manage Your Shop</h1>

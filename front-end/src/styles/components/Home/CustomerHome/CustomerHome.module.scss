@@ -1,17 +1,32 @@
 .index{
-  position: relative;
 
-  .categories_container{
+  width: 100%;
 
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    width: 250px;
-    height: 97%;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    overflow-y: auto;
+  .carousel_container{
+
+    position: relative;
+  
+    .categories_container{
+
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      width: 250px;
+      height: 96.7%;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      overflow-y: auto;
+
+    }
 
   }
+
+  .navigation_container{
+
+    display: flex;
+    padding: 30px;
+
+  }
+
 
 }

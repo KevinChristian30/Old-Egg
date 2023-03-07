@@ -13,4 +13,5 @@ type User struct {
 	SubscribedToEmailOffersAndDiscounts bool   `json:"subscribed_to_email_offers_and_discounts"`
 	Status                              string `json:"status"`
 	TwoFactorAuthentication             bool   `json:"two_factor_authentication"`
+	Currency                            int    `json:"currency"`
 }

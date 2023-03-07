@@ -8,5 +8,6 @@ import (
 func VoucherRoute(router *gin.Engine) {
 
 	router.POST("/create-voucher", controller.CreateVoucher)
+	router.POST("/apply-voucher", controller.ApplyVoucher)
 
 }

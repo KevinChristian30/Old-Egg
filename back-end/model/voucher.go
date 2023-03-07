@@ -7,4 +7,5 @@ type Voucher struct {
 	VoucherCode        string `json:"voucher_code" gorm:"primary_key"`
 	VoucherDiscount    int64  `json:"voucher_discount"`
 	VoucherDescription string `json:"voucher_description"`
+	VoucherQuota       int    `json:"voucher_quota"`
 }

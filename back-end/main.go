@@ -33,6 +33,7 @@ func main() {
 	route.EmailRoute(router)
 	route.NotificationRoute(router)
 	route.OneTimeCodeRoute(router)
+	route.SearchQueryRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

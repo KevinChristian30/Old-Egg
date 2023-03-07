@@ -1,5 +1,4 @@
 import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
-import RectangularSelectField from "@/components/RectangularSelectField";
 import useAuth from "@/hooks/useAuth";
 import useMiddleware from "@/hooks/useMiddleware";
 import getProductByID from "@/pages/api-calls/products/getProductByID";
@@ -8,7 +7,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import style from "../../../../styles/pages/shop/AddProductPage.module.scss"
 import RectangularButton from "@/components/RectangularButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomeLayout from "@/layouts/HomeLayout";
 import updateProduct from "@/pages/api-calls/products/updateProduct";
 
@@ -25,6 +23,7 @@ const UpdateProduct = () => {
   const [productStock, setProductStock] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productDetails, setProductDetails] = useState("");
+  const [productImageLink, setProductImageLink] = useState("");
 
   useEffect(() => {
 
@@ -41,8 +40,7 @@ const UpdateProduct = () => {
       setProductStock(response.product_stock);
       setProductDescription(response.product_description);
       setProductDetails(response.product_details);
-
-      console.log(response);
+      setProductImageLink(response.product_image_links[0]);
 
     }
 
@@ -76,9 +74,11 @@ const UpdateProduct = () => {
       <form className={style.index} onSubmit={handleFormSubmit}>
         <br />
         <div className={style.container}>
-
+          
           <h2>Product ID: {productID}</h2>
           <br />
+          {/* <img src={productImageLink} className={style.thumbnail} />
+          <br /><br /> */}
 
           <h4>Product Name</h4>
           <RectangularInputField required value={productName} onChange={setProductName} width={600} height={30} placeholder="Product Name" />

@@ -101,13 +101,48 @@ func GetProductByID(c *gin.Context) {
 	var requestBody RequestBody
 	c.ShouldBindJSON(&requestBody)
 
-	var product model.Product
-	config.DB.First(&product, "product_id = ?", requestBody.ProductID)
+	var rawProduct model.Product
+	config.DB.First(&rawProduct, "product_id = ?", requestBody.ProductID)
 
-	if product.ID == 0 {
+	if rawProduct.ID == 0 {
 		c.String(200, "Product Not Found")
 		return
 	}
+
+	type Product struct {
+		ProductID          string   `json:"product_id"`
+		ShopID             int      `json:"shop_id"`
+		ProductCategoryID  int      `json:"product_category_id"`
+		ProductName        string   `json:"product_name"`
+		ProductDescription string   `json:"product_description"`
+		ProductPrice       float64  `json:"product_price"`
+		ProductStock       int      `json:"product_stock"`
+		ProductDetails     string   `json:"product_details"`
+		ProductImageLinks  []string `json:"product_image_links"`
+	}
+
+	var product Product
+	product.ProductID = rawProduct.ProductID
+	product.ShopID = rawProduct.ShopID
+	product.ProductCategoryID = rawProduct.ProductCategoryID
+	product.ProductName = rawProduct.ProductName
+	product.ProductDescription = rawProduct.ProductDescription
+	product.ProductPrice = rawProduct.ProductPrice
+	product.ProductStock = rawProduct.ProductStock
+	product.ProductDetails = rawProduct.ProductDetails
+
+	// Get ALl Image Links
+	var productImageLinks []model.ProductImageLink
+	config.DB.Model(model.ProductImageLink{}).Where("product_id = ?", product.ProductID).Find(&productImageLinks)
+
+	var imageLinks []string
+	productImageLinksLength := len(productImageLinks)
+	for j := 0; j < productImageLinksLength; j++ {
+
+		imageLinks = append(imageLinks, productImageLinks[j].Link)
+
+	}
+	product.ProductImageLinks = imageLinks
 
 	c.JSON(200, product)
 
@@ -173,5 +208,75 @@ func UpdateProduct(c *gin.Context) {
 		}
 
 	}
+
+}
+
+func SearchProduct(c *gin.Context) {
+
+	type RequestBody struct {
+		Keyword         string `json:"keyword"`
+		InnerKeyword    string `json:"inner_keyword"`
+		PageNumber      int    `json:"page_number"`
+		IsAvailableOnly bool   `json:"is_available_only"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	pageSize := 50
+
+	rawProducts := []model.Product{}
+
+	if requestBody.IsAvailableOnly {
+		config.DB.Model(model.Product{}).Where("product_name ILIKE ?", "%"+requestBody.Keyword+"%").Where("product_name ILIKE ?", "%"+requestBody.InnerKeyword+"%").Where("product_stock > 0").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+	} else {
+		config.DB.Model(model.Product{}).Where("product_name ILIKE ?", "%"+requestBody.Keyword+"%").Where("product_name ILIKE ?", "%"+requestBody.InnerKeyword+"%").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+	}
+
+	type Product struct {
+		ProductID          string   `json:"product_id"`
+		ShopID             int      `json:"shop_id"`
+		ProductCategoryID  int      `json:"product_category_id"`
+		ProductName        string   `json:"product_name"`
+		ProductDescription string   `json:"product_description"`
+		ProductPrice       float64  `json:"product_price"`
+		ProductStock       int      `json:"product_stock"`
+		ProductDetails     string   `json:"product_details"`
+		ProductImageLinks  []string `json:"product_image_links"`
+	}
+
+	length := len(rawProducts)
+	var parsedProducts []Product
+
+	for i := 0; i < length; i++ {
+
+		var product Product
+		product.ProductID = rawProducts[i].ProductID
+		product.ShopID = rawProducts[i].ShopID
+		product.ProductCategoryID = rawProducts[i].ProductCategoryID
+		product.ProductName = rawProducts[i].ProductName
+		product.ProductDescription = rawProducts[i].ProductDescription
+		product.ProductPrice = rawProducts[i].ProductPrice
+		product.ProductStock = rawProducts[i].ProductStock
+		product.ProductDetails = rawProducts[i].ProductDetails
+
+		// Get ALl Image Links
+		var productImageLinks []model.ProductImageLink
+		config.DB.Model(model.ProductImageLink{}).Where("product_id = ?", product.ProductID).Find(&productImageLinks)
+
+		var imageLinks []string
+		productImageLinksLength := len(productImageLinks)
+		for j := 0; j < productImageLinksLength; j++ {
+
+			imageLinks = append(imageLinks, productImageLinks[j].Link)
+
+		}
+		product.ProductImageLinks = imageLinks
+
+		parsedProducts = append(parsedProducts, product)
+
+	}
+
+	c.JSON(200, &parsedProducts)
 
 }
