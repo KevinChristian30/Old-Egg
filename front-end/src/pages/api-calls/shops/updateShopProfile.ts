@@ -14,8 +14,6 @@ const updateShopProfile = async (token: string, shopEmail: string, shopName: str
       "display_picture_link": displayPictureLink
     }
 
-    console.log(body);
-
     const response = await axios.post(ENV.API + 'update-shop-profile', body);
     const result = response.data;
 

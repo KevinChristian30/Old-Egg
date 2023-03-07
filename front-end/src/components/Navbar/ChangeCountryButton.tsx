@@ -8,8 +8,6 @@ const ChangeCountryButton = () => {
 
   const onClick = () => {
 
-    console.log('CLicked');
-
     const language = getCookie("language");
     if (language === "english") setCookie("language", "indonesian", 10);
     else setCookie("language", "english", 10);

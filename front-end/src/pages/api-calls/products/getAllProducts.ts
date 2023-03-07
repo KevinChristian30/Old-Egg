@@ -1,14 +1,16 @@
 import { ENV } from "@/ENV";
 import axios from "axios";
 
-const getAllProducts = async (shopID: Number, pageNumber: Number, isAvailableOnly: boolean) => {
+const getAllProducts = async (shopID: Number, pageNumber: Number, isAvailableOnly: boolean, keyword?: string, innerKeyword?: string) => {
 
   try{
 
     const getAllProductsBody = {
-      "shop_id": shopID,
-      "page_number": pageNumber,
-      "is_available_only": isAvailableOnly
+      "shop_id": Number(shopID),
+      "page_number": Number(pageNumber),
+      "is_available_only": isAvailableOnly,
+      keyword: keyword ? keyword : '',
+      inner_keyword: innerKeyword ? innerKeyword : ''
     }
 
     const response = await axios.post(ENV.API + 'get-products' , getAllProductsBody);

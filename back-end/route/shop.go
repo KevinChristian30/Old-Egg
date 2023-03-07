@@ -17,4 +17,8 @@ func ShopRoute(router *gin.Engine) {
 	router.POST("/get-shop-information", controller.GetShopInformation)
 	router.POST("/reset-shop-password", controller.ResetShopPassword)
 
+	router.POST("/get-shop-by-id", controller.GetShopByID)
+
+	router.POST("/get-top-shops", controller.GetTopShops)
+
 }

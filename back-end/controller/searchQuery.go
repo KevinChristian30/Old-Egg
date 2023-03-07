@@ -24,3 +24,39 @@ func CreateSearchQuery(c *gin.Context) {
 	c.String(200, "Search Query Saved")
 
 }
+
+func GetPopularSearchQueries(c *gin.Context) {
+
+	query := `
+		SELECT keyword, 
+			COUNT(keyword)
+		FROM search_queries
+		GROUP BY keyword
+		ORDER BY COUNT(keyword) DESC
+		LIMIT 5
+	`
+
+	rows, _ := config.DB.Raw(query).Rows()
+
+	type Result struct {
+		Keyword string `json:"keyword"`
+		Count   int64  `json:"count"`
+	}
+
+	var result []Result
+
+	for rows.Next() {
+
+		var row Result
+		err := rows.Scan(&row.Keyword, &row.Count)
+		if err != nil {
+			panic(err)
+		}
+
+		result = append(result, row)
+
+	}
+
+	c.JSON(200, result)
+
+}

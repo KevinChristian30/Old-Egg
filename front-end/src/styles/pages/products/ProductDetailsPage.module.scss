@@ -1,0 +1,57 @@
+.index{
+
+  width: 90%;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+
+  .left{
+
+    width: 40%;
+
+    .image{
+
+      width: 100%;
+      height: auto;
+      border: 3px solid var(--tertiary-color-light);
+      border-radius: 7px;
+
+    } 
+
+  }
+
+  .right{
+
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    flex-direction: column;
+
+    .top{
+
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+    }
+
+    .bottom{
+
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+
+      .line{
+
+        width: 100%;
+        display: flex;
+        gap: 30px;
+
+      }
+
+    }
+
+  }
+
+}

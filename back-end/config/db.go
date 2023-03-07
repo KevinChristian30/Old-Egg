@@ -23,6 +23,16 @@ func migrate() {
 	DB.AutoMigrate(&model.ShopRating{})
 	DB.AutoMigrate(&model.SalesHeader{})
 	DB.AutoMigrate(&model.SearchQuery{})
+	DB.AutoMigrate(&model.Cart{})
+	DB.AutoMigrate(&model.Wishlist{})
+	DB.AutoMigrate(&model.WishlistDetail{})
+	DB.AutoMigrate(&model.SavedForLaterItems{})
+	DB.AutoMigrate(&model.Address{})
+	DB.AutoMigrate(&model.DeliveryProvider{})
+	DB.AutoMigrate(&model.PaymentMethod{})
+	DB.AutoMigrate(&model.OrderHeader{})
+	DB.AutoMigrate(&model.OrderDetail{})
+	DB.AutoMigrate(&model.Message{})
 
 }
 

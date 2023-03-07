@@ -21,4 +21,6 @@ func UserRoute(router *gin.Engine) {
 	router.POST("/request-two-factor-authentication-code", controller.RequestTFACode)
 	router.POST("/change-password", controller.ChangePassword)
 
+	router.POST("/subscribe-to-newsletter", controller.SubscribeToNewsletter)
+
 }

@@ -1,0 +1,18 @@
+.category_card{
+
+  padding: 20px;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--tertiary-color-light);
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+  
+
+  &:hover{
+
+    cursor: pointer;
+    background-color: var(--tertiary-color-dark);
+
+  }
+
+}

@@ -1,0 +1,21 @@
+.index{
+
+  width: 90%;
+
+  .line{
+
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+
+  }
+
+  .orders{
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+  }
+
+}

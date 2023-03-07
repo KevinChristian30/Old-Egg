@@ -34,6 +34,14 @@ func main() {
 	route.NotificationRoute(router)
 	route.OneTimeCodeRoute(router)
 	route.SearchQueryRoute(router)
+	route.CartRoute(router)
+	route.WishlistRoute(router)
+	route.SavedForLaterItemsRoute(router)
+	route.AddressRoute(router)
+	route.DeliveryProviderRoute(router)
+	route.PaymentMethodRoute(router)
+	route.OrderRoute(router)
+	route.MessageRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

@@ -2,7 +2,7 @@ import RouteLink from "@/interfaces/RouteLink";
 
 export const customerServiceLinks:Array<RouteLink> = [
   {title: 'Help Center', url: 'https://kb.newegg.com/'},
-  {title: 'Track an Order', url: ''},
+  {title: 'Track an Order', url: '/user/orders'},
   {title: 'Return an Item', url: ''},
   {title: 'Return Policy', url: ''},
   {title: 'Privacy & Security', url: 'https://kb.newegg.com/knowledge-base/privacy-policy-newegg/'},

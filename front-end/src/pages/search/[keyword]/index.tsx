@@ -51,7 +51,7 @@ const SearchPage = () => {
 
       setProducts([]);
       const response = await searchProducts(keyword, innerKeyword, pageNumber, isAvailableOnly);
-      if (!response) setPageNumber(pageNumber - 1);
+      if (!response && pageNumber > 1) setPageNumber(pageNumber - 1);
       else setProducts(response);
 
     }

@@ -19,6 +19,7 @@ import Link from 'next/link';
 import User from '@/types/User';
 import WORDS from './Words';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface NavBarProps{
   user?:User
@@ -27,6 +28,7 @@ interface NavBarProps{
 const Navbar = (props:NavBarProps) => {
 
   const { user } = props;
+  const router = useRouter();
 
   const getFeedbackButton = () => {
     return (
@@ -46,6 +48,12 @@ const Navbar = (props:NavBarProps) => {
     );
   }
 
+  const navigateToCartPage = () => {
+
+    router.push('/cart');
+
+  }
+
   return (
     <div className={style.navbar}>
 
@@ -60,8 +68,10 @@ const Navbar = (props:NavBarProps) => {
         <Link href={ user?.first_name ? "/profile" : "/sign-in" }>
           <LoginAndRegisterButton firstName={user?.first_name} />
         </Link>
-        <ReturnsAndOrdersButton />
-        <ShoppingCartButton />
+        <Link href={'/user/orders'}>
+          <ReturnsAndOrdersButton />
+        </Link>
+        <div onClick={ navigateToCartPage }><ShoppingCartButton user={user} /></div>        
       </div>
 
       <div className={style.bottom}>

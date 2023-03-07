@@ -16,7 +16,7 @@ const ManageUsers = () => {
 
     setUsers([])
     const data = await getAllUsers(pageNumber);
-    if (data.length == 0) setPageNumber(pageNumber - 1);
+    if (data.length == 0 && pageNumber > 1) setPageNumber(pageNumber - 1);
     setUsers(data);
 
   }

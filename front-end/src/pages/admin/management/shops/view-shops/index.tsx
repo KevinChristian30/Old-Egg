@@ -22,7 +22,7 @@ const ViewShopPage = (props:any) => {
 
     setShops([]);
     const data = await getAllShops(pageNumber, isActiveFilter, isBannedFilter);
-    if (data.length == 0) setPageNumber(pageNumber - 1);
+    if (data.length == 0 && pageNumber > 1) setPageNumber(pageNumber - 1);
     setShops(data);
 
   }

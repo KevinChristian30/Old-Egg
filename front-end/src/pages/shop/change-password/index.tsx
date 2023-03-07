@@ -20,8 +20,6 @@ const ChangePasswordScreen = () => {
 
   const onFormSubmitted = async (e:any) => {
 
-    console.log(user);
-
     e.preventDefault();
     const response = await resetShopPassword(user.email, password, repeatPassword);
 

@@ -285,3 +285,70 @@ func ResetShopPassword(c *gin.Context) {
 	c.String(200, "Password Saved!")
 
 }
+
+func GetShopByID(c *gin.Context) {
+
+	type RequestBody struct {
+		ID int64 `json:"id"`
+	}
+
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	var shop model.Shop
+	config.DB.Model(model.Shop{}).Where("id = ?", requestBody.ID).First(&shop)
+
+	c.JSON(200, shop)
+
+}
+
+func GetTopShops(c *gin.Context) {
+
+	type RequestBody struct {
+		Limit int `json:"limit"`
+	}
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	// Top With Most Items Sold
+	query := `
+		SELECT SUM(quantity), shop_id
+		FROM (
+			SELECT OD.product_id,
+				SUM(quantity) AS quantity,
+				shop_id
+			FROM order_details OD JOIN products PS ON
+				OD.product_id = PS.product_id
+			GROUP BY OD.product_id, shop_id
+		) AS sub
+		GROUP BY shop_id
+		ORDER BY SUM(quantity) DESC
+		LIMIT ` + strconv.Itoa(requestBody.Limit)
+
+	rows, _ := config.DB.Raw(query).Rows()
+
+	type Result struct {
+		Sum    int  `json:"sum"`
+		ShopID uint `json:"shop_id"`
+	}
+
+	var shopIds []uint
+
+	for rows.Next() {
+
+		var row Result
+		err := rows.Scan(&row.Sum, &row.ShopID)
+		if err != nil {
+			panic(err)
+		}
+
+		shopIds = append(shopIds, row.ShopID)
+
+	}
+
+	var shops []model.Shop
+	config.DB.Model(model.Shop{}).Where("id IN ?", shopIds).Find(&shops)
+
+	c.JSON(200, shops)
+
+}

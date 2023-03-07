@@ -1,7 +1,7 @@
 import Link from "next/link";
 import style from "../../styles/components/Home/ShopHome.module.scss";
 import SquareCard from "../Card/SquareCard";
-import { faComments, faKey, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faComments, faKey, faPenToSquare, faPlus, faTruck } from "@fortawesome/free-solid-svg-icons";
 import SimplePagination from "../Pagination/SimplePagination";
 import { useEffect, useState } from "react";
 import getAllProducts from "@/pages/api-calls/products/getAllProducts";
@@ -15,6 +15,7 @@ const ShopHome = (props: ShopHomeProps) => {
   const { shopID } = props;
   const [pageNumber, setPageNumber] = useState(1);
   const [products, setProducts] = useState<any>([]);
+  const [productCount, setProductCount] = useState<any>();
 
   const [isAvailableOnly, setIsAvailableOnly] = useState(false);
 
@@ -22,8 +23,10 @@ const ShopHome = (props: ShopHomeProps) => {
 
     setProducts([]);
     const data = await getAllProducts(shopID, pageNumber, !isAvailableOnly);
-    if (!data) setPageNumber(pageNumber - 1);
-    else setProducts(data);
+    if (!data.products) setPageNumber(pageNumber - 1);
+    else setProducts(data.products);
+
+    setProductCount(data.count);
 
   }
 
@@ -33,8 +36,10 @@ const ShopHome = (props: ShopHomeProps) => {
 
       setProducts([]);
       const data = await getAllProducts(shopID, pageNumber, isAvailableOnly);
-      if (!data) setPageNumber(pageNumber - 1);
-      else setProducts(data);
+      if (!data.products && pageNumber > 1) setPageNumber(pageNumber - 1);
+      else setProducts(data.products);
+
+      setProductCount(data.count);
 
     }
     
@@ -63,14 +68,12 @@ const ShopHome = (props: ShopHomeProps) => {
 
   }
 
-  // if (!products || products.length <= 0) return <h1>No Products</h1>
-
   return ( 
     <div className={style.index}>
       <br /><br /><br /><br /><br /><br />
       <h1>Your Products</h1>
-      <h3>Product Count: {products.length}</h3>
-      <br /><br /><br />
+      <h3>Product Count: { productCount }</h3>
+      <br /><br />
       <div className={style.is_available_only_container}>
         <h4>Show Available Products Only</h4>
         <input type="checkbox" checked={isAvailableOnly} onChange={ onIsAvailableOnlyChange } />
@@ -80,11 +83,11 @@ const ShopHome = (props: ShopHomeProps) => {
         {
           products.length > 0 && 
           <SimplePagination 
-            pageNumber={pageNumber} 
+            pageNumber={ pageNumber } 
             onPreviousButtonClicked={ decrementPageNumber }
             onNextButtonClicked={ incrementPageNumber } 
             data={ products } 
-            type="shop-product" 
+            type="customer-product" 
           />
         }
       </div>
@@ -103,6 +106,9 @@ const ShopHome = (props: ShopHomeProps) => {
         </Link>
         <Link href="/shop/change-password">
           <SquareCard text="Password" icon={faKey} />
+        </Link>
+        <Link href="/shop/orders">
+          <SquareCard text="Orders" icon={faTruck} />
         </Link>
       </div>
       <br /><br /><br /><br /><br /><br />

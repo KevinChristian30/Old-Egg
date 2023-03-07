@@ -546,3 +546,29 @@ func ChangePassword(c *gin.Context) {
 	c.String(200, "Password Saved!")
 
 }
+
+func SubscribeToNewsletter(c *gin.Context) {
+
+	var user model.User
+	c.ShouldBindJSON(&user)
+
+	var temp model.User
+	config.DB.Model(&model.User{}).Where("email = ?", user.Email).First(&temp)
+
+	if temp.ID == 0 {
+		c.String(200, "Email Not Found")
+		return
+	}
+
+	if temp.SubscribedToEmailOffersAndDiscounts {
+		c.String(200, "You Are Already Subscribed")
+		return
+	}
+
+	config.DB.Model(&model.User{}).Where("email = ?", user.Email).Updates(map[string]interface{}{
+		"subscribed_to_email_offers_and_discounts": true,
+	})
+
+	c.String(200, "You Are Now Subscribed")
+
+}

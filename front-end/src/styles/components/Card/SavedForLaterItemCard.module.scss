@@ -1,0 +1,25 @@
+.saved_for_later_item_card{
+
+  display: flex;
+  gap: 50px;
+
+  .left{
+
+    .image{
+
+      width: 100px;
+      height: 100px;
+
+    }
+
+  }
+
+  .right{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
+}
