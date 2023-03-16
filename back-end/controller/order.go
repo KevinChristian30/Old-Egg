@@ -183,6 +183,7 @@ func GetUserOrders(c *gin.Context) {
 		IsCancelled bool   `json:"is_cancelled"`
 		Keyword     string `json:"keyword"`
 		OrderNumber string `json:"order_number"`
+		OrderDate   string `json:"order_date"`
 	}
 
 	var requestBody RequestBody
@@ -261,7 +262,21 @@ func GetUserOrders(c *gin.Context) {
 			response.Detail = details[j]
 			config.DB.Model(model.Product{}).Where("product_id = ?", details[j].ProductID).First(&response.Product)
 
-			responses = append(responses, response)
+			// If Date == requestBody.OrderDate, append
+
+			if requestBody.OrderDate == "" {
+
+				responses = append(responses, response)
+
+			} else {
+
+				if response.Header.CreatedAt.String()[:10] == requestBody.OrderDate {
+
+					responses = append(responses, response)
+
+				}
+
+			}
 
 		}
 

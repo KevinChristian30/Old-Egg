@@ -15,6 +15,7 @@ const UserOrderPage = () => {
   const [isCancelled, setIsCancelled] = useState(true);
   const [keyword, setKeyword] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
+  const [orderDate, setOrderDate] = useState<any>("");
 
   const user:any = useAuth();
   const router = useRouter();
@@ -23,11 +24,12 @@ const UserOrderPage = () => {
 
     const get = async () => {
 
-      const response = await getUserOrders(user.ID, isOngoing, isCancelled, keyword, orderNumber);
+      const response = await getUserOrders(user.ID, isOngoing, isCancelled, keyword, orderNumber, orderDate);
       if (response === -1) alert('Server Error');
       else {
 
         setUserOrders(response);
+        console.log(response);
 
       }
 
@@ -35,9 +37,9 @@ const UserOrderPage = () => {
 
     get();
 
-  }, [user, isOngoing, isCancelled, keyword, orderNumber])
+  }, [user, isOngoing, isCancelled, keyword, orderNumber, orderDate])
 
-  if (!user.role_id) return <div className="">Loading</div>
+  if (!user.role_id) return <div className="">Loading</div>;
 
   const getContent = () => {
 
@@ -70,12 +72,17 @@ const UserOrderPage = () => {
           placeholder="Search: Order Number, Invoice Code"
         />
         <br />
+        <input type="date" 
+          value={orderDate}
+          onChange={(e:any) => { setOrderDate(e.target.value) }}
+        />
+        <br /><br /><br /><br /><br />
         {
           !userOrders ? <h1>You Don't Have any Orders</h1> : 
           <div className={style.orders}>
              {
               userOrders?.map((order: any) => {
-                return <UserOrderCard key={order.ID} order={order}  />
+                return <UserOrderCard key={order.header.ID} order={order}  />
               })
             }
           </div> 

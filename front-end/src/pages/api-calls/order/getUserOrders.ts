@@ -1,7 +1,7 @@
 import { ENV } from "@/ENV";
 import axios from "axios";
 
-const getUserOrders = async (userID: Number, isOngoing: boolean, isCancelled: boolean, keyword: string, orderNumber: string) => {
+const getUserOrders = async (userID: Number, isOngoing: boolean, isCancelled: boolean, keyword: string, orderNumber: string, orderDate: string) => {
 
   try{
     
@@ -10,7 +10,8 @@ const getUserOrders = async (userID: Number, isOngoing: boolean, isCancelled: bo
       is_ongoing: isOngoing,
       is_cancelled: isCancelled,
       keyword: keyword,
-      order_number: orderNumber
+      order_number: orderNumber,
+      order_date: orderDate
     }
 
     const response:any = await axios.post(ENV.API + 'get-user-orders', body);

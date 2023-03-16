@@ -21,6 +21,8 @@ const UserOrderCard = (props: UserOrderCardProps) => {
 
     }
 
+
+
   }
 
   return ( 
@@ -31,6 +33,8 @@ const UserOrderCard = (props: UserOrderCardProps) => {
       <h4>Product Name: { order.product.product_name }</h4>
       <h4>Quantity: { order.detail.quantity }</h4>
       <h4>Status: { order.detail.status  }</h4>
+      <br />
+      <h4>Order Date: { order.header.CreatedAt }</h4>
       <br /><br />
       <RectangularButton
         content={<div>Add to Cart</div>}
