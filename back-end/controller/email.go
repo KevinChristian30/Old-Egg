@@ -18,7 +18,7 @@ func BlastEmail(c *gin.Context) {
 	var requestBody RequestBody
 	c.ShouldBindJSON(&requestBody)
 
-	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "bkvbmvffymlxabmx", "smtp.gmail.com")
+	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "wvvkdsdzmcrugmtn", "smtp.gmail.com")
 
 	var subscribedUsers []model.User
 
@@ -61,7 +61,7 @@ func SendEmail(c *gin.Context) {
 	var requestBody RequestBody
 	c.ShouldBindJSON(&requestBody)
 
-	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "bkvbmvffymlxabmx", "smtp.gmail.com")
+	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "wvvkdsdzmcrugmtn", "smtp.gmail.com")
 
 	msg := "Subject: " + requestBody.MailSubject + "\n" + requestBody.MailBody
 	var to []string

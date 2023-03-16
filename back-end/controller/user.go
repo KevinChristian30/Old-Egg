@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"math/rand"
 	"net/mail"
 	"net/smtp"
@@ -345,7 +346,10 @@ func RequestForgotPasswordCode(c *gin.Context) {
 		config.DB.Model(model.OneTimeCode{}).Where("email = ?", code.Email).First(&user)
 
 		// 2 Minute Code Request Validation
-		_, _, _, _, min, _ := diff(code.UpdatedAt, time.Now())
+		_, _, _, _, min, _ := diff(user.UpdatedAt, time.Now())
+
+		fmt.Println(min)
+
 		if min < 2 {
 			c.String(200, "You Can Only Request Code Every 2 Minutes")
 			return
@@ -357,7 +361,7 @@ func RequestForgotPasswordCode(c *gin.Context) {
 	}
 
 	// Send Code to Email
-	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "bkvbmvffymlxabmx", "smtp.gmail.com")
+	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "wvvkdsdzmcrugmtn", "smtp.gmail.com")
 
 	msg := "Subject: " + "Forgot Password Code" + "\n" + "\nHere is your Code: " + code.Code
 	var to []string
@@ -487,7 +491,7 @@ func RequestTFACode(c *gin.Context) {
 	}
 
 	// Send Code to Email
-	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "bkvbmvffymlxabmx", "smtp.gmail.com")
+	auth := smtp.PlainAuth("", "oldeggKC222@gmail.com", "wvvkdsdzmcrugmtn", "smtp.gmail.com")
 
 	msg := "Subject: " + "Two Factor Authentication Code" + "\n" + "\nHere is your Code: " + code.Code
 	var to []string
