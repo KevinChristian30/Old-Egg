@@ -69,6 +69,20 @@
 
     }
 
+    .recommended_products_container{
+
+
+      .recommended_products{
+
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        justify-content: space-between;
+        row-gap: 50px;
+
+      }
+
+    }
+
   }
 
   .get_all_products_page{

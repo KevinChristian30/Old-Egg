@@ -18,7 +18,7 @@ import SafeNumber from '@/types/SafeNumber';
 import Link from 'next/link';
 import User from '@/types/User';
 import WORDS from './Words';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 interface NavBarProps{

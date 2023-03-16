@@ -67,7 +67,7 @@ const ProfilePage = () => {
 
     }
     
-    const toUpdate:User = {
+    const toUpdate:any = {
       ID: user.ID,
       first_name: user.first_name,
       last_name: user.last_name,
@@ -77,7 +77,8 @@ const ProfilePage = () => {
       role_id: user.role_id,
       subscribed_to_email_offers_and_discounts: user.subscribed_to_email_offers_and_discounts,
       status: user.status,
-      two_factor_authentication: !user.two_factor_authentication
+      two_factor_authentication: !user.two_factor_authentication,
+      currency: user.currency
     }
 
     const result = await updateUser(toUpdate);
@@ -94,7 +95,7 @@ const ProfilePage = () => {
 
   const onUpdatePhoneNumberButtonClicked = async () => {
 
-    const toUpdate:User = {
+    const toUpdate:any = {
       ID: user.ID,
       first_name: user.first_name,
       last_name: user.last_name,
@@ -104,7 +105,9 @@ const ProfilePage = () => {
       role_id: user.role_id,
       subscribed_to_email_offers_and_discounts: user.subscribed_to_email_offers_and_discounts,
       status: user.status,
-      two_factor_authentication: user.two_factor_authentication
+      two_factor_authentication: user.two_factor_authentication,
+      currency: user.currency
+      
     }
 
     const result = await updateUser(toUpdate);

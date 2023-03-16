@@ -14,5 +14,6 @@ func ProductRoute(router *gin.Engine) {
 	router.POST("/search-product", controller.SearchProduct)
 
 	router.POST("/get-recommended-products", controller.GetRecommendedProducts)
+	router.POST("/get-recommended-products-by-shop", controller.GetRecommendedProductsByShop)
 
 }

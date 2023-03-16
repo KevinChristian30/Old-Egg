@@ -11,6 +11,8 @@ import ProductCategoryCard from "@/components/Card/ProductCategoryCard";
 import SimplePagination from "@/components/Pagination/SimplePagination";
 import getAllProducts from "@/pages/api-calls/products/getAllProducts";
 import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
+import getRecommendedProductsByShop from "@/pages/api-calls/products/getRecommendedProductsByShop";
+import ProductCard from "@/components/Card/ProductCard";
 
 interface Shop{
   shop_name: string
@@ -34,6 +36,7 @@ const ProductDetailsPage = () => {
   const [productCategories, setProductCategories] = useState([]);
 
   const [products, setProducts] = useState<any>();
+  const [recommendedProducts, setRecommendedProducts] = useState<any>([]);
   const [productCount, setProductCount] = useState<ReactNode>(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [isAvailableOnly, setIsAvailableOnly] = useState(false);
@@ -66,7 +69,16 @@ const ProductDetailsPage = () => {
 
     }
 
+    const getRecommendation = async () => {
+
+      const response = await getRecommendedProductsByShop(shopID);
+      if (response === -1) return;
+      setRecommendedProducts(response);
+
+    }
+
     getProduct();
+    getRecommendation();
 
   }, [shopID]);
 
@@ -179,6 +191,22 @@ const ProductDetailsPage = () => {
                         />
                     </div>
                   )
+
+                })
+              }
+            </div>
+          </div>
+          <div className={style.recommended_products_container}>
+            <h2>Recommended For You</h2>
+            <br />
+            <div className={style.recommended_products}>
+              {
+                recommendedProducts?.map((product: any) => {
+
+                  return <ProductCard 
+                      product={product}
+                      key={product.product_id}
+                    />
 
                 })
               }

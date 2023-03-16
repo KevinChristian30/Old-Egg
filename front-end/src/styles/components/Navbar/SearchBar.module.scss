@@ -3,49 +3,81 @@
 .search_bar{
 
   display: flex;
-  align-items: center;
-  position: relative;
+  flex-direction: column;
   width: 30%;
-  min-width: 100px;
-  height: 45px;
+  position: relative;
 
-  .text_field{
-    height: 20px;
-    width: 100%;
-    border-radius: 100px;
-    padding: 10px 15px;
-    border: none;
-    background-color: $light-purplish-blue;
-  }
-  
-  .text_field:focus{
-    outline: 2px solid var(--secondary-color-light);
-  }
+  .top{
 
-  .search_button{
     display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: var(--navbar-button-color);
-    height: 40px;
-    width: 60px;
-    border: none;
-    border-radius: 100px;
-    position: absolute;
-    right: 0;
-    transition: all 0.1s linear;
+    position: relative;
+    width: 100%;
+    min-width: 100px;
+    height: 45px;
 
-    .icon{
-      color: var(--navbar-background-color);
-      height: 17px;
-      width: auto;
+    .text_field{
+      height: 20px;
+      width: 100%;
+      border-radius: 25px 25px 0 0;
+      padding: 10px 15px;
+      border: none;
+      background-color: $light-purplish-blue;
+    }
+    
+    .text_field:focus{
+      outline: 2px solid var(--secondary-color-light);
+    }
+
+    .search_button{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--navbar-button-color);
+      height: 40px;
+      width: 60px;
+      border: none;
+      border-radius: 25px 25px 0 0;
+      position: absolute;
+      right: 0;
+      transition: all 0.1s linear;
+
+      .icon{
+        color: var(--navbar-background-color);
+        height: 17px;
+        width: auto;
+      }
+
+    }
+
+    .search_button:hover{
+      transform: scale(1.05, 1.05);
+      cursor: pointer;
     }
 
   }
 
-  .search_button:hover{
-    transform: scale(1.05, 1.05);
-    cursor: pointer;
+  .search_results{
+
+    width: 100%;
+    position: absolute;
+    top: 43px;
+
+    .word{
+
+      background-color: $light-purplish-blue;
+      padding: 10px 10px;
+      color: black;
+
+      &:hover{
+
+        background-color: var(--tertiary-color-light);
+        cursor: pointer;
+
+      }
+
+    }
+
   }
 
 }
