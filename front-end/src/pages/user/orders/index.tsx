@@ -29,7 +29,6 @@ const UserOrderPage = () => {
       else {
 
         setUserOrders(response);
-        console.log(response);
 
       }
 

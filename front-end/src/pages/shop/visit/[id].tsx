@@ -13,6 +13,8 @@ import getAllProducts from "@/pages/api-calls/products/getAllProducts";
 import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
 import getRecommendedProductsByShop from "@/pages/api-calls/products/getRecommendedProductsByShop";
 import ProductCard from "@/components/Card/ProductCard";
+import getReviewsByShop from "@/pages/api-calls/review/getReviewsByShop";
+import ShopReviewCard from "@/components/Card/ShopReviewCard";
 
 interface Shop{
   shop_name: string
@@ -36,12 +38,15 @@ const ProductDetailsPage = () => {
   const [productCategories, setProductCategories] = useState([]);
 
   const [products, setProducts] = useState<any>();
-  const [recommendedProducts, setRecommendedProducts] = useState<any>([]);
   const [productCount, setProductCount] = useState<ReactNode>(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [isAvailableOnly, setIsAvailableOnly] = useState(false);
   const [keyword, setKeyword] = useState<any>("");
   const [innerKeyword, setInnerKeyword] = useState<any>("");
+
+  const [recommendedProducts, setRecommendedProducts] = useState<any>([]);
+
+  const [reviews, setReviews] = useState<any>([]);
 
   useEffect(() => {
 
@@ -77,8 +82,17 @@ const ProductDetailsPage = () => {
 
     }
 
+    const getReviews = async () => {
+
+      const response = await getReviewsByShop(shopID);
+      if (response === -1) return;
+      setReviews(response);
+
+    }
+
     getProduct();
     getRecommendation();
+    getReviews();
 
   }, [shopID]);
 
@@ -298,6 +312,26 @@ const ProductDetailsPage = () => {
 
     }
 
+    const getReviewPage = () => {
+
+      return (
+        <div className={style.review_page}>
+          <h1>Reviews</h1>
+          <br />
+          <div className={style.review_container}>
+            {
+              reviews.map((review: any) => {
+
+                return <ShopReviewCard key={review.review_id} review={review} />
+
+              })
+            }
+          </div>
+        </div>
+      )
+
+    }
+
     const getAboutUsPage = () => {
 
       return (
@@ -315,6 +349,7 @@ const ProductDetailsPage = () => {
         { getShopNavbar() }
         { sectionName === "HOME" && getShopHome() }
         { sectionName === "ALLPRODUCTS" && getAllProductsPage() }
+        { sectionName === "REVIEWS" && getReviewPage() }
         { sectionName === "ABOUTUS" && getAboutUsPage() }
       </div>  
     );

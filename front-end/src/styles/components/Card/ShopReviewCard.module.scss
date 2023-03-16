@@ -1,0 +1,15 @@
+.shop_review_card{
+
+  padding: 20px;
+  background-color: var(--tertiary-color-light);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 7px;
+
+  .button_container{
+
+    display: flex;
+    gap: 10px;
+
+  }
+
+}

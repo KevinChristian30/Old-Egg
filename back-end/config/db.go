@@ -33,6 +33,7 @@ func migrate() {
 	DB.AutoMigrate(&model.OrderHeader{})
 	DB.AutoMigrate(&model.OrderDetail{})
 	DB.AutoMigrate(&model.Message{})
+	DB.AutoMigrate(&model.Review{})
 
 }
 

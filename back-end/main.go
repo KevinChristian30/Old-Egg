@@ -42,6 +42,7 @@ func main() {
 	route.PaymentMethodRoute(router)
 	route.OrderRoute(router)
 	route.MessageRoute(router)
+	route.ReviewRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 
