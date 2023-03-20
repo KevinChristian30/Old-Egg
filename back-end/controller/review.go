@@ -170,7 +170,9 @@ func UpdateReview(c *gin.Context) {
 func GetReviewsByShop(c *gin.Context) {
 
 	type RequestBody struct {
-		ShopID int `json:"shop_id"`
+		ShopID        int    `json:"shop_id"`
+		ReviewDate    string `json:"review_date"`
+		ReviewKeyword string `json:"review_keyword"`
 	}
 
 	var requestBody RequestBody
@@ -178,17 +180,20 @@ func GetReviewsByShop(c *gin.Context) {
 
 	query := `
 		SELECT shop_id,
-			P.product_name,
-			R.details,
-			R.rating,
-			U.first_name,
-			R.id
+				P.product_name,
+				R.details,
+				R.rating,
+				U.first_name,
+				R.id,
+				R.updated_at
 		FROM reviews R 
 			JOIN order_details OD ON R.order_detail_id = OD.ID
 			JOIN products P ON OD.product_id = p.product_id
 			JOIN order_headers OH ON OH.id = OD.order_header_id
 			JOIN users U ON U.id = OH.user_id
-		WHERE shop_id = ` + strconv.Itoa(requestBody.ShopID)
+		WHERE R.details ILIKE '%` + requestBody.ReviewKeyword + `%'
+			AND shop_id = 
+	` + strconv.Itoa(requestBody.ShopID)
 
 	rows, _ := config.DB.Raw(query).Rows()
 
@@ -199,6 +204,7 @@ func GetReviewsByShop(c *gin.Context) {
 		Rating      int    `json:"rating"`
 		FirstName   string `json:"first_name"`
 		ReviewID    int    `json:"review_id"`
+		ReviewDate  string `json:"review_date"`
 	}
 
 	var result []Result
@@ -206,16 +212,34 @@ func GetReviewsByShop(c *gin.Context) {
 	for rows.Next() {
 
 		var row Result
-		err := rows.Scan(&row.ShopID, &row.ProductName, &row.Details, &row.Rating, &row.FirstName, &row.ReviewID)
+		err := rows.Scan(&row.ShopID, &row.ProductName, &row.Details, &row.Rating, &row.FirstName, &row.ReviewID, &row.ReviewDate)
 		if err != nil {
 			panic(err)
 		}
 
-		result = append(result, row)
+		if requestBody.ReviewDate != "" {
+
+			if requestBody.ReviewDate == row.ReviewDate[:10] {
+				result = append(result, row)
+			}
+
+		} else {
+
+			result = append(result, row)
+
+		}
 
 	}
 
 	c.JSON(200, result)
+
+}
+
+func GetCustomerServiceReviews(c *gin.Context) {
+
+	var response []model.Review
+	config.DB.Model(model.Review{}).Where("order_detail_id = ?", 0).Find(&response)
+	c.JSON(200, response)
 
 }
 

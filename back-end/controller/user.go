@@ -576,3 +576,77 @@ func SubscribeToNewsletter(c *gin.Context) {
 	c.String(200, "You Are Now Subscribed")
 
 }
+
+func GetVisualizationData(c *gin.Context) {
+
+	// Get 2 Visualization Data
+	// Get Count 1-5 Star Ratings
+	type Rating struct {
+		Rating int `json:"rating"`
+		Count  int `json:"count"`
+	}
+	query := `
+		SELECT rating,
+			COUNT(rating)
+		FROM reviews R
+		GROUP BY rating
+		ORDER BY rating ASC
+	`
+
+	rows, _ := config.DB.Raw(query).Rows()
+
+	var ratings []Rating
+
+	for rows.Next() {
+
+		var rating Rating
+		err := rows.Scan(&rating.Rating, &rating.Count)
+		if err != nil {
+			panic(err)
+		}
+
+		ratings = append(ratings, rating)
+
+	}
+
+	// Get Products Sold According to Product Category
+	type ProductsSoldByCategory struct {
+		ProductCategory string `json:"product_category"`
+		Count           int    `json:"count"`
+	}
+
+	query = `
+		SELECT product_category_name, 
+			COUNT(product_category_name)
+		FROM products P 
+			JOIN product_categories PC ON P.product_category_id = PC.product_category_id
+			JOIN order_details OD ON OD.product_id = P.product_id
+		GROUP BY product_category_name
+	`
+
+	rows, _ = config.DB.Raw(query).Rows()
+
+	var productsSoldByCategory []ProductsSoldByCategory
+	for rows.Next() {
+
+		var productByCategory ProductsSoldByCategory
+		err := rows.Scan(&productByCategory.ProductCategory, &productByCategory.Count)
+		if err != nil {
+			panic(err)
+		}
+
+		productsSoldByCategory = append(productsSoldByCategory, productByCategory)
+
+	}
+
+	type Response struct {
+		Ratings  []Rating                 `json:"ratings"`
+		Products []ProductsSoldByCategory `json:"products"`
+	}
+	var response Response
+	response.Ratings = ratings
+	response.Products = productsSoldByCategory
+
+	c.JSON(200, response)
+
+}

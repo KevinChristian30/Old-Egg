@@ -15,6 +15,7 @@ import getRecommendedProductsByShop from "@/pages/api-calls/products/getRecommen
 import ProductCard from "@/components/Card/ProductCard";
 import getReviewsByShop from "@/pages/api-calls/review/getReviewsByShop";
 import ShopReviewCard from "@/components/Card/ShopReviewCard";
+import getShopStatistics from "@/pages/api-calls/shops/getShopStatistics";
 
 interface Shop{
   shop_name: string
@@ -47,6 +48,11 @@ const ProductDetailsPage = () => {
   const [recommendedProducts, setRecommendedProducts] = useState<any>([]);
 
   const [reviews, setReviews] = useState<any>([]);
+  const [reviewDate, setReviewDate] = useState<any>([]);
+  const [reviewKeyword, setReviewKeyword] = useState<any>([]);
+  const [reviewStatistics, setReviewStatistics] = useState<any>({});
+
+  const [shopStatistics, setShopStatistics] = useState<any>({});
 
   useEffect(() => {
 
@@ -82,19 +88,64 @@ const ProductDetailsPage = () => {
 
     }
 
-    const getReviews = async () => {
+    const getStatistics = async () => {
 
-      const response = await getReviewsByShop(shopID);
-      if (response === -1) return;
-      setReviews(response);
+      const response:any = await getShopStatistics(shopID);
+      if (response == 1) alert('Failed Fetching Data');
+      else {
+
+        setShopStatistics(response);
+
+      }
 
     }
 
     getProduct();
     getRecommendation();
-    getReviews();
+    getStatistics();
 
   }, [shopID]);
+
+  useEffect(() => {
+
+    const getReviews = async () => {
+
+      const response:any = await getReviewsByShop(shopID, reviewDate, reviewKeyword);
+      if (response === -1) return;
+      setReviews(response);
+
+      let stat:any = {};
+      stat.numberOfRating = 0;
+      stat.averageRating = 0;
+      stat.oneStar = 0;
+      stat.twoStar = 0;
+      stat.threeStar = 0;
+      stat.fourStar = 0;
+      stat.fiveStar = 0;
+
+      response?.map((review: any) => {
+
+        stat.numberOfRating++;
+        if (review.rating) stat.averageRating += review.rating;
+
+        if (review.rating == 1) stat.oneStar++;
+        else if (review.rating == 2) stat.twoStar++;
+        else if (review.rating == 3) stat.threeStar++;
+        else if (review.rating == 4) stat.fourStar++;
+        else if (review.rating == 5) stat.fiveStar++;
+
+      })
+
+      if (stat.numberOfRating != 0) 
+        stat.averageRating = Number(stat.averageRating) / Number(stat.numberOfRating);
+
+      setReviewStatistics(stat);
+
+    }
+
+    getReviews();
+
+  }, [shopID, reviewDate, reviewKeyword])
 
   useEffect(() => {
 
@@ -316,11 +367,36 @@ const ProductDetailsPage = () => {
 
       return (
         <div className={style.review_page}>
-          <h1>Reviews</h1>
+          <h1>Review Statistics</h1>
           <br />
+          <h3>Number of Ratings: { reviewStatistics?.numberOfRating }</h3>
+          <h3>Average Rating: { reviewStatistics?.averageRating }</h3>
+          <br />
+          <h3>1 Star: { reviewStatistics?.oneStar }</h3>
+          <h3>2 Star: { reviewStatistics?.twoStar }</h3>
+          <h3>3 Star: { reviewStatistics?.threeStar }</h3>
+          <h3>4 Star: { reviewStatistics?.fourStar }</h3>
+          <h3>5 Star: { reviewStatistics?.fiveStar }</h3>
+          <br />
+          <h1>Filter Reviews</h1>
+          <br />
+          <input 
+            type="date" 
+            value={reviewDate}
+            onChange={ (e: any) => setReviewDate(e.target.value) }
+          />
+          <br /><br />
+          <RectangularInputField 
+            value={ reviewKeyword }
+            onChange={ setReviewKeyword }
+            width={300}
+            height={30}
+            placeholder="Keyword"
+          />
+          <br /><br /><br />
           <div className={style.review_container}>
             {
-              reviews.map((review: any) => {
+              reviews?.map((review: any) => {
 
                 return <ShopReviewCard key={review.review_id} review={review} />
 
@@ -339,6 +415,9 @@ const ProductDetailsPage = () => {
           <h1>About Us</h1>
           <br /><br />
           <h3>{ shop?.about_us }</h3>
+          <br /><br /><br />
+          <h4>Average Rating: { shopStatistics.average_rating }</h4>
+          <h4>Number of Sales: { shopStatistics.number_of_sales }</h4>
         </div>
       );
 

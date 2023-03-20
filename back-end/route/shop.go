@@ -20,5 +20,6 @@ func ShopRoute(router *gin.Engine) {
 	router.POST("/get-shop-by-id", controller.GetShopByID)
 
 	router.POST("/get-top-shops", controller.GetTopShops)
+	router.POST("/get-shop-statistics", controller.GetShopStatistics)
 
 }

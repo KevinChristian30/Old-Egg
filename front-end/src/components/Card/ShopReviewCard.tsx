@@ -32,6 +32,8 @@ const ShopReviewCard = (props: ShopReviewCardProps) => {
       <h4>User: { review.first_name }</h4>
       <h4>Rating: { review.rating }</h4>
       <h4>Details: { review.details }</h4>
+      <br />
+      <h4>Date: { review.review_date }</h4>
       <br /><br />
       <div className={style.button_container}>
         <RectangularButton

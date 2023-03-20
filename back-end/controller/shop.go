@@ -352,3 +352,68 @@ func GetTopShops(c *gin.Context) {
 	c.JSON(200, shops)
 
 }
+
+func GetShopStatistics(c *gin.Context) {
+
+	type RequestBody struct {
+		ShopID uint `json:"shop_id"`
+	}
+	var requestBody RequestBody
+	c.ShouldBindJSON(&requestBody)
+
+	var shop model.Shop
+	config.DB.Model(model.Shop{}).Where("id = ?", requestBody.ShopID).First(&shop)
+	if shop.ID == 0 {
+		c.String(200, "Shop Not Found")
+		return
+	}
+
+	// Average Rating & Number of Sales
+	type Response struct {
+		AverageRating float64 `json:"average_rating"`
+		NumberOfSales int     `json:"number_of_sales"`
+	}
+	var response Response
+
+	// Get Average Rating
+	query := `
+		SELECT AVG(R.rating)
+		FROM reviews R 
+			JOIN order_details OD ON R.order_detail_id = OD.id
+			JOIN products P ON P.product_id = OD.product_id
+		WHERE shop_id = 
+	` + strconv.Itoa(int(requestBody.ShopID))
+
+	rows, _ := config.DB.Raw(query).Rows()
+
+	if rows.Next() {
+
+		err := rows.Scan(&response.AverageRating)
+		if err != nil {
+			response.AverageRating = 0
+		}
+
+	}
+
+	// Get Number of Sales
+	query = `
+		SELECT COUNT(OD.product_id)
+		FROM order_details OD
+			JOIN products P ON OD.product_id = P.product_id
+		WHERE shop_id = 
+	` + strconv.Itoa(int(requestBody.ShopID))
+
+	rows, _ = config.DB.Raw(query).Rows()
+
+	if rows.Next() {
+
+		err := rows.Scan(&response.NumberOfSales)
+		if err != nil {
+			response.NumberOfSales = 0
+		}
+
+	}
+
+	c.JSON(200, response)
+
+}

@@ -12,6 +12,7 @@ func ReviewRoute(router *gin.Engine) {
 	router.POST("/update-review", controller.UpdateReview)
 
 	router.POST("/get-reviews-by-shop", controller.GetReviewsByShop)
+	router.GET("/get-customer-service-reviews", controller.GetCustomerServiceReviews)
 
 	router.POST("/increment-helpful-count", controller.IncrementHelpfulCount)
 	router.POST("/increment-unhelpful-count", controller.IncrementUnhelpfulCount)

@@ -23,4 +23,6 @@ func UserRoute(router *gin.Engine) {
 
 	router.POST("/subscribe-to-newsletter", controller.SubscribeToNewsletter)
 
+	router.GET("/get-visualization-data", controller.GetVisualizationData)
+
 }

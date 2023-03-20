@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import ShopInformation from "@/types/ShopInformation";
 import getShopInformation from "@/pages/api-calls/auth/getShopInformation";
 import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
-import Image from "next/image";
 import RectangularButton from "@/components/RectangularButton";
 import updateShopProfile from "@/pages/api-calls/shops/updateShopProfile";
 import uploadFile from "@/utility/uploadFile";
@@ -65,6 +64,8 @@ const EditShopInfoPage = () => {
       setShopProfilePicture(link);
 
     }
+
+    if (link === "") link = shopProfilePicture;
 
     const token = getCookie('Auth');
     const response = await updateShopProfile(token, user.email, shopName, aboutUs, link);
