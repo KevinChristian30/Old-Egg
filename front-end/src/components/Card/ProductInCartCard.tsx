@@ -67,7 +67,7 @@ const ProductInCartCard = (props: ProductInCartProps) => {
 
   const onCreateWishListButtonClicked = () => {
 
-    const response: any = createWishlist(product.user_id, wishlistName);
+    const response: any = createWishlist(product.user_id, wishlistName, true);
     if (response === -1) alert('Server Error While Creating Wishlist');
     else {
 

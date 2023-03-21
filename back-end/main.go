@@ -43,6 +43,7 @@ func main() {
 	route.OrderRoute(router)
 	route.MessageRoute(router)
 	route.ReviewRoute(router)
+	route.ProductPromotionRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

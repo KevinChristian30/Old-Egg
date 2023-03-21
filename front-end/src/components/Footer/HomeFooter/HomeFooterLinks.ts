@@ -14,7 +14,7 @@ export const myAccountLinks:Array<RouteLink> = [
   {title: 'Order History', url: ''},
   {title: 'Returns History', url: ''},
   {title: 'Address Book', url: ''},
-  {title: 'Wish Lists', url: ''},
+  {title: 'Wish Lists', url: '/wishlist'},
   {title: 'My Build Lists', url: ''},
   {title: 'My Build Showcase', url: ''},
   {title: 'Email Notifications', url: ''},

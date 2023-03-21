@@ -11,6 +11,9 @@ const getProductByID = async (productID: string) => {
 
     const response = await axios.post(ENV.API + 'get-product-by-id' , body);
     const result =  response.data;
+
+    if (result === 'Shop is Banned') return -2;
+
     return result;
 
   } catch (error){

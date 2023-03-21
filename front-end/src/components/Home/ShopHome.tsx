@@ -87,7 +87,7 @@ const ShopHome = (props: ShopHomeProps) => {
             onPreviousButtonClicked={ decrementPageNumber }
             onNextButtonClicked={ incrementPageNumber } 
             data={ products } 
-            type="customer-product" 
+            type="shop-product" 
           />
         }
       </div>

@@ -1,0 +1,106 @@
+.index{
+
+  width: 90%;
+  position: relative;
+
+  .create_wishlist{
+
+    background-color: var(--tertiary-color-light);
+    padding: 20px;
+    border-radius: 7px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+
+    .line{
+
+      display: flex;
+      align-items: center;
+      gap: 25px;
+
+      input[type="checkbox"]{
+
+        width: 15px;
+        height: 15px;
+
+      }
+
+    }
+
+  }
+
+  .wishlists{
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    .wishlist{
+
+      background-color: var(--tertiary-color-light);
+      padding: 20px;
+      border-radius: 7px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+
+      .button_container{
+
+        display: flex;
+        gap: 20px;
+
+      }
+
+    }
+
+  }
+
+  .modal_container{
+
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal{
+      
+      z-index: 101;
+      width: 500px;
+      height: 400px;
+      padding: 20px;
+      background-color: var(--tertiary-color-light);
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      .middle{
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .line{
+
+          display: flex;
+          gap: 25px;
+  
+        }
+
+      }
+      
+    }
+
+    .button_container{
+
+      display: flex;
+      gap: 25px;
+
+    }
+
+  }
+
+}

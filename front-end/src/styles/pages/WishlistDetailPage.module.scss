@@ -1,0 +1,24 @@
+.index{
+
+  width: 90%;
+  
+  .wishlist_header{
+
+    .line{
+
+      display: flex;
+      gap: 25px;
+
+    }
+
+  }
+
+  .wishlist_products{
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+  }
+
+}

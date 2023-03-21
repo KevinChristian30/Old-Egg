@@ -125,6 +125,15 @@ func GetProductByID(c *gin.Context) {
 		return
 	}
 
+	// Validate Banned Shop
+	var shop model.Shop
+	config.DB.Model(model.Shop{}).Where("id = ?", rawProduct.ShopID).First(&shop)
+
+	if shop.Status == "Banned" {
+		c.String(200, "Shop is Banned")
+		return
+	}
+
 	type Product struct {
 		ProductID          string   `json:"product_id"`
 		ShopID             int      `json:"shop_id"`
@@ -244,9 +253,13 @@ func SearchProduct(c *gin.Context) {
 	rawProducts := []model.Product{}
 
 	if requestBody.IsAvailableOnly {
+
 		config.DB.Model(model.Product{}).Where("product_name ILIKE ?", "%"+requestBody.Keyword+"%").Where("product_name ILIKE ?", "%"+requestBody.InnerKeyword+"%").Where("product_stock > 0").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+
 	} else {
+
 		config.DB.Model(model.Product{}).Where("product_name ILIKE ?", "%"+requestBody.Keyword+"%").Where("product_name ILIKE ?", "%"+requestBody.InnerKeyword+"%").Limit(pageSize).Offset((requestBody.PageNumber - 1) * pageSize).Find(&rawProducts)
+
 	}
 
 	type Product struct {

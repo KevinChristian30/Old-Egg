@@ -30,21 +30,31 @@ const ProductDetailsPage = () => {
 
   const [quantity, setQuantity] = useState(0);
 
+  const [isBanned, setIsBanned] = useState(false);
+
   useEffect(() => {
 
-    setProductID(router.query.id);
+    if (!router.isReady) return;
+
+    const id: any = router.query.id;
+    setProductID(id);
 
     const getProduct = async () => {
 
-      const response = await getProductByID(productID);
-      if (response === -1) return;      
+      const response = await getProductByID(id);
+      if (response === -1) return;    
+      else if (response === -2) {
+
+        setIsBanned(true);
+
+      }   
       setProduct(response);
 
-    }
+    } 
 
     getProduct();
 
-  }, [router.query.id]);
+  }, [router.isReady]);
 
   const onVisitStoreButtonClicked = () => {
 
@@ -57,6 +67,7 @@ const ProductDetailsPage = () => {
     if (!product) return;
 
     if (quantity > product?.product_stock) alert("Product Stock isn't Enough");
+    else if (quantity <= 0) alert("Product Quantity Can't be 0");
     else {
 
       const response = await addItemToCart(user.ID, productID, quantity);
@@ -85,21 +96,21 @@ const ProductDetailsPage = () => {
     return (
       <>
       {
-        product &&
+        !isBanned ? product &&
         <div className={style.index}>
          <div className={style.left}>
-          <img src={product?.product_image_links[0]}
+          <img src={product?.product_image_links ? product?.product_image_links[0] : ""}
             className={style.image}
           />
          </div>
          <div className={style.right}>
            <div className={style.top}>
-             <h1>{product?.product_name}</h1>
-             <h4>Description: {product?.product_description}</h4>
-             <h4>Details: {product?.product_details}</h4>
-             <h4>Price: {product?.product_price}</h4>
+             <h1>{product.product_name}</h1>
+             <h4>Description: {product.product_description}</h4>
+             <h4>Details: {product.product_details}</h4>
+             <h4>Price: {product.product_price}</h4>
              {
-                product?.product_stock <= 0 ? 
+                product.product_stock <= 0 ? 
                   <b><h4 style={{color: "red"}}>Out of Stock</h4></b> :
                   <h4>Stock: {product?.product_stock}</h4>
              }
@@ -138,7 +149,7 @@ const ProductDetailsPage = () => {
              </div> 
            </div>
          </div>
-       </div>
+       </div> : <h1>Shop is Banned</h1>
       }
       </>
     );

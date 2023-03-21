@@ -1,0 +1,28 @@
+.wishlist_item_card{
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 20px;
+  background-color: var(--tertiary-color-light);
+  border-radius: 7px;
+
+  .left{
+
+    .line{
+
+      display: flex;
+      gap: 20px;
+
+    }
+
+    .button_container{
+
+      display: flex;
+      gap: 10px;
+
+    }
+
+  }
+
+}
