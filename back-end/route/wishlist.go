@@ -22,4 +22,6 @@ func WishlistRoute(router *gin.Engine) {
 	router.POST("/add-wishlist-items-to-cart", controller.AddWishlistItemsToCart)
 	router.POST("/add-all-items-to-cart", controller.AddAllItemsToCart)
 
+	router.POST("/get-public-wishlists", controller.GetAllPublicWishlists)
+
 }

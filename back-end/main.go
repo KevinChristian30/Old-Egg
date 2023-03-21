@@ -44,6 +44,7 @@ func main() {
 	route.MessageRoute(router)
 	route.ReviewRoute(router)
 	route.ProductPromotionRoute(router)
+	route.FollowRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

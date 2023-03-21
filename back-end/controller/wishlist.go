@@ -319,3 +319,18 @@ func AddAllItemsToCart(c *gin.Context) {
 	}
 
 }
+
+func GetAllPublicWishlists(c *gin.Context) {
+
+	type Body struct {
+		PageNumber int `json:"page_number"`
+		PageSize   int `json:"page_size"`
+	}
+	var body Body
+	c.ShouldBindJSON(&body)
+
+	var wishlists []model.Wishlist
+	config.DB.Model(model.Wishlist{}).Where("is_private = ?", false).Limit(body.PageSize).Offset((body.PageNumber - 1) * body.PageSize).Find(&wishlists)
+	c.JSON(200, wishlists)
+
+}

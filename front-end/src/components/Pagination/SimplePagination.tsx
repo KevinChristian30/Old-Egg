@@ -8,6 +8,7 @@ import Link from "next/link";
 import getProductByID from "@/pages/api-calls/products/getProductByID";
 import NavbarButton from "../Navbar/NavbarButton";
 import { useRouter } from "next/router";
+import WishlistCard from "../Card/WishlistCard";
 
 interface SimplePaginationProps {
   data: any,
@@ -86,6 +87,12 @@ const SimplePagination = (props:SimplePaginationProps) => {
                   </div>
 
                 </div>
+              )
+
+            } else if (type === 'wishlist') {
+
+              return (
+                <WishlistCard key={content.ID} wishlist={content} />
               )
 
             }

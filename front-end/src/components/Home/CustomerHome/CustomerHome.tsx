@@ -4,7 +4,7 @@ import ImageCarousel from "./ImageCarousel";
 import CategoryCard from "@/components/Card/CategoryCard";
 import Link from "next/link";
 import SquareCard from "@/components/Card/SquareCard";
-import { faComment, faListCheck, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faGlobe, faListCheck, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "@/hooks/useAuth";
 import Marquee from "react-fast-marquee";
 import { useEffect, useState } from "react";
@@ -325,7 +325,10 @@ const CustomerHome = (props: any) => {
             <SquareCard text={"Your Reviews"} icon={faComment} />
           </Link>
           <Link href="/wishlist">
-            <SquareCard text={"Wishlist"} icon={faListCheck} />
+            <SquareCard text={"My Wishlists"} icon={faListCheck} />
+          </Link>
+          <Link href="/public-wishlists">
+            <SquareCard text={"Public Wishlists"} icon={faGlobe} />
           </Link>
         </div>
       }
