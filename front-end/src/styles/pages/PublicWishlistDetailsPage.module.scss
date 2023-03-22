@@ -1,0 +1,50 @@
+.index{
+
+  width: 90%;
+
+  .products_container{
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .product{
+
+      background-color: var(--tertiary-color-light);
+      padding: 20px;
+      border-radius: 7px;
+      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+
+    }  
+
+  }
+
+  .add_comment_container{
+
+    .line{
+
+      display: flex;
+      gap: 15px;
+
+    }
+
+  }
+
+  .comments_container{
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .comment{
+
+      padding: 20px;
+      background-color: var(--tertiary-color-light);
+      border-radius: 7px;
+      box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+
+    }
+
+  }
+
+}

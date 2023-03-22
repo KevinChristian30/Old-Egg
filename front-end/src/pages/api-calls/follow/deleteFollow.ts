@@ -1,7 +1,7 @@
 import { ENV } from "@/ENV";
 import axios from "axios";
 
-const createFollow = async (userID: Number, wishlistID: Number) => {
+const deleteFollow = async (userID: Number, wishlistID: Number) => {
 
   try{
 
@@ -10,10 +10,8 @@ const createFollow = async (userID: Number, wishlistID: Number) => {
       wishlist_id: Number(wishlistID)
     }
 
-    const response = await axios.post(ENV.API + 'create-follow', body);
+    const response = await axios.post(ENV.API + 'delete-follow', body);
     const result =  response.data;
-
-    if (result === 'You Already Followed This Wishlist') return -2;
 
     return result;
 
@@ -25,4 +23,4 @@ const createFollow = async (userID: Number, wishlistID: Number) => {
   
 }
  
-export default createFollow;
+export default deleteFollow;

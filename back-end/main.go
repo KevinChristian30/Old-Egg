@@ -45,6 +45,7 @@ func main() {
 	route.ReviewRoute(router)
 	route.ProductPromotionRoute(router)
 	route.FollowRoute(router)
+	route.CommentRoute(router)
 
 	http.ListenAndServe(":8080", handler)
 

@@ -24,4 +24,6 @@ func WishlistRoute(router *gin.Engine) {
 
 	router.POST("/get-public-wishlists", controller.GetAllPublicWishlists)
 
+	router.POST("/duplicate-wishlist", controller.DuplicateWishlist)
+
 }

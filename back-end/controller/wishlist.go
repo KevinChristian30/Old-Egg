@@ -134,6 +134,14 @@ func GetWishlistDetailsByID(c *gin.Context) {
 
 	}
 
+	if detailsLength == 0 {
+
+		var response Response
+		response.Header = header
+		responses = append(responses, response)
+
+	}
+
 	c.JSON(200, responses)
 
 }
@@ -332,5 +340,50 @@ func GetAllPublicWishlists(c *gin.Context) {
 	var wishlists []model.Wishlist
 	config.DB.Model(model.Wishlist{}).Where("is_private = ?", false).Limit(body.PageSize).Offset((body.PageNumber - 1) * body.PageSize).Find(&wishlists)
 	c.JSON(200, wishlists)
+
+}
+
+func DuplicateWishlist(c *gin.Context) {
+
+	type Body struct {
+		UserID     uint `json:"user_id"`
+		WishlistID uint `json:"wishlist_id"`
+	}
+	var body Body
+	c.ShouldBindJSON(&body)
+
+	// Get Entry in wishlists
+	var wishlistHeader model.Wishlist
+	config.DB.Model(model.Wishlist{}).Where("id = ?", body.WishlistID).First(&wishlistHeader)
+
+	if wishlistHeader.ID == 0 {
+		c.String(200, "Wishlist Not Found")
+		return
+	}
+
+	// Get Entries in wishlist_details
+	var wishlistDetails []model.WishlistDetail
+	config.DB.Model(model.WishlistDetail{}).Where("wishlist_detail_id = ?", body.WishlistID).Find(&wishlistDetails)
+
+	// Duplicate
+	var newWishlist model.Wishlist
+	newWishlist.WishListName = wishlistHeader.WishListName
+	newWishlist.IsPrivate = wishlistHeader.IsPrivate
+	newWishlist.UserID = int(body.UserID)
+	config.DB.Model(model.Wishlist{}).Create(&newWishlist)
+
+	length := len(wishlistDetails)
+	for i := 0; i < length; i++ {
+
+		var newWishlistDetail model.WishlistDetail
+		newWishlistDetail.WishlistDetailID = int64(newWishlist.ID)
+		newWishlistDetail.ProductID = wishlistDetails[i].ProductID
+		newWishlistDetail.Quantity = wishlistDetails[i].Quantity
+
+		config.DB.Model(model.WishlistDetail{}).Create(&newWishlistDetail)
+
+	}
+
+	c.String(200, "Wishlist Duplicated")
 
 }

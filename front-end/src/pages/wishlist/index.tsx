@@ -38,8 +38,6 @@ const WishListPage = () => {
         if (response) setWishlists(response);
         else setWishlists([]);
 
-        console.log(response);
-
       }
 
     }

@@ -20,7 +20,7 @@ const WishlistDetailPage = () => {
 
   const [wishlistID, setWishlistID] = useState<any>();
 
-  const [wishlistDetails, setWishlistDetails] = useState([]);
+  const [wishlistDetails, setWishlistDetails] = useState<Array<any>>([]);
 
   const [wishlistName, setWishlistName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
@@ -33,21 +33,28 @@ const WishlistDetailPage = () => {
 
       const id: any = router.query.id;
       setWishlistID(id);
+
       const response = await getWishlistDetailsByID(id); 
       if (response === -1) alert('Something Went Wrong');
       else {
 
-        setWishlistDetails(response);
-        setWishlistName(response[0].header.wishlist_name);
-        setIsPrivate(response[0].header.is_private);
-        setNote(response[0].header.note)
+        console.log(response);
+
+        if (response) {
+
+          setWishlistName(response[0].header.wishlist_name);
+          setIsPrivate(response[0].header.is_private);
+          setNote(response[0].header.note);
+          setWishlistDetails(response);
+
+        }
 
       }
 
     }
 
     get();
-
+    
   }, [router.isReady]);
 
   const onSaveButtonClicked = async () => {
@@ -126,6 +133,7 @@ const WishlistDetailPage = () => {
           {
             wishlistDetails.map((wishlist: any) => {
 
+              if (wishlist.detail.ID != 0)
               return ( <WishlistItemCard wishlist={wishlist} /> )
 
             })
