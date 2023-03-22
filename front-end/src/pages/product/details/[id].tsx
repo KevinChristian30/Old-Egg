@@ -7,6 +7,8 @@ import RectangularButton from "@/components/RectangularButton";
 import useAuth from "@/hooks/useAuth";
 import RectangularInputField from "@/components/RectangularInputField/RectangularInputField";
 import addItemToCart from "@/pages/api-calls/cart/addItemToCart";
+import getUserWishlists from "@/pages/api-calls/wishlist/getUserWishlists";
+import addToWishlist from "@/pages/api-calls/wishlist/addToWishlist";
 
 interface Product{
   product_category_id: string
@@ -32,6 +34,9 @@ const ProductDetailsPage = () => {
 
   const [isBanned, setIsBanned] = useState(false);
 
+  const [wishlists, setWishlists] = useState<Array<any>>([]);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
 
     if (!router.isReady) return;
@@ -52,7 +57,16 @@ const ProductDetailsPage = () => {
 
     } 
 
+    const getWishlists = async () => {
+
+      const response = await getUserWishlists(user.ID);
+      if (response === -1) alert('Failed Fetching Wish Lists');
+      setWishlists(response);
+
+    }
+
     getProduct();
+    getWishlists();
 
   }, [router.isReady]);
 
@@ -87,7 +101,24 @@ const ProductDetailsPage = () => {
 
   const onAddToWishlishButtonClicked = async () => {
 
+    wishlists.map(async (wishlist: any) => {
 
+      const checkBox:any = document.getElementById(wishlist.ID);
+      if (checkBox?.checked) {
+
+        const response = await addToWishlist(wishlist.ID, productID, quantity);
+        if (response === -1) setError(true);
+
+      }
+
+    });
+
+    if (error) alert("Wishlist Addition Failed");
+    else {
+
+      alert("Item Added to Wishlists");
+
+    }
 
   }
 
@@ -140,12 +171,25 @@ const ProductDetailsPage = () => {
                />
              </div> 
              <div className={style.line}>
-               <RectangularButton
-                 content={ <div>Add to Wishlist</div> }
-                 width={200}
-                 height={34}
-                 onClick={ onAddToWishlishButtonClicked }
-               />
+              <div className={style.wishlists}>
+                {
+                  wishlists.map((e: any) => {
+                    return (
+                      <div className={style.wishlist} key={e.ID}>
+                        <input type="checkbox" id={e.ID} />
+                        <h4>{ e.wishlist_name }</h4>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <RectangularButton
+                content={ <div>Add to Wishlist</div> }
+                width={200}
+                height={30}
+                onClick={ onAddToWishlishButtonClicked }
+                orange
+              />
              </div> 
            </div>
          </div>

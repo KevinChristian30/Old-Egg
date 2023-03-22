@@ -62,7 +62,6 @@ const ProductInCartCard = (props: ProductInCartProps) => {
     // Prompt User to Choose Wish Lists or to Create a new Wish List
     setIsDisplayingWishlists(true);
 
-
   }
 
   const onCreateWishListButtonClicked = () => {
@@ -82,7 +81,7 @@ const ProductInCartCard = (props: ProductInCartProps) => {
 
     let error = false;
 
-    await wishlists.map(async (wishlist: any) => {
+    wishlists.map(async (wishlist: any) => {
 
       const checkBox:any = document.getElementById(wishlist.ID);
       if (checkBox?.checked) {
