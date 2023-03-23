@@ -34,33 +34,6 @@ const CustomerHome = (props: any) => {
 
   const [isBottom, setIsBottom] = useState(false);
 
-  const [socket, setSocket] = useState<any>(null);
-
-  // Web Socket
-  useEffect(() => {
-
-    const skt = new WebSocket('ws://localhost:8080/send-message', "1");
-    if (!socket) setSocket(skt);
-    if (!socket) return;
-    
-    socket.onopen = () => {
-      console.log('WebSocket connection established.');
-    };
-
-    socket.onmessage = (event: any) => {
-      console.log('Received message:', event.data);
-    };
-
-    socket.onerror = (error: any) => {
-      console.error('WebSocket error:', error);
-    };
-
-    socket.onclose = (event: any) => {
-      console.log('WebSocket connection closed:', event.code, event.reason);
-    };
-
-  });
-
   useEffect(() => {
 
     function handleScroll() {

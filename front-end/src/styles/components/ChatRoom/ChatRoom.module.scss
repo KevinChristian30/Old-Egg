@@ -1,0 +1,117 @@
+.chat_room{
+
+  .chat_container{
+
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    
+    .top{
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      height: 350px;
+      background-color: gray;
+      border-radius: 7px;
+      padding: 20px;
+      overflow: auto;
+
+      &::-webkit-scrollbar{
+        
+        width: 5px;
+
+      }
+
+      &::-webkit-scrollbar-track{
+        
+        background-color: lightblue;
+
+      }
+
+      
+      &::-webkit-scrollbar-thumb{
+        
+        background-color: var(--tertiary-color-light);
+
+      }
+      
+      .from{
+
+        align-self: flex-end;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+        h6{
+
+          align-self: flex-end;
+          margin-right: 5px;
+
+        }
+
+      }
+
+      .to{
+
+        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+        h6{
+
+          align-self: flex-start;
+
+        }
+
+      }
+
+      .bubble{
+
+        padding: 5px 10px;
+        background-color: var(--tertiary-color-light);
+        border-radius: 17px;
+
+      }
+
+    }
+
+    .bottom{
+
+      display: flex;
+      gap: 10px;
+
+      .textfield{
+
+        width: 100%;
+        border-radius: 7px;
+        height: 30px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        background-color: lightblue;
+        outline: 0;
+        border: none;
+
+      }
+
+      .button{
+
+        background-color: var(--tertiary-color-light);
+        transition: all 0.1s ease-in;
+        width: 50px;
+
+        &:hover{
+
+          transform: scale(1.05, 1.05);
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

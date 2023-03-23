@@ -7,6 +7,9 @@ import (
 
 func MessageRoute(router *gin.Engine) {
 
-	router.GET("send-message", controller.SendingMessage)
+	router.GET("send-message", controller.SendMessage)
+	router.POST("get-messages", controller.GetMessages)
+	router.POST("delete-messages", controller.DeleteMessages)
+	router.POST("get-chatting-customers", controller.GetChattingCustomers)
 
 }

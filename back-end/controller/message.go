@@ -18,19 +18,15 @@ var upgrader = websocket.Upgrader{
 
 var conns = map[string]*websocket.Conn{}
 
-func SendingMessage(c *gin.Context) {
+func SendMessage(c *gin.Context) {
 
 	var ReqFrom string
 	h := http.Header{}
-	fmt.Println("connected")
-	fmt.Println(h)
 
 	for _, sub := range websocket.Subprotocols(c.Request) {
 
 		h.Set("Sec-Websocket-Protocol", sub)
-		fmt.Println(sub)
 		ReqFrom = sub
-		fmt.Println(sub)
 
 	}
 
@@ -42,6 +38,7 @@ func SendingMessage(c *gin.Context) {
 	}
 
 	conns[ReqFrom] = ws
+
 	for {
 
 		var req model.Message
@@ -81,10 +78,73 @@ func SendingMessage(c *gin.Context) {
 
 }
 
-func GetAllMsg(c *gin.Context) {
+func GetMessages(c *gin.Context) {
 
-	messages := []model.Message{}
-	config.DB.Find(&messages)
-	c.JSON(200, &messages)
+	var body model.Message
+	c.ShouldBindJSON(&body)
+
+	var messages []model.Message
+
+	config.DB.Where("\"from\" = ? AND \"to\" = ?", body.From, body.To).Or("\"from\" = ? AND \"to\" = ?", body.To, body.From).Order("updated_at ASC").Find(&messages)
+
+	c.JSON(200, messages)
+
+}
+
+func DeleteMessages(c *gin.Context) {
+
+	var body model.Message
+	c.ShouldBindJSON(&body)
+
+	var messages []model.Message
+
+	config.DB.Where("\"from\" = ? AND \"to\" = ?", body.From, body.To).Or("\"from\" = ? AND \"to\" = ?", body.To, body.From).Order("updated_at ASC").Find(&messages)
+
+	length := len(messages)
+	for i := 0; i < length; i++ {
+
+		config.DB.Delete(&messages[i])
+
+	}
+
+	c.String(200, "Messages Deleted")
+
+}
+
+func GetChattingCustomers(c *gin.Context) {
+
+	type Body struct {
+		UserID string `json:"user_id"`
+	}
+	var body Body
+	c.ShouldBindJSON(&body)
+
+	query := `
+
+		SELECT DISTINCT "to"
+		FROM messages
+		WHERE "from" = '` + body.UserID + ` AND deleted_at IS NULL'
+		UNION 
+		SELECT DISTINCT "from"
+		FROM messages
+		WHERE "to" = '` + body.UserID + `' AND deleted_at IS NULL`
+
+	rows, _ := config.DB.Raw(query).Rows()
+
+	var userIDs []string
+
+	for rows.Next() {
+
+		var row string
+		err := rows.Scan(&row)
+		if err != nil {
+			panic(err)
+		}
+
+		userIDs = append(userIDs, row)
+
+	}
+
+	c.JSON(200, userIDs)
 
 }

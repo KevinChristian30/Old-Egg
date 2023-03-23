@@ -37,6 +37,7 @@ func migrate() {
 	DB.AutoMigrate(&model.ProductPromotion{})
 	DB.AutoMigrate(&model.Follow{})
 	DB.AutoMigrate(&model.Comment{})
+	DB.AutoMigrate(&model.CustomerServiceReview{})
 
 }
 

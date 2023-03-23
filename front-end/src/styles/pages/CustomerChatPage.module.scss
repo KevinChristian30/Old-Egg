@@ -1,0 +1,46 @@
+.index{
+
+  width: 90%;
+  
+  .container{
+
+    display: flex;
+    width: 100%;
+
+    .left{
+
+      width: 30%;
+      margin-top: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .user{
+  
+        padding: 20px;
+        background-color: var(--tertiary-color-light);
+        border-radius: 8px;
+        box-shadow: 0 2px 9px rgba(0, 0, 0, 0.3);
+        transition: all 0.1s ease-in;
+
+        &:hover{
+
+          background-color: lightblue;
+          cursor: pointer;
+
+        }
+  
+      }
+  
+    }
+
+    .right{
+
+      width: 100%;
+
+    }
+
+  }
+
+}

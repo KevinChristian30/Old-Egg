@@ -90,7 +90,9 @@ const Navbar = (props:NavBarProps) => {
         <div className={style.right}>
           <NewEggBusiness />
           <NavbarButton child={ getFeedbackButton() } />
-          <NavbarButton child={ getHelpCenterButton() } />
+          <Link href="/help">
+            <NavbarButton child={ getHelpCenterButton() } />
+          </Link>
         </div>
         
       </div>
